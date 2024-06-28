@@ -1,0 +1,79 @@
+<template>
+  <div v-for="group in filterData" :key="group.id">
+    <div class="relative p-4 gap-2 flex flex-col items-center">
+      <h3>{{ group.title }}</h3>
+      <div class="flex gap-2 justify-center">
+        <label
+          v-for="option in group.items"
+          :key="option.id"
+          :for="option.id"
+          class="relative text-sm font-medium leading-none w-[240px] flex flex-col gap-4 items-center justify-between rounded-lg border-2 border-surface-300 bg-popover p-2 hover:cursor-pointer hover:bg-accent hover:text-accent-foreground has-[:focus-visible]:ring-1 hover:bg-surface-50 has-[:checked]:border-primary-500"
+        >
+          <input
+            class="absolute size-0 opacity-0"
+            type="radio"
+            :id="option.id"
+            :name="group.id"
+            :value="option.value"
+            :checked="formStore.getFormField(group.id) === option.value"
+            @change="updateForm(group.id, option.value)"
+          />
+
+          <img
+            class="w-[224px] h-[56px]"
+            :src="`radio-images/${option.image}`"
+            :alt="option.text"
+          />
+          <span class="text-xs h-[42px] flex justify-center items-center text-center">{{
+            option.text
+          }}</span>
+
+          <i
+            v-if="formStore.getFormField(group.id) === option.value"
+            class="pi pi-check-circle absolute top-1 right-1 text-primary-500"
+          ></i>
+        </label>
+      </div>
+      <button
+        v-if="formStore.existsFormField(group.id)"
+        @click="formStore.removeFormField(group.id)"
+        class="absolute -top-6 right-0 m-2"
+      >
+        <i class="pi pi-times-circle text-surface-800"></i>
+      </button>
+    </div>
+  </div>
+  <button @click="formStore.resetForm()">Reset</button>
+</template>
+
+<script setup>
+import { useFormStore } from '@/stores/formStore'
+import { radioData } from '@/data/form-radio.js'
+
+const filterData = radioData
+const formStore = useFormStore()
+
+const updateForm = (groupId, value) => {
+  formStore.updateFormField(groupId, value)
+}
+</script>
+
+<style scoped>
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  display: flex;
+  align-items: center;
+}
+
+input[type='radio'] {
+  margin-right: 10px;
+}
+
+button {
+  margin-top: 20px;
+}
+</style>

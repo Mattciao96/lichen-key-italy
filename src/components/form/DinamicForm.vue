@@ -22,7 +22,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useFormStore } from '@/stores/formStore'
 import { radioData } from '@/data/form-radio.js'
 

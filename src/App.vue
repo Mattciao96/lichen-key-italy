@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import FormStepper from '@/components/form/FormStepper.vue'
 </script>
 
 <template>

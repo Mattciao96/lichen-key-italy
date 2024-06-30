@@ -57,7 +57,7 @@ onMounted(async () => {
     console.log(data)
     items.value = data.map((item, index) => ({
       name: item,
-      value: index
+      value: item
     }))
   } catch (error) {
     console.error('Error fetching data:', error)

@@ -11,8 +11,11 @@
     api-endpoint="https://italic.units.it/api/v1/families"
     store-field-id="family"
   />
-  <SelectForm />
-  <SelectRangeForm />
+
+  <div class="space-y-4"><SelectForm /></div>
+  <div class="space-y-4"><SelectRangeForm /></div>
+
+  <button @click="console.log(formStore.getFormValuesForSubmission())">See val</button>
 </template>
 
 <script setup lang="ts">
@@ -20,4 +23,8 @@ import FormStepper from '@/components/form/FormStepper.vue'
 import SelectForm from '@/components/form/SelectForm.vue'
 import SelectRangeForm from '@/components/form/SelectRangeForm.vue'
 import ComboBox from '@/components/form/ComboBox.vue'
+
+import { useFormStore } from '@/stores/formStore'
+
+const formStore = useFormStore()
 </script>

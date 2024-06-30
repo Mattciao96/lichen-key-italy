@@ -9,6 +9,7 @@
           v-model="formStore.formData[group.id]"
           @change="(option) => updateSelectFormField(group.id, option.value)"
           :placeholder="group.title"
+          :autoOptionFocus="true"
           class="w-full md:w-[14rem]"
         />
         <button

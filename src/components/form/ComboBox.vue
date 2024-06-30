@@ -1,8 +1,9 @@
 <template>
-  <div class="">
+  <label>{{ props.placeholder }}</label>
+  <div class="relative">
     <Dropdown
       v-model="formStore.formData[props.storeFieldId]"
-      :options="countries"
+      :options="items"
       filter
       optionLabel="name"
       :placeholder="props.placeholder"
@@ -25,14 +26,14 @@
         </div>
       </template>
     </Dropdown>
+    <button
+      v-if="formStore.existsFormField(props.storeFieldId)"
+      @click="formStore.removeFormField(props.storeFieldId)"
+      class="absolute top-[8px] right-[40px] z-10"
+    >
+      <i class="pi pi-times-circle text-surface-800"></i>
+    </button>
   </div>
-  <button
-    v-if="formStore.existsFormField(props.storeFieldId)"
-    @click="formStore.removeFormField(props.storeFieldId)"
-    class="m-2"
-  >
-    <i class="pi pi-times-circle text-surface-800"></i>
-  </button>
 </template>
 
 <script setup>
@@ -47,14 +48,14 @@ const props = defineProps({
 })
 const formStore = useFormStore()
 
-const countries = ref([])
+const items = ref([])
 
 onMounted(async () => {
   try {
     const response = await fetch(props.apiEndpoint)
     const data = await response.json()
     console.log(data)
-    countries.value = data.map((item, index) => ({
+    items.value = data.map((item, index) => ({
       name: item,
       value: index
     }))

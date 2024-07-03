@@ -42,6 +42,11 @@ const router = createRouter({
       path: '/filter-taxa',
       name: 'filter-taxa',
       component: () => import('../views/FilterTaxaView.vue')
+    },
+    {
+      path: '/key',
+      name: 'key',
+      component: () => import('../views/KeyView.vue')
     }
   ]
 })

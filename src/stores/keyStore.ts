@@ -29,12 +29,14 @@ export const useKeyStore = defineStore('key', () => {
   const keyId = ref<string | null>(null)
   const recordsList = ref<number[]>([])
   const fullKey = ref<FullKey | null>(null)
+  //const fullKeyLastFetched = ref<number | null>(null)
   const keyTree = ref<Tree | null>(null)
   const stepsList = ref<KeyItem[]>([])
 
-  const speciesCount = computed(() => new Set(stepsList.value.map((item) => item.leadSpecies)).size)
+  //const speciesCount = computed(() => new Set(stepsList.value.map((item) => item.leadSpecies)).size)
   const speciesList = ref<SpeciesInfo[] | null>(null)
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
+  const speciesCount = 0
 
   const setKeyId = (keyUUID: string) => {
     if (keyId.value !== keyUUID) {
@@ -42,6 +44,33 @@ export const useKeyStore = defineStore('key', () => {
     }
     keyId.value = keyUUID
   }
+
+  /*const fetchFullKey = async (): Promise<FullKey> => {
+    const cachedFullKey = localStorage.getItem('fullKey')
+    const cachedTimestamp = localStorage.getItem('fullKeyTimestamp')
+
+    if (cachedFullKey && cachedTimestamp) {
+      const lastFetchedTime = parseInt(cachedTimestamp)
+      const oneMonthAgo = Date.now() - 30 * 24 * 60 * 60 * 1000 // 30 days in milliseconds
+
+      if (lastFetchedTime > oneMonthAgo) {
+        fullKey.value = JSON.parse(cachedFullKey)
+        fullKeyLastFetched.value = lastFetchedTime
+        return fullKey.value
+      }
+    }
+
+    // If not in cache or older than a month, fetch new data
+    const response = await axios.get<FullKey>('https://italic.units.it/api/v1/full-key')
+    fullKey.value = response.data
+    fullKeyLastFetched.value = Date.now()
+
+    // Cache the new data
+    localStorage.setItem('fullKey', JSON.stringify(fullKey.value))
+    localStorage.setItem('fullKeyTimestamp', fullKeyLastFetched.value.toString())
+
+    return fullKey.value
+  }*/
 
   const fetchFullKey = async (): Promise<FullKey> => {
     const response = await axios.get<FullKey>('https://italic.units.it/api/v1/full-key')

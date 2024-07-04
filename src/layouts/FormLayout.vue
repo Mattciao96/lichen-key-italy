@@ -77,7 +77,7 @@ const submitForm = async () => {
     const result = await keyFilterMutation.mutateAsync(filters)
 
     keyStore.setKeyId(result['key-id'])
-    await keyStore.fetchData() // This will fetch and set all necessary data
+    //await keyStore.fetchData() // This will fetch and set all necessary data
 
     // Navigate to the key view
     await router.push(`/${result['key-id']}/species`)

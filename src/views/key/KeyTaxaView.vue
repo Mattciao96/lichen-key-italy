@@ -19,6 +19,7 @@
         >
           <div class="relative pb-3/4 w-full overflow-hidden rounded-md">
             <img
+              loading="lazy"
               v-if="species.image"
               :src="`https://italic.units.it/flora/${species.image}`"
               :alt="species.name"

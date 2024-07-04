@@ -84,7 +84,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.meta.requiresKeyData && to.params.keyId) {
     const keyStore = useKeyStore()
     const formStore = useFormStore()
@@ -93,7 +93,6 @@ router.beforeEach(async (to, from, next) => {
     if (keyId !== keyStore.keyId) {
       formStore.resetForm()
       keyStore.setKeyId(keyId)
-      await keyStore.fetchData()
     }
   }
   next()

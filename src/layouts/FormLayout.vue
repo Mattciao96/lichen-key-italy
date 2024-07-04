@@ -35,6 +35,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import { useKeyFilterMutation } from '@/composables/useKeyApi'
 import { useRecordStore } from '@/stores/recordStore'
 import { useFormStore } from '@/stores/formStore'
+import { useKeyStore } from '@/stores/keyStore'
 import { useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -46,13 +47,14 @@ const previousRoute = actualRouteIndex === 0 ? null : formRoutes[actualRouteInde
 
 // submit code
 const keyFilterMutation = useKeyFilterMutation()
-const recordStore = useRecordStore()
+
 const formStore = useFormStore()
+const keyStore = useKeyStore()
 const router = useRouter()
 
 const isLoading = computed(() => keyFilterMutation.isPending.value)
 
-const submitForm = async () => {
+/*const submitForm = async () => {
   try {
     recordStore.resetRecords()
     const filters = formStore.getFormValuesForSubmission()
@@ -60,6 +62,25 @@ const submitForm = async () => {
     recordStore.setRecords(result.records)
     recordStore.setKeyId(result['key-id'])
     await router.push(`/key?key-id=${result['key-id']}`)
+  } catch (error) {
+    console.error('Error submitting form:', error)
+  }
+}*/
+const submitForm = async () => {
+  try {
+    const keyStore = useKeyStore()
+    const formStore = useFormStore()
+
+    keyStore.resetStore() // This replaces recordStore.resetRecords()
+
+    const filters = formStore.getFormValuesForSubmission()
+    const result = await keyFilterMutation.mutateAsync(filters)
+
+    keyStore.setKeyId(result['key-id'])
+    await keyStore.fetchData() // This will fetch and set all necessary data
+
+    // Navigate to the key view
+    await router.push(`/${result['key-id']}/species`)
   } catch (error) {
     console.error('Error submitting form:', error)
   }

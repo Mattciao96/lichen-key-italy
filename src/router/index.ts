@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { useKeyStore } from '@/stores/keyStore'
+import { useFormStore } from '@/stores/formStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,8 +50,35 @@ const router = createRouter({
       name: 'key',
       /*component: () => import('../views/KeyView.vue')*/
       component: () => import('../views/TestKeyStoreView.vue')
+    },
+    {
+      path: '/:keyId/species',
+      name: 'species',
+      component: () => import('../views/key/KeyTaxaView.vue'),
+      meta: { requiresKeyData: true }
+    },
+    {
+      path: '/:keyId/key',
+      name: 'key',
+      component: () => import('../views/key/KeyStepsView.vue'),
+      meta: { requiresKeyData: true }
     }
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requiresKeyData && to.params.keyId) {
+    const keyStore = useKeyStore()
+    const formStore = useFormStore()
+    const keyId = to.params.keyId as string
+
+    if (keyId !== keyStore.keyId) {
+      formStore.resetForm()
+      keyStore.setKeyId(keyId)
+      await keyStore.fetchData()
+    }
+  }
+  next()
 })
 
 export default router

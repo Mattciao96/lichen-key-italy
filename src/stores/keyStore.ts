@@ -37,6 +37,9 @@ export const useKeyStore = defineStore('key', () => {
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
 
   const setKeyId = (keyUUID: string) => {
+    if (keyId.value !== keyUUID) {
+      resetAllExceptKey()
+    }
     keyId.value = keyUUID
   }
 
@@ -117,6 +120,26 @@ export const useKeyStore = defineStore('key', () => {
     return computedSpeciesList
   }
 
+  const resetAllExceptKey = () => {
+    isLoading.value = false
+    error.value = null
+    recordsList.value = []
+    fullKey.value = null
+    keyTree.value = null
+    stepsList.value = []
+    speciesList.value = null
+  }
+  const resetStore = () => {
+    isLoading.value = false
+    error.value = null
+    recordsList.value = []
+    fullKey.value = null
+    keyTree.value = null
+    stepsList.value = []
+    speciesList.value = null
+    keyId.value = null
+  }
+
   return {
     keyId,
     isLoading,
@@ -129,6 +152,7 @@ export const useKeyStore = defineStore('key', () => {
     setKeyId,
     fetchData,
     getUniqueSpeciesWithImages,
-    uniqueSpeciesWithImages
+    uniqueSpeciesWithImages,
+    resetStore
   }
 })

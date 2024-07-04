@@ -113,6 +113,17 @@ export default class Tree {
     return uniqueSpeciesIds.size
   }
 
+  getTreeAsListById(leadId) {
+    if (!leadId) {
+      return this.getTreeAsList()
+    }
+    let startNode = this.find(leadId)
+    if (!startNode) {
+      return this.getTreeAsList()
+    }
+    return this.getTreeAsList(startNode)
+  }
+
   getTreeAsList(node = this.root) {
     if (!node) {
       return []
@@ -152,86 +163,9 @@ export default class Tree {
     return numberOfChildrenLeaves
   }
 
-  prune(leadSpeciesIds) {
-    this.root = this.pruneRecursive(this.root, leadSpeciesIds)
-  }
-  prune2(leadSpeciesIds) {
-    this.root = this.pruneRecursive2(this.root, leadSpeciesIds)
-  }
   prune3(leadRecordIds) {
     this.root = this.pruneRecursive3(this.root, leadRecordIds)
-  }
-
-  /* pruneRecursive(node, leadSpeciesIds) {
-    node.children = node.children
-      .map((child) => this.pruneRecursive(child, leadSpeciesIds))
-      .filter(Boolean);
-
-    if (
-      leadSpeciesIds.includes(node.data.leadSpeciesId) ||
-      node.children.length > 0
-    ) {
-      return node;
-    }
-
-    return null;
-  } */
-  pruneRecursive(node, leadSpeciesIds) {
-    node.children = node.children
-      .map((child) => this.pruneRecursive(child, leadSpeciesIds))
-      .filter(Boolean)
-
-    console.log(node.data.leadId)
-    if (leadSpeciesIds.includes(node.data.leadSpeciesId)) {
-      return node
-    }
-
-    if (node.children.length > 1) {
-      return node
-    }
-
-    if (node.children.length === 1) {
-      return node.children[0]
-    }
-
-    return null
-  }
-
-  pruneRecursive2(node, leadSpeciesIds) {
-    node.children = node.children
-      .map((child) => this.pruneRecursive2(child, leadSpeciesIds))
-      .filter(Boolean)
-
-    if (leadSpeciesIds.includes(node.data.leadSpeciesId)) {
-      return node
-    }
-
-    if (node.children.length > 1) {
-      return node
-    }
-
-    if (node.children.length === 1) {
-      let parentNode = this.find(node.data.parentId)
-      // this cover singles before the first couplet
-      // still keeps 0
-      if (!parentNode) {
-        return node.children[0]
-      }
-
-      if (parentNode.children.length > 1) {
-        node.children[0].data.parentId = node.data.parentId
-        node.children[0].data.leadText = node.data.leadText
-        return node.children[0]
-      } else {
-        //! this works but souldn't
-        //node.children[0].parentId = parentNode.leadId;
-        // ? tis is correct and, for now works
-        node.children[0].data.parentId = parentNode.data.parentId
-        return node.children[0]
-      }
-    }
-
-    return null
+    this.adjustIds()
   }
 
   pruneRecursive3(node, leadRecordIds) {
@@ -291,34 +225,31 @@ export default class Tree {
     return this.root ? this.root.data.leadId : null
   }
 
-  /**
-   * test function to add in prune3 to reassign couplet id after the tree has been pruned
-   * // add to prune3 like this
-   *  prune3(leadRecordIds) {
-   *   this.root = this.pruneRecursive3(this.root, leadRecordIds);
-   *   this.reassignCoupletNumbers();
-   * }
-   * */
-  reassignCoupletNumbers() {
+  adjustIds() {
     if (!this.root) return
 
-    let coupletNumber = 1
+    let idCounter = 1
 
-    const reassignRecursive = (node) => {
-      if (node.children.length > 1) {
-        // This is a couplet node
-        node.data.coupletNumber = coupletNumber++
+    const adjustIdsRecursive = (node, parentId) => {
+      const oldId = node.data.leadId
+
+      if (node.data.leadSpeciesId !== null) {
+        node.data.leadId = node.data.leadSpecies
       } else {
-        // This is not a couplet, so we don't assign a number
-        node.data.coupletNumber = null
+        node.data.leadId = idCounter++
       }
 
-      // Recursively process children
+      node.data.parentId = parentId
+
+      // Update references in the nodes object
+      delete this.nodes[oldId]
+      this.nodes[node.data.leadId] = node
+
       for (let child of node.children) {
-        reassignRecursive(child)
+        adjustIdsRecursive(child, node.data.leadId)
       }
     }
 
-    reassignRecursive(this.root)
+    adjustIdsRecursive(this.root, null)
   }
 }

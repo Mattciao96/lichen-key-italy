@@ -25,7 +25,7 @@ export const useFormStore = defineStore('form', {
     },
     getFormValuesForSubmission() {
       // return formData but for each key, if the value is an object, return the value of the object
-      // i don't like the first condition
+      // I don't like the first condition
       return Object.fromEntries(
         Object.entries(this.formData).map(([key, value]) => {
           if (typeof value === 'object' && value !== null) {

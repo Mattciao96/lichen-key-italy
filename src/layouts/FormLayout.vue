@@ -3,7 +3,7 @@
   <form id="filter-form" @submit.prevent="submitForm">
     <slot />
   </form>
-  <div class="flex justify-around">
+  <div class="flex justify-around my-10">
     <Button
       :disabled="previousRoute === null"
       class="!w-30"
@@ -34,6 +34,7 @@ import { RouterLink, useRoute } from 'vue-router'
 // imports for submit
 import { useKeyFilterMutation } from '@/composables/useKeyApi'
 import { useRecordStore } from '@/stores/recordStore'
+import { useFormStore } from '@/stores/formStore'
 import { useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -46,13 +47,16 @@ const previousRoute = actualRouteIndex === 0 ? null : formRoutes[actualRouteInde
 // submit code
 const keyFilterMutation = useKeyFilterMutation()
 const recordStore = useRecordStore()
+const formStore = useFormStore()
 const router = useRouter()
 
 const isLoading = computed(() => keyFilterMutation.isPending.value)
 
 const submitForm = async () => {
   try {
-    const result = await keyFilterMutation.mutateAsync('')
+    recordStore.resetRecords()
+    const filters = formStore.getFormValuesForSubmission()
+    const result = await keyFilterMutation.mutateAsync(filters)
     recordStore.setRecords(result.records)
     recordStore.setKeyId(result['key-id'])
     await router.push(`/key?key-id=${result['key-id']}`)

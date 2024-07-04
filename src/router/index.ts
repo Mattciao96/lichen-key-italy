@@ -46,7 +46,8 @@ const router = createRouter({
     {
       path: '/key',
       name: 'key',
-      component: () => import('../views/KeyView.vue')
+      /*component: () => import('../views/KeyView.vue')*/
+      component: () => import('../views/TestKeyView.vue')
     }
   ]
 })

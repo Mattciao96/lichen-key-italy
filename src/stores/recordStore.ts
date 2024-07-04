@@ -12,6 +12,10 @@ export const useRecordStore = defineStore('record', {
     },
     setKeyId(keyId: string) {
       this.keyId = keyId
+    },
+    resetRecords() {
+      this.records = []
+      this.keyId = ''
     }
   }
 })

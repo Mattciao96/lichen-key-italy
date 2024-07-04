@@ -48,15 +48,18 @@
 </template>
 
 <script setup lang="ts">
+// a very rough component that show how things should work
+
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import Tree from '@/utils/key-builder'
-import useReorderKeyIds from '@/composables/useReorderKeyIds'
+
 const lista = ref([])
 const count = ref(0)
 const route = useRoute()
 const keyId = computed(() => route.query['key-id'] as string)
+const savedTree = ref(null)
 
 const fetchData = async () => {
   try {
@@ -77,6 +80,7 @@ const fetchData = async () => {
     newTree.prune3(recordsToKeep)
 
     console.log(newTree)
+    savedTree.value = newTree
 
     let listaProvvisoria = newTree.getTreeAsListById()
     listaProvvisoria.shift()

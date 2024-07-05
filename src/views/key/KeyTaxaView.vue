@@ -15,9 +15,7 @@
         <div v-for="species in displayedSpecies" :key="species.name" class="flex flex-col">
           <div class="relative pb-3/4 w-full overflow-hidden rounded-md">
             <LazyImage
-              :src="
-                species.image ? `https://italic.units.it/flora/${species.image}` : placeholderImage
-              "
+              :src="getSpeciesUrl(species.image)"
               :alt="species.name"
               :placeholder="placeholderImage"
             />
@@ -50,6 +48,15 @@ const loadMoreTrigger = ref(null)
 const displayedSpecies = computed(() => {
   return keyStore.uniqueSpeciesWithImages.slice(0, currentPage.value * itemsPerPage)
 })
+
+const getSpeciesUrl = (imagePath: string) => {
+  if (!imagePath) {
+    return placeholderImage
+  }
+  const path = imagePath.split('/')
+  path.splice(2, 1, 'thumbnails')
+  return `https://italic.units.it/flora/${path.join('/')}`
+}
 
 const loadMore = () => {
   if (currentPage.value * itemsPerPage >= keyStore.uniqueSpeciesWithImages.length) {

@@ -34,6 +34,13 @@
           >
             Species List
           </router-link>
+          <router-link
+            :to="`/${keyStore.keyId}/interactive`"
+            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+            :class="{ 'bg-green-700': $route.name === 'species' }"
+          >
+            Interactive key
+          </router-link>
         </div>
       </div>
 

@@ -145,6 +145,22 @@ export const useKeyStore = defineStore('key', () => {
     return computedSpeciesList
   }
 
+  // for interactive key
+  const getStepsListFromNodeId = (nodeId) => {
+    const tree = keyTree.value
+    if (!tree) {
+      return []
+    }
+
+    const stepsList = tree.getTreeAsListById(nodeId)
+    if (!stepsList) {
+      return []
+    }
+
+    stepsList.shift()
+    return stepsList
+  }
+
   const resetAllExceptKey = () => {
     isLoading.value = false
     error.value = null
@@ -177,6 +193,7 @@ export const useKeyStore = defineStore('key', () => {
     setKeyId,
     fetchData,
     getUniqueSpeciesWithImages,
+    getStepsListFromNodeId,
     uniqueSpeciesWithImages,
     resetStore
   }

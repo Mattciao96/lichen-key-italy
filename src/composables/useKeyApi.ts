@@ -15,6 +15,7 @@ const api = axios.create({
 export function useKeyRecordsQuery(keyId: string) {
   return useQuery({
     queryKey: ['keyRecords', keyId],
+
     queryFn: () => api.post('/key-records', { 'key-id': keyId }).then((res) => res.data),
     enabled: !!keyId
   })
@@ -50,6 +51,12 @@ export function useKeyRecordsQuery(keyId: string) {
 export function useFullKeyQuery() {
   return useQuery({
     queryKey: ['fullKey'],
+    staleTime: Infinity, // Data will never go stale
+    cacheTime: Infinity, // Data will never be removed from cache
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+
     queryFn: async () => {
       const startTime = performance.now()
       const result = await axios

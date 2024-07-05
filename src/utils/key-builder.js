@@ -31,8 +31,7 @@ export default class Tree {
   }
 
   buildTree(data) {
-    console.log(data)
-    for (let item of data.keyData) {
+    for (let item of data) {
       let node = new Node(item)
       this.nodes[item.leadId] = node
     }
@@ -44,7 +43,7 @@ export default class Tree {
       }
     }
 
-    this.root = this.nodes[data.keyData[0].leadId]
+    this.root = this.nodes[data[0].leadId]
   }
 
   isRoot(node) {

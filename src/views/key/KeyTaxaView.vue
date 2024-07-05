@@ -12,25 +12,15 @@
       <div
         class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
       >
-        <div
-          v-for="species in keyStore.uniqueSpeciesWithImages"
-          :key="species.name"
-          class="flex flex-col"
-        >
+        <div v-for="species in displayedSpecies" :key="species.name" class="flex flex-col">
           <div class="relative pb-3/4 w-full overflow-hidden rounded-md">
-            <img
-              loading="lazy"
-              v-if="species.image"
-              :src="`https://italic.units.it/flora/${species.image}`"
+            <LazyImage
+              :src="
+                species.image ? `https://italic.units.it/flora/${species.image}` : placeholderImage
+              "
               :alt="species.name"
-              class="absolute inset-0 w-full h-full object-cover"
+              :placeholder="placeholderImage"
             />
-            <div
-              v-else
-              class="absolute inset-0 w-full h-full bg-gray-200 flex items-center justify-center"
-            >
-              <span class="text-gray-500">No Image</span>
-            </div>
           </div>
           <p
             class="mt-2 text-center text-xs sm:text-sm xl:text-base font-medium text-gray-800 line-clamp-2"
@@ -39,15 +29,75 @@
           </p>
         </div>
       </div>
+      <div v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import LazyImage from '@/components/LazyImage.vue'
+import placeholderImage from '@/assets/placeholder.svg'
 
 const keyStore = useKeyStore()
+const itemsPerPage = 20
+const currentPage = ref(1)
+const allLoaded = ref(false)
+const loadMoreTrigger = ref(null)
+
+const displayedSpecies = computed(() => {
+  return keyStore.uniqueSpeciesWithImages.slice(0, currentPage.value * itemsPerPage)
+})
+
+const loadMore = () => {
+  if (currentPage.value * itemsPerPage >= keyStore.uniqueSpeciesWithImages.length) {
+    allLoaded.value = true
+    return
+  }
+  currentPage.value++
+}
+
+let observer: IntersectionObserver | null = null
+
+const setupIntersectionObserver = () => {
+  if (observer) {
+    observer.disconnect()
+  }
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && !allLoaded.value) {
+        loadMore()
+      }
+    },
+    { rootMargin: '200px' }
+  )
+
+  if (loadMoreTrigger.value) {
+    observer.observe(loadMoreTrigger.value)
+  }
+}
+
+onMounted(() => {
+  setupIntersectionObserver()
+})
+
+onUnmounted(() => {
+  if (observer) {
+    observer.disconnect()
+  }
+})
+
+watch(
+  () => keyStore.uniqueSpeciesWithImages,
+  () => {
+    allLoaded.value = false
+    currentPage.value = 1
+    setupIntersectionObserver()
+  }
+)
 </script>
 
 <style scoped>

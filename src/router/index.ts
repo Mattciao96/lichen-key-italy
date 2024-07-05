@@ -78,13 +78,19 @@ const router = createRouter({
           name: 'species',
           component: () => import('../views/key/KeyTaxaView.vue'),
           meta: { requiresKeyData: true }
+        },
+        {
+          path: 'species-list',
+          name: 'species-list',
+          component: () => import('../views/key/KeyTaxaNamesView.vue'),
+          meta: { requiresKeyData: true }
         }
       ]
     }
   ]
 })
 
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
   if (to.meta.requiresKeyData && to.params.keyId) {
     const keyStore = useKeyStore()
     const formStore = useFormStore()
@@ -96,6 +102,6 @@ router.beforeEach((to, from, next) => {
     }
   }
   next()
-})
+})*/
 
 export default router

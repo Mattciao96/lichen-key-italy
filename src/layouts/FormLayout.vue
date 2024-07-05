@@ -78,9 +78,9 @@ const submitForm = async () => {
 
     keyStore.setKeyId(result['key-id'])
     //await keyStore.fetchData() // This will fetch and set all necessary data
-
+    formStore.resetForm()
     // Navigate to the key view
-    await router.push(`/${result['key-id']}/species`)
+    await router.push(`/${result['key-id']}/species-list`)
   } catch (error) {
     console.error('Error submitting form:', error)
   }

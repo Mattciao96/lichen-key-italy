@@ -1,33 +1,20 @@
 <template>
-  <div v-if="currentNode">
-    <h2>Current Node: {{ currentNode.data.leadText }}</h2>
-    <p>ID: {{ currentNode.data.leadId }}</p>
-
-    <h3>Statistics:</h3>
-    <p>Number of unique remaining species: {{ uniqueSpeciesCount }}</p>
-
-    <h3>Step List:</h3>
-    <ol>
-      <li v-for="step in stepList" :key="step.leadId">
-        {{ step.leadText }}
-      </li>
-    </ol>
-
-    <div v-if="currentNode.children.length > 0">
-      <h3>Children:</h3>
-      <div v-for="child in currentNode.children" :key="child.data.leadId">
-        <button @click="navigateToNode(child)">
-          {{ child.data.leadText }}
-        </button>
-      </div>
+  <div>
+    <div class="button-group">
+      <button @click="activeView = 'interactive'" :class="{ active: activeView === 'interactive' }">
+        Interactive Key
+      </button>
+      <button @click="activeView = 'species'" :class="{ active: activeView === 'species' }">
+        Species List
+      </button>
+      <button @click="activeView = 'steps'" :class="{ active: activeView === 'steps' }">
+        Steps List
+      </button>
     </div>
 
-    <div v-else>
-      <p>This is a leaf node (no children).</p>
-    </div>
+    <InteractiveKey v-if="activeView === 'interactive'" v-model:currentNode="currentNode" />
 
-    <button v-if="!isRoot" @click="navigateToParent">Go to Parent</button>
-    <div class="bg-purple-400">
+    <div v-if="activeView === 'species'">
       <h3>Unique Species List:</h3>
       <ul>
         <li v-for="species in uniqueSpeciesList" :key="species">
@@ -35,28 +22,25 @@
         </li>
       </ul>
     </div>
+
+    <div v-if="activeView === 'steps'">
+      <h3>Steps:</h3>
+      <KeyTable :steps-list="stepList" :key="currentNodeId"></KeyTable>
+    </div>
   </div>
-  <h3>Steps:</h3>
-  <KeyTable v-memo="[stepList]" :steps-list="stepList"></KeyTable>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
 import KeyTable from '@/components/key/KeyTable.vue'
+import InteractiveKey from '@/components/key/KeyInteractive.vue'
 
 const keyStore = useKeyStore()
 const currentNode = ref(null)
+const activeView = ref('interactive')
+
 const currentNodeId = computed(() => currentNode.value?.data.leadId)
-
-const isRoot = computed(() => {
-  return currentNode.value && keyStore.keyTree.isRoot(currentNode.value)
-})
-
-const uniqueSpeciesCount = computed(() => {
-  if (!currentNode.value) return 0
-  return keyStore.keyTree.getNumberOfUniqueLeaves(currentNode.value.data.leadId)
-})
 
 const uniqueSpeciesList = computed(() => {
   if (!currentNode.value) return []
@@ -76,17 +60,24 @@ onMounted(async () => {
   }
   currentNode.value = keyStore.keyTree.root
 })
-
-function navigateToNode(node) {
-  currentNode.value = node
-}
-
-function navigateToParent() {
-  if (currentNode.value && currentNode.value.data.parentId) {
-    const parentNode = keyStore.keyTree.find(currentNode.value.data.parentId)
-    if (parentNode) {
-      currentNode.value = parentNode
-    }
-  }
-}
 </script>
+
+<style scoped>
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.button-group button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.button-group button.active {
+  background-color: #007bff;
+  color: white;
+}
+</style>

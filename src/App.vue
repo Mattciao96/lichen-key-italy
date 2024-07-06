@@ -5,14 +5,12 @@ import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 
 <template>
   <header class="bg-green-600">
-    <nav>
+    <nav class="space-x-10">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/components">Components</RouterLink>
       <RouterLink to="/filter-area">Filter</RouterLink>
+      <RouterLink to="/filter-taxa">Select species</RouterLink>
     </nav>
   </header>
-  <!--  <FormStepper />-->
   <RouterView />
   <VueQueryDevtools />
 </template>

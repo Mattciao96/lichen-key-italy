@@ -11,19 +11,6 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    },
-    {
-      path: '/components',
-      name: 'components',
-      component: () => import('../views/ComponentsView.vue')
-    },
     // pages for filters
     {
       path: '/filter-area',
@@ -40,28 +27,15 @@ const router = createRouter({
       name: 'filter-traits',
       component: () => import('../views/FilterTraitsView.vue')
     },
-    {
+    /*{
       path: '/filter-taxa',
       name: 'filter-taxa',
       component: () => import('../views/FilterTaxaView.vue')
-    },
+    },*/
     {
-      path: '/key',
-      name: 'key',
-      /*component: () => import('../views/KeyView.vue')*/
-      component: () => import('../views/TestKeyStoreView.vue')
-    },
-    {
-      path: '/:keyId/species',
-      name: 'species',
-      component: () => import('../views/key/KeyTaxaView.vue'),
-      meta: { requiresKeyData: true }
-    },
-    {
-      path: '/:keyId/key',
-      name: 'key',
-      component: () => import('../views/key/KeyStepsView.vue'),
-      meta: { requiresKeyData: true }
+      path: '/filter-taxa/:letter?',
+      name: 'FilterTaxa',
+      component: () => import('../views/FilterTaxaView.vue')
     },
     {
       path: '/:keyId',

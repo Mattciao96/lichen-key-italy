@@ -118,46 +118,37 @@ const getSpeciesUrl = (imagePath: string | null) => {
 }
 
 const scrollToAnchor = async (leadId: number) => {
+  const batchSize = 50
   let found = false
 
-  // First, check if the element is already in the visible steps
-  const targetElement = document.getElementById(`couplet${leadId}`)
-  if (targetElement) {
-    found = true
-    scrollToElement(targetElement)
-  } else {
-    // If not found, load batches until found or all data is loaded
-    while (currentIndex.value < props.stepsList.length && !found) {
-      // Load the next batch
-      const nextBatch = props.stepsList.slice(currentIndex.value, currentIndex.value + CHUNK_SIZE)
-      visibleSteps.value.push(...nextBatch)
-      currentIndex.value += CHUNK_SIZE
+  while (currentIndex.value < props.stepsList.length && !found) {
+    // Load the next batch
+    const nextBatch = props.stepsList.slice(currentIndex.value, currentIndex.value + batchSize)
+    visibleSteps.value.push(...nextBatch)
+    currentIndex.value += batchSize
 
-      // Wait for the DOM to update
-      await new Promise((resolve) => setTimeout(resolve, 50))
+    // Wait for the DOM to update
+    await new Promise((resolve) => setTimeout(resolve, 0))
 
-      // Check if the target element is now in the DOM
-      const newTargetElement = document.getElementById(`couplet${leadId}`)
-      if (newTargetElement) {
-        found = true
-        scrollToElement(newTargetElement)
-      }
+    // Check if the target element is in this batch
+    const targetElement = document.getElementById(`couplet${leadId}`)
+    if (targetElement) {
+      found = true
+
+      // Scroll to the element
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+      // Highlight the row temporarily
+      targetElement.parentElement?.classList.add('highlight')
+      setTimeout(() => {
+        targetElement.parentElement?.classList.remove('highlight')
+      }, 2000)
     }
   }
 
   if (!found) {
     console.log(`Element with leadId ${leadId} not found`)
   }
-}
-
-const scrollToElement = (element: HTMLElement) => {
-  element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-
-  // Highlight the row temporarily
-  element.parentElement?.classList.add('highlight')
-  setTimeout(() => {
-    element.parentElement?.classList.remove('highlight')
-  }, 2000)
 }
 
 // for copy to clipboard

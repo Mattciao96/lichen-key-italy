@@ -17,12 +17,14 @@
   "dependencies": {
     "@tanstack/vue-query": "^5.49.1",
     "@tanstack/vue-query-devtools": "^5.49.1",
+    "@tanstack/vue-virtual": "^3.8.1",
     "axios": "^1.7.2",
     "pinia": "^2.1.7",
     "primeicons": "^7.0.0",
     "primevue": "^3.52.0",
     "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "vue-virtual-scroll-list": "^2.3.5"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.1",

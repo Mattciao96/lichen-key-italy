@@ -52,7 +52,6 @@ export function useFullKeyQuery() {
   return useQuery({
     queryKey: ['fullKey'],
     staleTime: Infinity, // Data will never go stale
-    cacheTime: Infinity, // Data will never be removed from cache
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,

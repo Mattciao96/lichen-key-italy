@@ -5,7 +5,7 @@ import { useSpeciesStore } from '@/stores/speciesStore'
 import { useFormStore } from '@/stores/formStore'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory('/key-test/'),
   routes: [
     {
       path: '/',

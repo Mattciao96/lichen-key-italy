@@ -1,8 +1,8 @@
 // src/stores/useKeyStore.ts
+// !!! TODO remove the toot in list in tree class
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
-import { openDB } from 'idb'
 
 import Tree from '@/utils/key-builder'
 
@@ -23,24 +23,9 @@ interface SpeciesInfo {
 interface FullKey {
   keyData: KeyItem[]
 }
-
-interface KeyDB {
-  fullKey: {
-    key: string
-    value: FullKey
-  }
-  lastFetch: {
-    key: string
-    value: number
-  }
+interface OnlyKey {
+  keyData: KeyItem[]
 }
-
-const dbPromise = openDB<KeyDB>('keyStore', 1, {
-  upgrade(db) {
-    db.createObjectStore('fullKey')
-    db.createObjectStore('lastFetch')
-  }
-})
 
 export const useKeyStore = defineStore('key', () => {
   const isLoading = ref(false)
@@ -48,11 +33,14 @@ export const useKeyStore = defineStore('key', () => {
   const keyId = ref<string | null>(null)
   const recordsList = ref<number[]>([])
   const fullKey = ref<FullKey | null>(null)
+  //const fullKeyLastFetched = ref<number | null>(null)
   const keyTree = ref<Tree | null>(null)
   const stepsList = ref<KeyItem[]>([])
 
+  //const speciesCount = computed(() => new Set(stepsList.value.map((item) => item.leadSpecies)).size)
   const speciesList = ref<SpeciesInfo[] | null>(null)
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
+  //const speciesCount = 0
   const speciesCount = computed(() => uniqueSpeciesWithImages.value.length)
 
   const setKeyId = (keyUUID: string) => {
@@ -63,26 +51,28 @@ export const useKeyStore = defineStore('key', () => {
   }
 
   const fetchFullKey = async (): Promise<FullKey> => {
-    const db = await dbPromise
-    const storedKey = await db.get('fullKey', 'currentKey')
-    const lastFetchTime = await db.get('lastFetch', 'fullKeyFetch')
+    const storedKey = localStorage.getItem('fullKey')
+    const lastFetchTime = localStorage.getItem('lastFullKeyFetch')
     const currentTime = new Date().getTime()
 
     // Check if a month has passed since the last fetch
-    if (storedKey && lastFetchTime && currentTime - lastFetchTime < 30 * 24 * 60 * 60 * 1000) {
-      return storedKey
+    if (
+      storedKey &&
+      lastFetchTime &&
+      currentTime - parseInt(lastFetchTime) < 30 * 24 * 60 * 60 * 1000
+    ) {
+      return JSON.parse(storedKey)
     }
 
-    // Fetch new data if not in IndexedDB or a month has passed
+    // Fetch new data if not in localStorage or a month has passed
     const response = await axios.get<FullKey>('https://italic.units.it/api/v1/full-key')
 
     // Store the new data and fetch time
-    await db.put('fullKey', response.data, 'currentKey')
-    await db.put('lastFetch', currentTime, 'fullKeyFetch')
+    localStorage.setItem('fullKey', JSON.stringify(response.data.keyData))
+    localStorage.setItem('lastFullKeyFetch', currentTime.toString())
 
-    return response.data
+    return response.data.keyData
   }
-
   const fetchRecords = async (id: string): Promise<number[]> => {
     const response = await axios.post<{ records: number[] }>(
       'https://italic.units.it/api/v1/key-records',
@@ -91,9 +81,9 @@ export const useKeyStore = defineStore('key', () => {
     return response.data.records
   }
 
-  const buildKeyTree = (key: FullKey, records: number[]): Tree => {
+  const buildKeyTree = (key: OnlyKey, records: number[]): Tree => {
     const tree = new Tree()
-    tree.buildTree(key.keyData)
+    tree.buildTree(key)
     tree.prune3(records)
     return tree
   }
@@ -180,7 +170,6 @@ export const useKeyStore = defineStore('key', () => {
     stepsList.value = []
     speciesList.value = null
   }
-
   const resetStore = () => {
     isLoading.value = false
     error.value = null

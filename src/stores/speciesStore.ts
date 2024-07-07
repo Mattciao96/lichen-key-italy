@@ -15,6 +15,9 @@ export const useSpeciesStore = defineStore('species', {
     },
     removeSpecies(species: string) {
       this.selectedSpecies = this.selectedSpecies.filter((s) => s !== species)
+    },
+    reset() {
+      this.selectedSpecies = []
     }
   }
 })

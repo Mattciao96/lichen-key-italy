@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { useKeyStore } from '@/stores/keyStore'
-//import { useFormStore } from '@/stores/formStore'
+import { useSpeciesStore } from '@/stores/speciesStore'
+import { useFormStore } from '@/stores/formStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +12,6 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
-    // pages for filters
     {
       path: '/filter-area',
       name: 'filter-area',
@@ -27,11 +27,6 @@ const router = createRouter({
       name: 'filter-traits',
       component: () => import('../views/FilterTraitsView.vue')
     },
-    /*{
-      path: '/filter-taxa',
-      name: 'filter-taxa',
-      component: () => import('../views/FilterTaxaView.vue')
-    },*/
     {
       path: '/filter-taxa/:letter?',
       name: 'FilterTaxa',
@@ -70,17 +65,43 @@ const router = createRouter({
   ]
 })
 
+const routeGroups = {
+  form: {
+    routes: ['/filter-area', '/filter-ecology', '/filter-traits'],
+    resetStore: () => useFormStore().resetForm()
+  },
+  taxa: {
+    routes: ['/filter-taxa'],
+    resetStore: () => useSpeciesStore().reset()
+  }
+}
+
+const isFirstLoad = { form: true, taxa: true }
+
 router.beforeEach((to, from, next) => {
+  // Handle store resets for form and taxa routes
+  Object.entries(routeGroups).forEach(([group, { routes, resetStore }]) => {
+    const isCurrentRoute = routes.some((route) => to.path.startsWith(route))
+    const wasLastRoute = routes.some((route) => from.path.startsWith(route))
+
+    if (isCurrentRoute && (isFirstLoad[group] || !wasLastRoute)) {
+      resetStore()
+      isFirstLoad[group] = false
+    } else if (!isCurrentRoute) {
+      isFirstLoad[group] = true
+    }
+  })
+
+  // Handle key data requirement
   if (to.meta.requiresKeyData && to.params.keyId) {
     const keyStore = useKeyStore()
-    //const formStore = useFormStore()
     const keyId = to.params.keyId as string
 
     if (keyId !== keyStore.keyId) {
-      //formStore.resetForm()
       keyStore.setKeyId(keyId)
     }
   }
+
   next()
 })
 

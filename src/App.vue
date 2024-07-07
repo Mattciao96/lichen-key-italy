@@ -8,7 +8,7 @@ import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
     <nav class="space-x-10">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/filter-area">Filter</RouterLink>
-      <RouterLink to="/filter-taxa">Select species</RouterLink>
+      <RouterLink to="/filter-taxa/a">Select species</RouterLink>
     </nav>
   </header>
   <RouterView />

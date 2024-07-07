@@ -34,6 +34,18 @@ export function useKeyFilterMutation() {
   })
 }
 
+export function useKeyTaxaFilterMutation() {
+  return useMutation({
+    mutationFn: async (filters: any) => {
+      const startTime = performance.now()
+      const result = await api.post('/key-taxa', filters).then((res) => res.data)
+      const endTime = performance.now()
+      console.log(`useKeyTaxaFilterMutation execution time: ${endTime - startTime} milliseconds`)
+      return result
+    }
+  })
+}
+
 export function useKeyRecordsQuery(keyId: string) {
   return useQuery({
     queryKey: ['keyRecords', keyId],

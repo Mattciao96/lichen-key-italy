@@ -27,7 +27,7 @@
 </template>
 <script setup lang="ts">
 // da aggiungere sidebar
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import Button from 'primevue/button'
 import FormStepper from '@/components/form/FormStepper.vue'
 import { RouterLink, useRoute } from 'vue-router'
@@ -35,6 +35,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import { useKeyFilterMutation } from '@/composables/useKeyApi'
 import { useFormStore } from '@/stores/formStore'
 import { useKeyStore } from '@/stores/keyStore'
+import { useSpeciesStore } from '@/stores/speciesStore'
 import { useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -49,6 +50,8 @@ const keyFilterMutation = useKeyFilterMutation()
 
 const formStore = useFormStore()
 const keyStore = useKeyStore()
+
+const speciesStore = useSpeciesStore()
 const router = useRouter()
 
 const isLoading = computed(() => keyFilterMutation.isPending.value)
@@ -84,4 +87,6 @@ const submitForm = async () => {
     console.error('Error submitting form:', error)
   }
 }
+
+// on mount reset speciestore
 </script>

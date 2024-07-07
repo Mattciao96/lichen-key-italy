@@ -38,7 +38,7 @@ export function useKeyTaxaFilterMutation() {
   return useMutation({
     mutationFn: async (filters: any) => {
       const startTime = performance.now()
-      const result = await api.post('/key-taxa', filters).then((res) => res.data)
+      const result = await api.post('/taxa-records', filters).then((res) => res.data)
       const endTime = performance.now()
       console.log(`useKeyTaxaFilterMutation execution time: ${endTime - startTime} milliseconds`)
       return result

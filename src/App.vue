@@ -1,16 +1,27 @@
+<template>
+  <header class="min-h-[4rem] top-0 z-20 border-b border-surface-300 shadow-sm flex items-center">
+    <NavigationBar />
+  </header>
+  <main>
+    <RouterView />
+  </main>
+  <ScrollTop />
+  <Footer />
+  <!--  <VueQueryDevtools />-->
+</template>
+
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import NavigationBar from '@/components/NavigationBar.vue'
+import Footer from '@/components/Footer.vue'
 import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
+import ScrollTop from 'primevue/scrolltop'
 </script>
 
-<template>
-  <header class="bg-green-600">
-    <nav class="space-x-10">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/filter-area">Filter</RouterLink>
-      <RouterLink to="/filter-taxa/a">Select species</RouterLink>
-    </nav>
-  </header>
-  <RouterView />
-  <VueQueryDevtools />
-</template>
+<style scoped>
+main {
+  min-height: calc(100vh - 64px - 14rem);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+</style>

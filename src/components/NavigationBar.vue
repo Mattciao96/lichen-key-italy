@@ -35,7 +35,7 @@
   <button
     @click="toggleMobileMenu"
     type="button"
-    class="sm:hidden fixed top-4 right-4 z-[1002] inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary-500 focus:outline-none"
+    class="sm:hidden absolute top-4 right-4 z-[1002] inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary-500 focus:outline-none"
     aria-controls="mobile-menu"
     :aria-expanded="mobileMenuOpen"
   >

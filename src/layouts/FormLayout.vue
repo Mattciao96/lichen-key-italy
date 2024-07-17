@@ -1,28 +1,30 @@
 <template>
-  <FormStepper />
-  <form id="filter-form" @submit.prevent="submitForm">
-    <slot />
-  </form>
-  <div class="flex justify-around my-10">
-    <Button
-      :disabled="previousRoute === null"
-      class="!w-30"
-      severity="contrast"
-      icon="pi pi-arrow-left"
-    >
-      <RouterLink :to="previousRoute">Previous</RouterLink>
-    </Button>
+  <div class="max-w-4xl mx-auto">
+    <FormStepper />
+    <form id="filter-form" @submit.prevent="submitForm">
+      <slot />
+    </form>
+    <div class="flex justify-around my-10">
+      <Button
+        :disabled="previousRoute === null"
+        class="!w-30"
+        severity="contrast"
+        icon="pi pi-arrow-left"
+      >
+        <RouterLink :to="previousRoute">Previous</RouterLink>
+      </Button>
 
-    <button type="submit" form="filter-form" :disabled="isLoading">Submit</button>
+      <button type="submit" form="filter-form" :disabled="isLoading">Submit</button>
 
-    <Button
-      class="!w-30"
-      :disabled="nextRoute === null"
-      severity="contrast"
-      icon="pi pi-arrow-right"
-    >
-      <RouterLink :to="nextRoute">Next</RouterLink>
-    </Button>
+      <Button
+        class="!w-30"
+        :disabled="nextRoute === null"
+        severity="contrast"
+        icon="pi pi-arrow-right"
+      >
+        <RouterLink :to="nextRoute">Next</RouterLink>
+      </Button>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

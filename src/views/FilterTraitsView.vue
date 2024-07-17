@@ -1,7 +1,7 @@
 <template>
   <FormLayout>
-    <div>traits</div>
-    <!--  <DinamicForm />-->
+    <TitleForm>Traits Filters</TitleForm>
+
     <GroupForm />
   </FormLayout>
 </template>
@@ -10,4 +10,5 @@
 import FormLayout from '@/layouts/FormLayout.vue'
 
 import GroupForm from '@/components/form/GroupForm.vue'
+import TitleForm from '@/components/form/TitleForm.vue'
 </script>

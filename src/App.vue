@@ -2,19 +2,17 @@
   <header class="min-h-[4rem] top-0 z-20 border-b border-surface-300 shadow-sm flex items-center">
     <NavigationBar />
   </header>
-  <main>
+  <main class="p-2 md:p-3 lg:p-4">
     <RouterView />
   </main>
   <ScrollTop />
   <Footer />
-  <!--  <VueQueryDevtools />-->
 </template>
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import NavigationBar from '@/components/NavigationBar.vue'
 import Footer from '@/components/Footer.vue'
-import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 import ScrollTop from 'primevue/scrolltop'
 </script>
 

@@ -10,6 +10,7 @@
       class="w-full md:w-[14rem]"
       :virtualScrollerOptions="{ itemSize: 32 }"
       :autoFilterFocus="true"
+      append-to="self"
       filterMatchMode="startsWith"
     >
       <template #value="slotProps">

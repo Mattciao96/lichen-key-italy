@@ -9,7 +9,7 @@
         <span
           :class="[
             'flex items-center justify-center border-solid border-2 border-surface-200 dark:border-surface-700 min-w-[2rem] h-[2rem] line-height-[2rem] rounded-full text-lg transition transition-colors transition-shadow duration-200',
-            isActive ? 'text-primary-500 border-primary-500' : 'text-surface-500'
+            isActive ? 'text-primary-500 !border-primary-500' : 'text-surface-500'
           ]"
           >1</span
         >
@@ -34,7 +34,7 @@
         <span
           :class="[
             'flex items-center justify-center border-solid border-2 border-surface-200 dark:border-surface-700 min-w-[2rem] h-[2rem] line-height-[2rem] rounded-full text-lg transition transition-colors transition-shadow duration-200',
-            isActive ? 'text-primary-500 border-primary-500' : 'text-surface-500'
+            isActive ? 'text-primary-500 !border-primary-500' : 'text-surface-500'
           ]"
           >2</span
         >
@@ -59,7 +59,7 @@
         <span
           :class="[
             'flex items-center justify-center border-solid border-2 border-surface-200 dark:border-surface-700 min-w-[2rem] h-[2rem] line-height-[2rem] rounded-full text-lg transition transition-colors transition-shadow duration-200',
-            isActive ? 'text-primary-500 border-primary-500' : 'text-surface-500'
+            isActive ? 'text-primary-500 !border-primary-500' : 'text-surface-500'
           ]"
           >3</span
         >

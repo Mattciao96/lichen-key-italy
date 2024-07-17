@@ -1,6 +1,8 @@
 export default {
   root: ({ props, state, parent }) => ({
     class: [
+      // mc
+      'w-full md:max-w-[200px]',
       // Display and Position
       'inline-flex',
       'relative',
@@ -32,7 +34,7 @@ export default {
       // States
       { 'hover:border-surface-400 dark:hover:border-surface-600': !props.invalid },
       {
-        'outline-none outline-offset-0 ring-1 ring-primary-500 dark:ring-primary-400 z-10':
+        'outline-none outline-offset-0 ring-1 ring-primary-500 dark:ring-primary-400 ':
           state.focused
       },
 
@@ -117,12 +119,14 @@ export default {
       'rounded-md',
       'shadow-md',
       // MC important to override
-      '!mt-1'
+      '!mt-1',
+      'absolute w-full'
     ]
   },
   wrapper: {
     class: [
       // Sizing
+
       'max-h-[200px]',
 
       // Misc
@@ -137,6 +141,10 @@ export default {
   item: ({ context }) => ({
     class: [
       'relative',
+
+      // mc
+      'break-words', // Allow text to break to next line
+      '!whitespace-normal',
 
       // Font
       'leading-none',
@@ -249,7 +257,7 @@ export default {
 
       // States
       'hover:border-surface-400 dark:hover:border-surface-600',
-      'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400 focus:z-10',
+      'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400 ',
 
       // Misc
       'appearance-none'

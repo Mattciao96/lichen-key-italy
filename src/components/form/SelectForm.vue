@@ -1,8 +1,8 @@
 <template>
   <div v-for="group in filterData" :key="group.id">
-    <div>
+    <div class="flex flex-col">
       <label>{{ group.title }}:</label>
-      <div class="relative">
+      <div class="relative flex md:mr-auto">
         <Dropdown
           :options="group.items"
           optionLabel="text"
@@ -10,12 +10,13 @@
           @change="(option) => updateSelectFormField(group.id, option.value)"
           :placeholder="group.title"
           :autoOptionFocus="true"
-          class="w-full md:w-[14rem]"
+          append-to="self"
+          class="w-full md:w-[14rem] !z-1"
         />
         <button
           v-if="formStore.existsFormField(group.id)"
           @click="formStore.removeFormField(group.id)"
-          class="absolute -top-[12px] right-[40px] z-10"
+          class="absolute -top-[12px] right-[40px] z-2"
         >
           <i class="pi pi-times-circle text-surface-800"></i>
         </button>

@@ -1,6 +1,6 @@
 <template>
   <FormLayout>
-    <div>ecology</div>
+    <TitleForm>Ecology Filters</TitleForm>
     <ComboBox
       placeholder="genus"
       api-endpoint="https://italic.units.it/api/v1/genera"
@@ -25,7 +25,7 @@ import FormLayout from '@/layouts/FormLayout.vue'
 import SelectForm from '@/components/form/SelectForm.vue'
 import SelectRangeForm from '@/components/form/SelectRangeForm.vue'
 import ComboBox from '@/components/form/ComboBox.vue'
-
+import TitleForm from '@/components/form/TitleForm.vue'
 import { useFormStore } from '@/stores/formStore'
 
 const formStore = useFormStore()

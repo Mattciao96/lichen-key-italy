@@ -23,7 +23,8 @@
             >
           </td>
         </tr>
-        <tr v-if="item.species_description" class="hover:bg-gray-50">
+        <!-- default       -->
+        <tr v-if="item.species_description" class="hidden lg:table-row hover:bg-gray-50">
           <td class="p-1 border-b w-[2%]"></td>
           <td class="p-1 border-b w-[65%]">
             <span class="text-xs"><b>Description:</b></span>
@@ -35,8 +36,22 @@
               :src="getSpeciesUrl(item.speciesImage)"
               alt="Species Image"
               loading="lazy"
+              class="max-w-full lg:w-full lg:h-auto object-contain rounded-sm"
+            />
+          </td>
+        </tr>
+        <!--mobile-->
+        <tr v-if="item.species_description" class="lg:hidden hover:bg-gray-50">
+          <td colspan="3" class="p-1 border-b">
+            <img
+              v-if="item.speciesImage"
+              :src="getSpeciesUrl(item.speciesImage)"
+              alt="Species Image"
+              loading="lazy"
               class="w-full h-auto object-contain rounded-sm"
             />
+            <span class="text-xs"><b>Description:</b></span>
+            <span class="text-xs" v-html="item.species_description"> </span>
           </td>
         </tr>
       </template>

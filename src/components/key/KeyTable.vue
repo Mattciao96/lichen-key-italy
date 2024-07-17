@@ -63,6 +63,7 @@ interface KeyItem {
   leadText: string
   leadImage: string | null
   speciesImage: string | null
+  species_description: string | null
 }
 
 const props = defineProps<{

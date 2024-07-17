@@ -84,6 +84,9 @@ export const useKeyStore = defineStore('key', () => {
   }
 
   const fetchRecords = async (id: string): Promise<number[]> => {
+    if (id === 'full') {
+      return [] // Return an empty array for 'full' key
+    }
     const response = await axios.post<{ records: number[] }>(
       'https://italic.units.it/api/v1/key-records',
       { 'key-id': id }
@@ -94,6 +97,9 @@ export const useKeyStore = defineStore('key', () => {
   const buildKeyTree = (key: FullKey, records: number[]): Tree => {
     const tree = new Tree()
     tree.buildTree(key.keyData)
+    if (keyId.value === 'full') {
+      return tree
+    }
     tree.prune3(records)
     return tree
   }

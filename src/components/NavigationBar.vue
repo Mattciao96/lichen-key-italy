@@ -115,7 +115,7 @@ const navigation = [
   { name: 'Home', route: { name: '/' } },
   { name: 'Filters', route: { name: '/filter-area' } },
   { name: 'Taxa filters', route: { name: '/filter-taxa/a' } },
-  { name: 'Full key', route: { name: 'calendar' } }
+  { name: 'Full key', route: { name: '/full/species-list' } }
 ]
 
 const toggleMobileMenu = () => {

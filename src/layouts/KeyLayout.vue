@@ -59,6 +59,9 @@ const keyStore = useKeyStore()
 const route = useRoute()
 
 const fetchData = async () => {
+  if (route.params.keyId === 'full') {
+    keyStore.setKeyId('full')
+  }
   if (keyStore.keyId) {
     await keyStore.fetchData()
   }

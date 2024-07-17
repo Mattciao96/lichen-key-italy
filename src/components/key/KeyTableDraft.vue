@@ -8,44 +8,47 @@
     <table class="w-full bg-white border border-gray-300">
       <thead class="sticky top-0 bg-white z-10">
         <tr class="bg-gray-100">
-          <th class="p-1 border-b w-[10%]">Couplet</th>
-          <th class="p-1 border-b w-[70%]">Lead Text</th>
-          <th class="p-1 border-b w-[20%]">Lead to</th>
+          <th class="py-2 px-4 border-b w-[5%]">Couplet</th>
+          <th class="py-2 px-4 border-b w-[60%]">Lead Text</th>
+          <th class="py-2 px-4 border-b w-[15%]">Images</th>
+          <th class="py-2 px-4 border-b w-[20%]">Lead to</th>
+          <th class="py-2 px-4 border-b w-[20%]">Description</th>
         </tr>
       </thead>
       <tbody>
-        <template v-for="item in visibleSteps" :key="item.leadId">
-          <tr class="hover:bg-gray-50">
-            <td class="p-1 border-b w-[10%]" :id="`couplet${item.parentId}`">
-              {{ item.parentId }}
-            </td>
-            <td class="p-1 border-b w-[70%]" v-html="item.leadText"></td>
-            <td class="p-1 border-b w-[20%]">
-              <a
-                @click.prevent="scrollToAnchor(item.leadId)"
-                href="#"
-                class="text-blue-500 hover:underline"
-                >{{ item.leadId }}</a
-              >
-            </td>
-          </tr>
-          <tr v-if="item.species_description" class="hover:bg-gray-50">
-            <td class="p-1 border-b w-[2%]"></td>
-            <td class="p-1 border-b w-[65%]">
-              <span class="text-xs"><b>Description:</b></span>
-              <span class="text-xs" v-html="item.species_description"> </span>
-            </td>
-            <td class="p-1 border-b w-[10%]">
-              <img
-                v-if="item.speciesImage"
-                :src="getSpeciesUrl(item.speciesImage)"
-                alt="Species Image"
-                loading="lazy"
-                class="w-full h- object-contain rounded-sm"
-              />
-            </td>
-          </tr>
-        </template>
+        <tr v-for="item in visibleSteps" :key="item.leadId" class="hover:bg-gray-50">
+          <td class="py-2 px-4 border-b w-[5%]" :id="`couplet${item.parentId}`">
+            {{ item.parentId }}
+          </td>
+          <td class="py-2 px-4 border-b w-[40%]" v-html="item.leadText"></td>
+          <td class="py-2 px-4 border-b w-[15%]">
+            <img
+              v-if="item.leadImage"
+              :src="getImageUrl(item.leadImage)"
+              loading="lazy"
+              alt="Lead Image"
+              class="w-full h-20 object-contain"
+            />
+            <img
+              v-if="item.speciesImage"
+              :src="getSpeciesUrl(item.speciesImage)"
+              alt="Species Image"
+              loading="lazy"
+              class="w-full h-20 object-contain mt-1"
+            />
+          </td>
+          <td class="py-2 px-4 border-b w-[20%]">
+            <a
+              @click.prevent="scrollToAnchor(item.leadId)"
+              href="#"
+              class="text-blue-500 hover:underline"
+              >{{ item.leadId }}</a
+            >
+          </td>
+          <td class="py-2 px-4 border-b w-[20%]">
+            {{ item.species_description }}
+          </td>
+        </tr>
       </tbody>
     </table>
     <div ref="loadMoreTrigger" class="load-more-trigger"></div>

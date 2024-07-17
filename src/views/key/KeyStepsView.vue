@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { useKeyStore } from '@/stores/keyStore'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import KeyTable from '@/components/key/KeyTable.vue'
+import KeyTable from '@/components/key/KeyStepsTable.vue'
 import { computed } from 'vue'
 
 const keyStore = useKeyStore()

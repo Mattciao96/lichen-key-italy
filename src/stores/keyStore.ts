@@ -98,6 +98,7 @@ export const useKeyStore = defineStore('key', () => {
     const tree = new Tree()
     tree.buildTree(key.keyData)
     if (keyId.value === 'full') {
+      tree.prune4()
       return tree
     }
     tree.prune3(records)

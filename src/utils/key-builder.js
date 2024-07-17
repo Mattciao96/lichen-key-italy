@@ -166,6 +166,9 @@ export default class Tree {
     this.root = this.pruneRecursive3(this.root, leadRecordIds)
     this.adjustIds()
   }
+  prune4() {
+    this.adjustIds()
+  }
 
   pruneRecursive3(node, leadRecordIds) {
     node.children = node.children

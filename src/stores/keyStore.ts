@@ -69,7 +69,7 @@ export const useKeyStore = defineStore('key', () => {
     const currentTime = new Date().getTime()
 
     // Check if a month has passed since the last fetch
-    if (storedKey && lastFetchTime && currentTime - lastFetchTime < 30 * 24 * 60 * 60 * 1000) {
+    if (storedKey && lastFetchTime && currentTime - lastFetchTime < 24 * 60 * 60 * 1000) {
       return storedKey
     }
 

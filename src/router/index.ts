@@ -6,6 +6,10 @@ import { useFormStore } from '@/stores/formStore'
 
 const router = createRouter({
   history: createWebHistory('/key-test/'),
+  scrollBehavior(to, from, savedPosition) {
+    // always scroll to top
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',

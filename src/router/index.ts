@@ -63,6 +63,12 @@ const router = createRouter({
           name: 'interactive',
           component: () => import('../views/key/KeyInteractiveView.vue'),
           meta: { requiresKeyData: true }
+        },
+        {
+          path: 'refine',
+          name: 'refine',
+          component: () => import('../views/key/KeyRefineView.vue'),
+          meta: { requiresKeyData: true }
         }
       ]
     }

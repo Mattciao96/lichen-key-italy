@@ -162,6 +162,21 @@ export const useKeyStore = defineStore('key', () => {
     return computedSpeciesList
   }
 
+  const getUniqueSpeciesWithRecords = () => {
+    const speciesMap = new Map<string, { name: string; records: number[] }>()
+
+    stepsList.value.forEach((item) => {
+      if (item.leadSpecies !== null) {
+        if (!speciesMap.has(item.leadSpecies)) {
+          speciesMap.set(item.leadSpecies, { name: item.leadSpecies, records: [] })
+        }
+
+        speciesMap.get(item.leadSpecies)!.records.push(item.leadRecordId)
+      }
+    })
+    return Array.from(speciesMap.values())
+  }
+
   // for interactive key
   const getStepsListFromNodeId = (nodeId) => {
     const tree = keyTree.value
@@ -211,6 +226,7 @@ export const useKeyStore = defineStore('key', () => {
     setKeyId,
     fetchData,
     getUniqueSpeciesWithImages,
+    getUniqueSpeciesWithRecords,
     getStepsListFromNodeId,
     uniqueSpeciesWithImages,
     resetStore

@@ -13,7 +13,6 @@
         :autoFilterFocus="true"
         append-to="self"
         filterMatchMode="startsWith"
-        :loading="isLoading"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="flex items-center">
@@ -41,9 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useFormStore } from '@/stores/formStore'
-import { useComboboxItemsQuery } from '@/composables/useKeyApi'
 import Dropdown from 'primevue/dropdown'
 
 const props = defineProps({
@@ -51,15 +49,21 @@ const props = defineProps({
   storeFieldId: String,
   apiEndpoint: String
 })
-
 const formStore = useFormStore()
 
-const { data, isLoading, error } = useComboboxItemsQuery(props.placeholder, props.apiEndpoint)
+const items = ref([])
 
-const items = computed(() => data.value || [])
-
-// You can handle the error state if needed
-if (error.value) {
-  console.error('Error fetching combobox items:', error.value)
-}
+onMounted(async () => {
+  try {
+    const response = await fetch(props.apiEndpoint)
+    const data = await response.json()
+    console.log(data)
+    items.value = data.map((item, index) => ({
+      name: item,
+      value: item
+    }))
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+})
 </script>

@@ -2,7 +2,7 @@
   <div v-for="group in filterData" :key="group.id">
     <div class="relative p-4 gap-2 flex flex-col items-center">
       <h3>{{ group.title }}</h3>
-      <div class="relative flex gap-2 justify-center">
+      <div class="relative flex gap-2 justify-center flex-wrap">
         <label
           v-for="option in group.items"
           :key="option.id"
@@ -41,13 +41,6 @@
           <i class="pi pi-times-circle text-surface-800"></i>
         </button>
       </div>
-      <!--      <button
-        v-if="formStore.existsFormField(group.id)"
-        @click="formStore.removeFormField(group.id)"
-        class="absolute -top-6 right-0 m-2"
-      >
-        <i class="pi pi-times-circle text-surface-800"></i>
-      </button>-->
     </div>
   </div>
   <button @click="formStore.resetForm()">Reset</button>

@@ -80,3 +80,20 @@ export function useFullKeyQuery() {
     }
   })
 }
+
+export function useComboboxItemsQuery(fetchKeyName: string, apiEndpoint: string) {
+  return useQuery({
+    queryKey: ['comboboxItems', apiEndpoint],
+    queryFn: async () => {
+      const response = await api.get(apiEndpoint)
+      return response.data.map((item: string) => ({
+        name: item,
+        value: item
+      }))
+    },
+    staleTime: 1000 * 60 * 30, // 5 minutes
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
+  })
+}

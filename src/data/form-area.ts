@@ -1,7 +1,7 @@
 export const selectDataArea = [
   {
     id: 'area',
-    title: 'Taxa to work on:',
+    title: 'Taxa to work on',
     items: [
       { value: 'italy', text: 'Only species known from Italy' },
       {

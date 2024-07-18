@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-around my-10">
+  <div class="flex justify-around my-4">
     <RouterLink
       :to="previousRoute ? previousRoute : actualRoute"
       :class="[
-        'px-4 py-2 bg-gray-200 border border-gray-300 rounded-md text-black flex items-center gap-2',
+        'lg:w-32  px-2 py-2 bg-gray-200 border border-gray-300 rounded-md  flex items-center justify-center gap-2',
         { 'opacity-50 cursor-not-allowed': previousRoute === null }
       ]"
       :disabled="previousRoute === null"
@@ -17,7 +17,7 @@
       type="submit"
       form="filter-form"
       :disabled="isLoading"
-      class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      class="lg:w-32 px-2 py-2 flex items-center justify-center bg-primary-500 text-white rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
     >
       Submit
     </button>
@@ -25,7 +25,7 @@
     <RouterLink
       :to="nextRoute ? nextRoute : actualRoute"
       :class="[
-        'px-4 py-2 bg-gray-200 border border-gray-300 rounded-md text-black flex items-center gap-2',
+        'lg:w-32 px-2 py-2 bg-gray-200 border border-gray-300 rounded-md text-black flex items-center justify-center gap-2',
         { 'opacity-50 cursor-not-allowed': nextRoute === null }
       ]"
       :disabled="nextRoute === null"
@@ -38,12 +38,21 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { computed } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+
+const route = useRoute()
+const formRoutes = ['/filter-area', '/filter-ecology', '/filter-traits']
+const actualRoute = computed(() => route.fullPath)
+const actualRouteIndex = computed(() => formRoutes.indexOf(actualRoute.value))
+const nextRoute = computed(() =>
+  actualRouteIndex.value === 2 ? null : formRoutes[actualRouteIndex.value + 1]
+)
+const previousRoute = computed(() =>
+  actualRouteIndex.value === 0 ? null : formRoutes[actualRouteIndex.value - 1]
+)
 
 defineProps<{
-  actualRoute: string
-  previousRoute: string | null
-  nextRoute: string | null
   isLoading: boolean
 }>()
 </script>

@@ -1,24 +1,27 @@
 <template>
-  <div class="max-w-4xl mx-auto">
-    <div class="pb-6" v-for="group in selectDataArea" :key="group.id">
-      <h2>{{ group.title }}</h2>
-      <Dropdown
-        :options="group.items"
-        optionLabel="text"
-        v-model="formStore.formData[group.id]"
-        @change="(option) => updateSelectFormField(group.id, option.value)"
-        :placeholder="group.title"
-        append-to="self"
-        class=""
-        :disabled="isDropdownDisabled(group)"
-      />
-      <button
-        v-if="formStore.existsFormField(group.id)"
-        @click="removeFormField(group.id)"
-        class="absolute -top-6 right-0 m-2"
-      >
-        <i class="pi pi-times-circle text-surface-800"></i>
-      </button>
+  <div v-for="group in selectDataArea" :key="group.id">
+    <div class="flex flex-col pb-2">
+      <label class="pb-1" :for="group.id">{{ group.title }}:</label>
+      <div class="relative flex md:mr-auto">
+        <Dropdown
+          :options="group.items"
+          optionLabel="text"
+          v-model="formStore.formData[group.id]"
+          @change="(option) => updateSelectFormField(group.id, option.value)"
+          :placeholder="group.title"
+          :autoOptionFocus="true"
+          append-to="self"
+          class="w-full md:w-[400px] !z-1"
+          :disabled="isDropdownDisabled(group)"
+        />
+        <button
+          v-if="formStore.existsFormField(group.id)"
+          @click="removeFormField(group.id)"
+          class="bg-surface-0 absolute top-[8px] right-[16px] z-2"
+        >
+          <i class="pi pi-times-circle text-surface-800"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -45,10 +48,12 @@ const updateSelectFormField = (groupId, option) => {
 
 const removeFormField = (groupId) => {
   formStore.removeFormField(groupId)
-}
+  const dependents = selectDataArea.filter((group) => group.depend && group.depend.id === groupId)
 
-const resetForm = () => {
-  formStore.resetForm()
+  // If it does, remove these dependents from the store
+  dependents.forEach((dependent) => {
+    formStore.removeFormField(dependent.id)
+  })
 }
 
 const isDropdownDisabled = (group) => {

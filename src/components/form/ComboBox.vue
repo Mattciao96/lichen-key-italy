@@ -7,7 +7,7 @@
       filter
       optionLabel="name"
       :placeholder="props.placeholder"
-      class="w-full md:w-[14rem]"
+      class="w-full lg:w-[400px]"
       :virtualScrollerOptions="{ itemSize: 32 }"
       :autoFilterFocus="true"
       append-to="self"

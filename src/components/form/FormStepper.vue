@@ -75,9 +75,6 @@
   </ul>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { RouterLink } from 'vue-router'
-// il terzo:
-// non ha la linea dopo
-// li ha il flex-initial
 </script>

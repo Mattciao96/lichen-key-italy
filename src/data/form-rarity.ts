@@ -1,7 +1,7 @@
 export const rarityData = [
   {
     id: 'COMM',
-    title: 'rarity',
+    title: 'Commonness / Rarity',
     depend: { id: 'area', item: 'italy' },
     items: [
       {

@@ -2,10 +2,11 @@ export default {
   root: ({ props, state, parent }) => ({
     class: [
       // mc
-      'w-full md:max-w-[200px]',
+      'w-full md:max-w-[400px]',
       // Display and Position
       'inline-flex',
       'relative',
+
       // Shape
       { 'rounded-md': parent.instance.$name !== 'InputGroup' },
       {
@@ -127,7 +128,7 @@ export default {
     class: [
       // Sizing
 
-      'max-h-[200px]',
+      'max-h-[300px]',
 
       // Misc
       'overflow-auto',
@@ -145,6 +146,7 @@ export default {
       // mc
       'break-words', // Allow text to break to next line
       '!whitespace-normal',
+      'text-sm',
 
       // Font
       'leading-none',

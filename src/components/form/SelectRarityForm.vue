@@ -34,7 +34,7 @@
 import { nextTick } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import { useFormStore } from '@/stores/formStore'
-import { rarityData } from '@/data/form-rarity.js'
+import { rarityData } from '@/data/form-rarity'
 
 const formStore = useFormStore()
 

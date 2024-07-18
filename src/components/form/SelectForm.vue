@@ -1,7 +1,7 @@
 <template>
   <div v-for="group in filterData" :key="group.id">
-    <div class="flex flex-col">
-      <label>{{ group.title }}:</label>
+    <div class="flex flex-col pb-2">
+      <label class="pb-1" :for="group.id">{{ group.title }}:</label>
       <div class="relative flex md:mr-auto">
         <Dropdown
           :options="group.items"
@@ -11,54 +11,29 @@
           :placeholder="group.title"
           :autoOptionFocus="true"
           append-to="self"
-          class="w-full md:w-[14rem] !z-1"
+          class="w-full md:w-[400px] !z-1"
         />
-        <button
-          v-if="formStore.existsFormField(group.id)"
-          @click="formStore.removeFormField(group.id)"
-          class="absolute -top-[12px] right-[40px] z-2"
-        >
-          <i class="pi pi-times-circle text-surface-800"></i>
-        </button>
+        <ClearButtonForm :storeFieldId="group.id" />
       </div>
     </div>
   </div>
-
-  <button @click="formStore.resetForm()">Reset</button>
 </template>
 
-<script setup>
-// !!! SUPER STO APPROCCIO
+<script setup lang="ts">
 import Dropdown from 'primevue/dropdown'
-
+import ClearButtonForm from '@/components/form/ClearButtonForm.vue'
 import { useFormStore } from '@/stores/formStore'
-import { selectData } from '@/data/form-select.js'
+import { selectData } from '@/data/form-select'
 
 const filterData = selectData
 const formStore = useFormStore()
 
-const updateSelectFormField = (groupId, option) => {
-  console.log({ groupId, option })
+type Option = {
+  text: string
+  value: string
+}
+
+const updateSelectFormField = (groupId: string, option: Option) => {
   formStore.updateFormField(groupId, option)
 }
 </script>
-
-<style scoped>
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  display: flex;
-  align-items: center;
-}
-
-input[type='radio'] {
-  margin-right: 10px;
-}
-
-button {
-  margin-top: 20px;
-}
-</style>

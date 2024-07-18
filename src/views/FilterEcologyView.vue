@@ -12,10 +12,8 @@
       store-field-id="family"
     />
 
-    <div class="space-y-4"><SelectForm /></div>
-    <div class="space-y-4"><SelectRangeForm /></div>
-
-    <button @click="console.log(formStore.getFormValuesForSubmission())">See val</button>
+    <div class="space-y-2 mb-2"><SelectForm /></div>
+    <div class="space-y-2"><SelectRangeForm /></div>
   </FormLayout>
 </template>
 

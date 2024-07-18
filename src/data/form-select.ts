@@ -1,7 +1,7 @@
 export const selectData = [
   {
     id: 'subst',
-    title: 'substratum',
+    title: 'Substratum',
     items: [
       { value: 'Sax', text: 'saxicolous' },
       { value: 'Lign', text: 'on lignum' },
@@ -12,7 +12,7 @@ export const selectData = [
   },
   {
     id: 'photo',
-    title: 'photobiont',
+    title: 'Photobiont',
     items: [
       { value: 'Ch', text: 'green algae other than Trentepohlia' },
       { value: 'Tr', text: 'trentepohlia' },

@@ -47,9 +47,9 @@
 
 <script setup lang="ts">
 import { useFormStore } from '@/stores/formStore'
-import { radioData } from '@/data/form-radio'
+import { radioDataSubstratum } from '@/data/form-radio-substratum'
 
-const filterData = radioData
+const filterData = radioDataSubstratum
 const formStore = useFormStore()
 
 const updateForm = (groupId, value) => {

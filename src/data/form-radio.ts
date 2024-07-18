@@ -1,5 +1,5 @@
 export const radioData = [
-  {
+  /*{
     id: '4',
     title: 'Substratum',
     items: [
@@ -11,7 +11,7 @@ export const radioData = [
         image: 'soil.png'
       }
     ]
-  },
+  },*/
   {
     id: '26',
     title: 'Thallus',
@@ -337,15 +337,4 @@ export const radioData = [
       }
     ]
   }
-
-  /* {
-    title: 'topo',
-    description: 'puzzone',
-    items: [
-      { text: 'cacca topo', value: 'option1', image: 'bark.png' },
-      { text: 'casa topo', value: 'option2', image: 'rock.png' },
-      { text: 'riccio', value: 'option3', image: 'soil.png' },
-    ],
-  }, */
-  // Add more groups as needed
 ]

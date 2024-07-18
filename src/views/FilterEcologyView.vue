@@ -11,6 +11,7 @@
       api-endpoint="https://italic.units.it/api/v1/families"
       store-field-id="family"
     />-->
+    <div class="mb-2"><GroupFormSubstratum /></div>
     <div class="space-y-2 mb-2"><SelectRangeForm /></div>
     <div class="space-y-2"><SelectForm /></div>
   </FormLayout>
@@ -24,6 +25,7 @@ import SelectRangeForm from '@/components/form/SelectRangeForm.vue'
 
 import TitleForm from '@/components/form/TitleForm.vue'
 import { useFormStore } from '@/stores/formStore'
+import GroupFormSubstratum from '@/components/form/GroupFormSubstratum.vue'
 
 const formStore = useFormStore()
 </script>

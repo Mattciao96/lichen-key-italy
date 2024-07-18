@@ -55,7 +55,7 @@
 
 <script setup>
 import { useFormStore } from '@/stores/formStore'
-import { radioData } from '@/data/form-radio.js'
+import { radioData } from '@/data/form-radio'
 
 const filterData = radioData
 const formStore = useFormStore()

@@ -2,12 +2,12 @@
   <FormLayout>
     <TitleForm>Ecology Filters</TitleForm>
     <ComboBox
-      placeholder="genus"
+      placeholder="Genus"
       api-endpoint="https://italic.units.it/api/v1/genera"
       store-field-id="genus"
     />
     <ComboBox
-      placeholder="family"
+      placeholder="Family"
       api-endpoint="https://italic.units.it/api/v1/families"
       store-field-id="family"
     />

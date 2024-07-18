@@ -27,7 +27,7 @@
     ></li>
     <li class="relative flex items-center flex-initial p-1">
       <RouterLink
-        to="/filter-ecology"
+        to="/filter-traits"
         class="focus-visible:ring text-surface-500 border-0 border-none inline-flex items-center text-decoration-none transition transition-shadow duration-200 rounded-md bg-transparent outline-none"
         v-slot="{ isActive }"
       >
@@ -43,7 +43,7 @@
             'block whitespace-nowrap overflow-hidden text-ellipsis max-w-full ml-2 font-medium transition transition-colors transition-shadow duration-200',
             isActive ? 'text-primary-500' : 'text-surface-500'
           ]"
-          >Ecology</span
+          >Traits</span
         >
       </RouterLink>
     </li>
@@ -52,7 +52,7 @@
     ></li>
     <li class="relative flex items-center flex-initial p-1">
       <RouterLink
-        to="/filter-traits"
+        to="/filter-ecology"
         class="focus-visible:ring text-surface-500 border-0 border-none inline-flex items-center text-decoration-none transition transition-shadow duration-200 rounded-md bg-transparent outline-none"
         v-slot="{ isActive }"
       >
@@ -68,7 +68,7 @@
             'block whitespace-nowrap overflow-hidden text-ellipsis max-w-full ml-2 font-medium transition transition-colors transition-shadow duration-200',
             isActive ? 'text-primary-500' : 'text-surface-500'
           ]"
-          >Traits</span
+          >Ecology</span
         >
       </RouterLink>
     </li>

@@ -1,30 +1,15 @@
 <template>
   <div class="max-w-4xl mx-auto">
     <FormStepper />
+    <NavigationForm
+      :actualRoute="actualRoute"
+      :previousRoute="previousRoute"
+      :nextRoute="nextRoute"
+      :isLoading="isLoading"
+    />
     <form id="filter-form" @submit.prevent="submitForm">
       <slot />
     </form>
-    <div class="flex justify-around my-10">
-      <Button
-        :disabled="previousRoute === null"
-        class="!w-30"
-        severity="contrast"
-        icon="pi pi-arrow-left"
-      >
-        <RouterLink :to="previousRoute">Previous</RouterLink>
-      </Button>
-
-      <button type="submit" form="filter-form" :disabled="isLoading">Submit</button>
-
-      <Button
-        class="!w-30"
-        :disabled="nextRoute === null"
-        severity="contrast"
-        icon="pi pi-arrow-right"
-      >
-        <RouterLink :to="nextRoute">Next</RouterLink>
-      </Button>
-    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -32,6 +17,7 @@
 import { computed, onMounted } from 'vue'
 import Button from 'primevue/button'
 import FormStepper from '@/components/form/FormStepper.vue'
+import NavigationForm from '@/components/form/NavigationForm.vue'
 import { RouterLink, useRoute } from 'vue-router'
 // imports for submit
 import { useKeyFilterMutation } from '@/composables/useKeyApi'
@@ -58,18 +44,6 @@ const router = useRouter()
 
 const isLoading = computed(() => keyFilterMutation.isPending.value)
 
-/*const submitForm = async () => {
-  try {
-    recordStore.resetRecords()
-    const filters = formStore.getFormValuesForSubmission()
-    const result = await keyFilterMutation.mutateAsync(filters)
-    recordStore.setRecords(result.records)
-    recordStore.setKeyId(result['key-id'])
-    await router.push(`/key?key-id=${result['key-id']}`)
-  } catch (error) {
-    console.error('Error submitting form:', error)
-  }
-}*/
 const submitForm = async () => {
   try {
     /*const keyStore = useKeyStore()

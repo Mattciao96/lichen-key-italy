@@ -1,5 +1,5 @@
 export const selectData = [
-  {
+  /*{
     id: 'subst',
     title: 'Substratum',
     items: [
@@ -44,7 +44,7 @@ export const selectData = [
       { value: 'LF', text: 'lichenicolous fungus' },
       { value: 'F', text: 'non-lichenized, non-lichenicolous fungus' }
     ]
-  },
+  },*/
   {
     id: 'srw',
     title: 'Special requirements for water',
@@ -61,6 +61,15 @@ export const selectData = [
     ]
   },
   {
+    id: 'metal',
+    title: 'Only species of metal-rich substrata',
+    items: [
+      { value: 'null', text: 'No' },
+      { value: 'm', text: 'Yes' },
+      { value: 'without', text: 'Without those species' }
+    ]
+  },
+  /* {
     id: 'repro',
     title: 'Reproduction',
     items: [
@@ -75,7 +84,7 @@ export const selectData = [
       },
       { value: 'A.f', text: 'mainly asexual, by thallus fragmentation' }
     ]
-  },
+  },*/
   {
     id: 'oc',
     title: 'Phytoclimatic range',
@@ -109,15 +118,6 @@ export const selectData = [
     items: [
       { value: 'null', text: 'No' },
       { value: 'p', text: 'Yes' },
-      { value: 'without', text: 'Without those species' }
-    ]
-  },
-  {
-    id: 'metal',
-    title: 'Only species of metal-rich substrata',
-    items: [
-      { value: 'null', text: 'No' },
-      { value: 'm', text: 'Yes' },
       { value: 'without', text: 'Without those species' }
     ]
   }

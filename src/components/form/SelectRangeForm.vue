@@ -18,7 +18,7 @@
             :placeholder="`${group.title} ${suffix === '1' ? 'min' : 'max'}`"
             :autoOptionFocus="true"
             append-to="self"
-            class="w-full md:w-[300px]"
+            class="w-full md:w-[354px]"
           />
           <button
             v-if="formStore.existsFormField(`${group.id}${suffix}`)"

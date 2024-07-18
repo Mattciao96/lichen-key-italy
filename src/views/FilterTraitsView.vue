@@ -1,6 +1,6 @@
 <template>
   <FormLayout>
-    <TitleForm>Traits Filters</TitleForm>
+    <TitleForm>Traits Filter</TitleForm>
 
     <GroupForm />
   </FormLayout>

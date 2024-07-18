@@ -1,6 +1,6 @@
 <template>
   <FormLayout>
-    <TitleForm>Area Filters</TitleForm>
+    <TitleForm>Area Filter</TitleForm>
     <div class="space-y-4"><AreaForm /></div>
     <div class="space-y-4"><SelectRarityForm /></div>
   </FormLayout>

@@ -1,6 +1,6 @@
 <template>
   <FormLayout>
-    <TitleForm>Ecology Filters</TitleForm>
+    <TitleForm>Ecology Filter</TitleForm>
     <ComboBox
       placeholder="Genus"
       api-endpoint="https://italic.units.it/api/v1/genera"

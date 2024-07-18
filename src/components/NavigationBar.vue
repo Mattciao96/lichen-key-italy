@@ -114,7 +114,7 @@ const mobileMenuOpen = ref(false)
 const navigation = [
   { name: 'Home', route: { name: '/' } },
   { name: 'Filters', route: { name: '/filter-area' } },
-  { name: 'Taxa filters', route: { name: '/filter-taxa/a' } },
+  { name: 'Species filter', route: { name: '/filter-species/a' } },
   { name: 'Full key', route: { name: '/full/species-list' } }
 ]
 

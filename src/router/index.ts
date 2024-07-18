@@ -28,7 +28,7 @@ const router = createRouter({
       component: () => import('../views/FilterTraitsView.vue')
     },
     {
-      path: '/filter-taxa/:letter?',
+      path: '/filter-species/:letter?',
       name: 'FilterTaxa',
       component: () => import('../views/FilterTaxaView.vue')
     },
@@ -71,7 +71,7 @@ const routeGroups = {
     resetStore: () => useFormStore().resetForm()
   },
   taxa: {
-    routes: ['/filter-taxa'],
+    routes: ['/filter-species'],
     resetStore: () => useSpeciesStore().reset()
   }
 }

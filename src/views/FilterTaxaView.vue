@@ -9,7 +9,7 @@
         <router-link
           v-for="letter in availableLetters"
           :key="letter"
-          :to="`/filter-taxa/${letter.toLowerCase()}`"
+          :to="`/filter-species/${letter.toLowerCase()}`"
           :class="[
             'px-3 py-1 rounded-md text-sm font-medium',
             currentLetter.toUpperCase() === letter
@@ -105,9 +105,9 @@ watch(
   () => route.params.letter,
   (newLetter) => {
     if (newLetter && availableLetters.value.includes(newLetter.toUpperCase())) {
-      router.push(`/filter-taxa/${newLetter.toLowerCase()}`)
+      router.push(`/filter-species/${newLetter.toLowerCase()}`)
     } else if (checklist.value) {
-      router.push(`/filter-taxa/${availableLetters.value[0].toLowerCase()}`)
+      router.push(`/filter-species/${availableLetters.value[0].toLowerCase()}`)
     }
   },
   { immediate: true }

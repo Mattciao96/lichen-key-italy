@@ -22,7 +22,7 @@
             :key="index"
             :to="route.path"
             class="px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
-            active-class="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
+            activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
           >
             {{ route.label }}
           </RouterLink>
@@ -43,12 +43,40 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue'
 const keyStore = useKeyStore()
 const route = useRoute()
 
-const routes = computed(() => [
+/*const routes = computed(() => [
   { path: `/${route.params.keyId}/key`, name: 'key', label: 'Textual Key' },
   { path: `/${route.params.keyId}/species`, name: 'species', label: 'Species Images' },
   { path: `/${route.params.keyId}/species-list`, name: 'species-list', label: 'Species List' },
   { path: `/${route.params.keyId}/interactive`, name: 'interactive', label: 'Interactive Key' },
   { path: `/${route.params.keyId}/refine`, name: 'refine', label: 'Adjust Key' }
+])*/
+
+const routes = computed(() => [
+  {
+    path: { name: 'key', params: { keyId: route.params.keyId } },
+    name: 'key',
+    label: 'Textual Key'
+  },
+  {
+    path: { name: 'species', params: { keyId: route.params.keyId } },
+    name: 'species',
+    label: 'Species Images'
+  },
+  {
+    path: { name: 'species-list', params: { keyId: route.params.keyId } },
+    name: 'species-list',
+    label: 'Species List'
+  },
+  {
+    path: { name: 'interactive', params: { keyId: route.params.keyId } },
+    name: 'interactive',
+    label: 'Interactive Key'
+  },
+  {
+    path: { name: 'refine', params: { keyId: route.params.keyId } },
+    name: 'refine',
+    label: 'Adjust Key'
+  }
 ])
 
 const fetchData = async () => {

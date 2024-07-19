@@ -1,21 +1,30 @@
 <template>
   <div>
-    <!--    <CopyToClipBoardButton
-      :steps-list="stepsList"
+    <CopyToClipBoardButton
+      :steps-list="props.stepsList"
       @copy-success="onCopySuccess"
       @copy-error="onCopyError"
-    />-->
+    />
 
-    <div class="mb-4 flex flex-wrap gap-2 justify-end">
-      <RouterLink
-        v-for="viewOption in viewOptions"
-        :key="viewOption.name"
-        :to="{ name: 'key-view', params: { keyId: $route.params.keyId, view: viewOption.name } }"
-        class="px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
-        activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
+    <div class="mb-4">
+      <button
+        @click="toggleVisualization('detailed')"
+        class="px-4 py-2 bg-blue-500 text-white rounded"
       >
-        {{ viewOption.label }}
-      </RouterLink>
+        Detailed
+      </button>
+      <button
+        @click="toggleVisualization('simple')"
+        class="px-4 py-2 bg-blue-500 text-white rounded"
+      >
+        Simple
+      </button>
+      <button
+        @click="toggleVisualization('description')"
+        class="px-4 py-2 bg-blue-500 text-white rounded"
+      >
+        Description
+      </button>
     </div>
     <div class="steps-table-container w-[96vw] max-w-[1200px] mx-auto">
       <component
@@ -30,7 +39,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
-import { useRoute } from 'vue-router'
 import CopyToClipBoardButton from '@/components/key/CopyToClipBoardButton.vue'
 import DetailedKeyTable from '@/components/key/DetailedKeyTable.vue'
 import SimpleKeyTable from '@/components/key/SimpleKeyTable.vue'
@@ -49,23 +57,16 @@ const props = defineProps<{
   stepsList: KeyItem[]
 }>()
 
-const route = useRoute()
-
-const viewOptions = [
-  { name: 'detailed', label: 'Detailed' },
-  { name: 'simple', label: 'Simple' },
-  { name: 'description', label: 'Description' }
-]
-
 const visibleSteps = ref<KeyItem[]>([])
 const loadMoreTrigger = ref<HTMLElement | null>(null)
 const currentIndex = ref(0)
 const CHUNK_SIZE = 50
-
-const currentView = computed(() => (route.params.view as string) || 'detailed')
+const visualizationType = ref<'detailed' | 'simple' | 'description'>('detailed')
 
 const currentVisualization = computed(() => {
-  switch (currentView.value) {
+  switch (visualizationType.value) {
+    case 'detailed':
+      return DetailedKeyTable
     case 'simple':
       return SimpleKeyTable
     case 'description':
@@ -74,6 +75,13 @@ const currentVisualization = computed(() => {
       return DetailedKeyTable
   }
 })
+
+const toggleVisualization = (type) => {
+  visualizationType.value = type
+  visibleSteps.value = []
+  currentIndex.value = 0
+  loadMoreSteps()
+}
 
 const loadMoreSteps = () => {
   const nextChunk = props.stepsList.slice(currentIndex.value, currentIndex.value + CHUNK_SIZE)
@@ -106,15 +114,6 @@ watch(
     loadMoreSteps()
   },
   { deep: true }
-)
-
-watch(
-  () => route.params.view,
-  () => {
-    visibleSteps.value = []
-    currentIndex.value = 0
-    loadMoreSteps()
-  }
 )
 
 const scrollToAnchor = async (leadId: number) => {

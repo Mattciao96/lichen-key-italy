@@ -43,8 +43,17 @@ const router = createRouter({
         {
           path: 'key',
           name: 'key',
-          component: () => import('../views/key/KeyStepsView.vue'),
-          meta: { requiresKeyData: true }
+          redirect(to) {
+            return { name: 'key-view', params: { view: 'detailed' } }
+          },
+          children: [
+            {
+              path: ':view',
+              name: 'key-view',
+              component: () => import('../views/key/KeyStepsView.vue'),
+              meta: { requiresKeyData: true }
+            }
+          ]
         },
         {
           path: 'species',

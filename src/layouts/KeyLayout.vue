@@ -43,14 +43,6 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue'
 const keyStore = useKeyStore()
 const route = useRoute()
 
-/*const routes = computed(() => [
-  { path: `/${route.params.keyId}/key`, name: 'key', label: 'Textual Key' },
-  { path: `/${route.params.keyId}/species`, name: 'species', label: 'Species Images' },
-  { path: `/${route.params.keyId}/species-list`, name: 'species-list', label: 'Species List' },
-  { path: `/${route.params.keyId}/interactive`, name: 'interactive', label: 'Interactive Key' },
-  { path: `/${route.params.keyId}/refine`, name: 'refine', label: 'Adjust Key' }
-])*/
-
 const routes = computed(() => [
   {
     path: { name: 'key', params: { keyId: route.params.keyId } },

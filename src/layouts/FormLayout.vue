@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-4xl mx-auto">
     <FormStepper />
-    <NavigationForm :isLoading="isLoading" />
+
     <form id="filter-form" @submit.prevent="submitForm">
       <slot />
     </form>

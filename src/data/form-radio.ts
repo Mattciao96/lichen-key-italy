@@ -119,6 +119,23 @@ export const radioData = [
     ]
   },
   {
+    id: '39',
+    title: 'Ascocarps',
+
+    items: [
+      {
+        text: 'Present',
+        value: '2',
+        image: 'ascocarp.png'
+      },
+      {
+        text: 'Absent (sterile crusts, non-cyanobacterial crustose lichens only)',
+        value: '1',
+        image: 'no-ascocarp.png'
+      }
+    ]
+  },
+  {
     id: '38',
     title: 'Vegetative diaspores (soredia, blastidia, isidia, schizidia etc.)',
 
@@ -147,7 +164,7 @@ export const radioData = [
       },
       {
         text: 'With isidia or schizidia',
-        value: '2',
+        value: '3',
         image: 'isidia.png'
       }
     ]

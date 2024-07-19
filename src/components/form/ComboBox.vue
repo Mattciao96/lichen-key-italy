@@ -10,6 +10,7 @@
         :placeholder="props.placeholder"
         class="w-full md:w-[400px]"
         :virtualScrollerOptions="{ itemSize: 32 }"
+        :resetFilterOnHide="true"
         :autoFilterFocus="true"
         append-to="self"
         filterMatchMode="startsWith"

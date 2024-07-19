@@ -114,7 +114,7 @@ export const radioData = [
       {
         text: 'And/or apothecia of other colours',
         value: '2',
-        image: 'apothecia-yellow.png'
+        image: 'not-yellow.png'
       }
     ]
   },

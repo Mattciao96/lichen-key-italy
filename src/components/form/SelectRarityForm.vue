@@ -20,6 +20,8 @@
             append-to="self"
             class="w-full md:w-[354px]"
             :disabled="isDropdownDisabled(group)"
+            @show="toggleScroll"
+            @hide="toggleScroll"
           />
           <button
             v-if="formStore.existsFormField(`${group.id}${suffix}`)"
@@ -39,6 +41,9 @@ import { nextTick } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import { useFormStore } from '@/stores/formStore'
 import { rarityData } from '@/data/form-rarity'
+
+import { useScrollLock } from '@/composables/useScrollLock'
+const { toggleScroll } = useScrollLock()
 
 const formStore = useFormStore()
 

@@ -15,6 +15,8 @@
         append-to="self"
         filterMatchMode="startsWith"
         :loading="isLoading"
+        @show="toggleScroll"
+        @hide="toggleScroll"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="flex items-center">
@@ -46,6 +48,9 @@ import { computed } from 'vue'
 import { useFormStore } from '@/stores/formStore'
 import { useComboboxItemsQuery } from '@/composables/useKeyApi'
 import Dropdown from 'primevue/dropdown'
+
+import { useScrollLock } from '@/composables/useScrollLock'
+const { toggleScroll } = useScrollLock()
 
 const props = defineProps({
   placeholder: String,

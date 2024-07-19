@@ -19,6 +19,8 @@
             :autoOptionFocus="true"
             append-to="self"
             class="w-full md:w-[354px]"
+            @show="toggleScroll"
+            @hide="toggleScroll"
           />
           <button
             v-if="formStore.existsFormField(`${group.id}${suffix}`)"
@@ -37,6 +39,9 @@
 import Dropdown from 'primevue/dropdown'
 import { useFormStore } from '@/stores/formStore'
 import { rangeData } from '@/data/form-range.js'
+
+import { useScrollLock } from '@/composables/useScrollLock'
+const { toggleScroll } = useScrollLock()
 
 const formStore = useFormStore()
 

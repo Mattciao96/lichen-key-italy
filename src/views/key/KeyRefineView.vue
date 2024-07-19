@@ -1,6 +1,7 @@
 <template>
   <div class="max-w-2xl mx-auto p-4">
     <div v-if="isLoading" class="text-center text-lg font-semibold">Loading...</div>
+    <div v-else-if="isSubmitting" class="text-center text-lg font-semibold">Loading...</div>
     <div v-else-if="error" class="text-center text-red-500 text-lg font-semibold">
       Error: {{ error }}
     </div>
@@ -35,38 +36,29 @@
 import { ref, computed } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
 import { useRouter } from 'vue-router'
-import { useKeyTaxaFilterMutation } from '@/composables/useKeyApi'
+import { useKeyRecordsMutation } from '@/composables/useKeyApi'
 
 const keyStore = useKeyStore()
 const router = useRouter()
-const keyTaxaFilterMutation = useKeyTaxaFilterMutation()
+const keyRecordMutation = useKeyRecordsMutation()
 
 const { getUniqueSpeciesWithRecords, isLoading, error } = keyStore
 
 const speciesWithRecords = computed(() => getUniqueSpeciesWithRecords())
 
 const selectedSpecies = ref([])
+const isSubmitting = ref(false)
 
 const handleSubmit = async () => {
   if (selectedSpecies.value.length > 0) {
+    isSubmitting.value = true
     const selectedRecords = selectedSpecies.value.flatMap((species) => species.records)
     console.log('Selected species records:', selectedRecords)
 
-    /*try {
-      // Reset the key store
-      keyStore.resetStore()
-
-      // Use the keyTaxaFilterMutation to get the key ID
-      const result = await keyTaxaFilterMutation.mutateAsync(selectedRecords)
-
-      // Set the key ID from the mutation result
-      keyStore.setKeyId(result['key-id'])
-
-      // Navigate to the key view
-      await router.push(`/${result['key-id']}/species-list`)
-    } catch (error) {
-      console.error('Error submitting form:', error)
-    }*/
+    const result = await keyRecordMutation.mutateAsync(selectedRecords)
+    keyStore.resetStore()
+    keyStore.setKeyId(result['key-id'])
+    await router.push(`/${result['key-id']}/species-list`)
   } else {
     console.log('No species selected')
   }

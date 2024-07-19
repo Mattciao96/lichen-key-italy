@@ -2,68 +2,54 @@
   <div class="container mx-auto px-4 py-8">
     <LoadingSpinner v-if="keyStore.isLoading" />
 
-    <div v-else-if="keyStore.error" class="error-message">
-      {{ keyStore.error }}
+    <div
+      v-else-if="keyStore.error"
+      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <strong class="font-bold">Error!</strong>
+      <span class="block sm:inline">{{ keyStore.error }}</span>
     </div>
 
     <div v-else>
-      <div class="mb-6 flex justify-between items-center">
-        <div>
-          <h1 class="text-2xl font-bold">Key ID: {{ keyStore.keyId }}</h1>
-          <p class="text-lg">Species Count: {{ keyStore.speciesCount }}</p>
+      <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <div class="mb-4 sm:mb-0">
+          <p class="text-lg font-semibold">Species Count: {{ keyStore.speciesCount }}</p>
         </div>
-        <div class="space-x-4">
-          <router-link
-            :to="`/${keyStore.keyId}/key`"
-            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-            :class="{ 'bg-blue-700': $route.name === 'key' }"
+        <nav class="flex flex-wrap gap-2">
+          <RouterLink
+            v-for="(route, index) in routes"
+            :key="index"
+            :to="route.path"
+            class="px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
+            active-class="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
           >
-            Key Steps
-          </router-link>
-          <router-link
-            :to="`/${keyStore.keyId}/species`"
-            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
-            :class="{ 'bg-green-700': $route.name === 'species' }"
-          >
-            Species images
-          </router-link>
-          <router-link
-            :to="`/${keyStore.keyId}/species-list`"
-            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
-            :class="{ 'bg-green-700': $route.name === 'species' }"
-          >
-            Species List
-          </router-link>
-          <router-link
-            :to="`/${keyStore.keyId}/interactive`"
-            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
-            :class="{ 'bg-green-700': $route.name === 'species' }"
-          >
-            Interactive key
-          </router-link>
-          <router-link
-            :to="`/${keyStore.keyId}/refine`"
-            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
-            :class="{ 'bg-green-700': $route.name === 'species' }"
-          >
-            Adjust key
-          </router-link>
-        </div>
+            {{ route.label }}
+          </RouterLink>
+        </nav>
       </div>
 
-      <router-view></router-view>
+      <RouterView></RouterView>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useKeyStore } from '@/stores/keyStore'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const keyStore = useKeyStore()
 const route = useRoute()
+
+const routes = computed(() => [
+  { path: `/${route.params.keyId}/key`, name: 'key', label: 'Textual Key' },
+  { path: `/${route.params.keyId}/species`, name: 'species', label: 'Species Images' },
+  { path: `/${route.params.keyId}/species-list`, name: 'species-list', label: 'Species List' },
+  { path: `/${route.params.keyId}/interactive`, name: 'interactive', label: 'Interactive Key' },
+  { path: `/${route.params.keyId}/refine`, name: 'refine', label: 'Adjust Key' }
+])
 
 const fetchData = async () => {
   if (route.params.keyId === 'full') {

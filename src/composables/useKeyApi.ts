@@ -34,6 +34,21 @@ export function useKeyFilterMutation() {
   })
 }
 
+// use to refine a key
+export function useKeyRecordsMutation() {
+  return useMutation({
+    mutationFn: async (records: any) => {
+      const startTime = performance.now()
+      const result = await api
+        .post('/key-id-from-records', { records: records })
+        .then((res) => res.data)
+      const endTime = performance.now()
+      console.log(`useKeyFilterMutation execution time: ${endTime - startTime} milliseconds`)
+      return result
+    }
+  })
+}
+
 export function useKeyTaxaFilterMutation() {
   return useMutation({
     mutationFn: async (filters: any) => {

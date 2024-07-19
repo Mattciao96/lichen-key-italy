@@ -53,7 +53,6 @@ const handleSubmit = async () => {
   if (selectedSpecies.value.length > 0) {
     isSubmitting.value = true
     const selectedRecords = selectedSpecies.value.flatMap((species) => species.records)
-    console.log('Selected species records:', selectedRecords)
 
     const result = await keyRecordMutation.mutateAsync(selectedRecords)
     keyStore.resetStore()

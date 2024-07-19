@@ -174,7 +174,7 @@ export const useKeyStore = defineStore('key', () => {
         speciesMap.get(item.leadSpecies)!.records.push(item.leadRecordId)
       }
     })
-    return Array.from(speciesMap.values())
+    return Array.from(speciesMap.values()).sort((a, b) => a.name.localeCompare(b.name))
   }
 
   // for interactive key

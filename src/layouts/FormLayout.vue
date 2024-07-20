@@ -33,7 +33,7 @@ const submitForm = async () => {
     const result = await keyFilterMutation.mutateAsync(filters)
     keyStore.setKeyId(result['key-id'])
     formStore.resetForm()
-    await router.push(`/keys/${result['key-id']}/species-list`)
+    await router.push(`/${result['key-id']}/species-list`)
   } catch (error) {
     console.error('Error submitting form:', error)
   }

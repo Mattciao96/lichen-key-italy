@@ -62,12 +62,12 @@ const router = createRouter({
           ]
         },
         {
-          path: '/filter-species/:letter?',
+          path: 'filter-species/:letter?',
           name: 'FilterTaxa',
           component: () => import('../views/form/FilterTaxaView.vue')
         },
         {
-          path: '/keys/:keyId',
+          path: ':keyId/',
           component: () => import('../layouts/KeyLayout.vue'),
           children: [
             {

@@ -102,9 +102,6 @@ function navigateToParent() {
   }
 }
 
-/*function getImageUrl(imagePath) {
-  return imagePath ? `https://italic.units.it/flora/${imagePath}` : 'path/to/placeholder-image.jpg'
-}*/
 const getInteractiveImageUrl = (nodeData) => {
   if (nodeData.speciesImage) {
     let imgPath = nodeData.speciesImage

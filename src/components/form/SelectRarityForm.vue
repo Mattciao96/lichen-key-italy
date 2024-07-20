@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { nextTick } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import { useFormStore } from '@/stores/formStore'

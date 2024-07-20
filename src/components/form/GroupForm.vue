@@ -21,7 +21,7 @@
 
           <img
             class="w-[150px] h-[38px] sm:w-[224px] sm:h-[56px] rounded-sm"
-            :src="`radio-images/${option.image}`"
+            :src="`/key-test/radio-images/${option.image}`"
             :alt="option.text"
           />
           <span

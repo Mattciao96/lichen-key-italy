@@ -41,7 +41,7 @@ import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 const route = useRoute()
-const formRoutes = ['/filter-area', '/filter-traits', '/filter-ecology']
+const formRoutes = ['/filters/general', '/filters/traits', '/filters/ecology']
 const actualRoute = computed(() => route.fullPath)
 const actualRouteIndex = computed(() => formRoutes.indexOf(actualRoute.value))
 const nextRoute = computed(() =>

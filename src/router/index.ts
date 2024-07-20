@@ -1,83 +1,115 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import { useKeyStore } from '@/stores/keyStore'
 import { useSpeciesStore } from '@/stores/speciesStore'
 import { useFormStore } from '@/stores/formStore'
 
+/**
+ * SITE STRUCTURE
+ *
+ * / (MainLayout: navbar + footer + scroller)
+ * ├── '' (HomeView)
+ * ├── filter (FilterLayout: step navigation + command navigation & submit)
+ * │   ├── general (FilterGeneralView)
+ * │   ├── traits (FilterTraitsView)
+ * │   └── ecology (FilterEcologyView)
+ * ├── filter-species (FilterTaxaView)
+ * ├── keys/:keyId (KeyLayout: key navigation + key content)
+ * │   ├── nodes/nodeId (KeyNodesView)
+ *
+ *
+ */
+
 const router = createRouter({
   history: createWebHistory('/key-test/'),
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     // always scroll to top
     return { top: 0 }
   },
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/filter-area',
-      name: 'filter-area',
-      component: () => import('../views/FilterAreaView.vue')
-    },
-    {
-      path: '/filter-ecology',
-      name: 'filter-ecology',
-      component: () => import('../views/FilterEcologyView.vue')
-    },
-    {
-      path: '/filter-traits',
-      name: 'filter-traits',
-      component: () => import('../views/FilterTraitsView.vue')
-    },
-    {
-      path: '/filter-species/:letter?',
-      name: 'FilterTaxa',
-      component: () => import('../views/FilterTaxaView.vue')
-    },
-    {
-      path: '/:keyId',
-      component: () => import('../layouts/KeyLayout.vue'),
+      name: 'base',
+      component: () => import('@/layouts/MainLayout.vue'),
       children: [
         {
-          path: 'key',
-          name: 'key',
-          redirect(to) {
-            return { name: 'key-view', params: { view: 'detailed' } }
+          path: '',
+          name: 'home',
+          component: () => import('@/views/HomeView.vue')
+        },
+        {
+          path: 'filters/',
+          name: 'filters',
+          component: () => import('@/layouts/FormLayout.vue'),
+          redirect() {
+            return { name: 'general' }
           },
           children: [
             {
-              path: ':view',
-              name: 'key-view',
-              component: () => import('../views/key/KeyStepsView.vue'),
-              meta: { requiresKeyData: true }
+              path: 'general',
+              name: 'general',
+              component: () => import('@/views/form/FilterGeneralView.vue')
+            },
+            {
+              path: 'traits',
+              name: 'traits',
+              component: () => import('@/views/form/FilterTraitsView.vue')
+            },
+            {
+              path: 'ecology',
+              name: 'ecology',
+              component: () => import('@/views/form/FilterEcologyView.vue')
             }
           ]
         },
         {
-          path: 'species',
-          name: 'species',
-          component: () => import('../views/key/KeyTaxaView.vue'),
-          meta: { requiresKeyData: true }
+          path: '/filter-species/:letter?',
+          name: 'FilterTaxa',
+          component: () => import('../views/form/FilterTaxaView.vue')
         },
         {
-          path: 'species-list',
-          name: 'species-list',
-          component: () => import('../views/key/KeyTaxaNamesView.vue'),
-          meta: { requiresKeyData: true }
-        },
-        {
-          path: 'interactive',
-          name: 'interactive',
-          component: () => import('../views/key/KeyInteractiveView.vue'),
-          meta: { requiresKeyData: true }
-        },
-        {
-          path: 'refine',
-          name: 'refine',
-          component: () => import('../views/key/KeyRefineView.vue'),
-          meta: { requiresKeyData: true }
+          path: '/keys/:keyId',
+          component: () => import('../layouts/KeyLayout.vue'),
+          children: [
+            {
+              path: 'key',
+              name: 'key',
+              redirect(to) {
+                return { name: 'key-view', params: { view: 'detailed' } }
+              },
+              children: [
+                {
+                  path: ':view',
+                  name: 'key-view',
+                  component: () => import('../views/key/KeyStepsView.vue'),
+                  meta: { requiresKeyData: true }
+                }
+              ]
+            },
+            {
+              path: 'species',
+              name: 'species',
+              component: () => import('../views/key/KeyTaxaView.vue'),
+              meta: { requiresKeyData: true }
+            },
+            {
+              path: 'species-list',
+              name: 'species-list',
+              component: () => import('../views/key/KeyTaxaNamesView.vue'),
+              meta: { requiresKeyData: true }
+            },
+            {
+              path: 'interactive',
+              name: 'interactive',
+              component: () => import('../views/key/KeyInteractiveView.vue'),
+              meta: { requiresKeyData: true }
+            },
+            {
+              path: 'refine',
+              name: 'refine',
+              component: () => import('../views/key/KeyRefineView.vue'),
+              meta: { requiresKeyData: true }
+            }
+          ]
         }
       ]
     }

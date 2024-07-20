@@ -3,7 +3,7 @@
     <FormStepper />
 
     <form id="filter-form" @submit.prevent="submitForm">
-      <slot />
+      <RouterView />
     </form>
     <NavigationForm :isLoading="isLoading" />
   </div>
@@ -16,7 +16,7 @@ import NavigationForm from '@/components/form/NavigationForm.vue'
 import { useKeyFilterMutation } from '@/composables/useKeyApi'
 import { useFormStore } from '@/stores/formStore'
 import { useKeyStore } from '@/stores/keyStore'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterView } from 'vue-router'
 
 const keyFilterMutation = useKeyFilterMutation()
 const formStore = useFormStore()
@@ -33,13 +33,13 @@ const submitForm = async () => {
     const result = await keyFilterMutation.mutateAsync(filters)
     keyStore.setKeyId(result['key-id'])
     formStore.resetForm()
-    await router.push(`/${result['key-id']}/species-list`)
+    await router.push(`/keys/${result['key-id']}/species-list`)
   } catch (error) {
     console.error('Error submitting form:', error)
   }
 }
 
 onMounted(() => {
-  // Add your speciesStore reset logic here if needed
+  // I may add  speciesStore reset logic here if needed
 })
 </script>

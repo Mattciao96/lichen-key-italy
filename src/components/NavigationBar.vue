@@ -105,7 +105,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
@@ -113,7 +113,7 @@ const mobileMenuOpen = ref(false)
 
 const navigation = [
   { name: 'Home', route: { name: '/' } },
-  { name: 'Filters', route: { name: '/filter-area' } },
+  { name: 'Filters', route: { name: '/filters' } },
   { name: 'Species filter', route: { name: '/filter-species/a' } },
   { name: 'Full key', route: { name: '/full/species-list' } }
 ]

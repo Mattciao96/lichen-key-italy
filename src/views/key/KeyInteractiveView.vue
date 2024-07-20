@@ -38,6 +38,7 @@ import InteractiveKey from '@/components/key/KeyInteractive.vue'
 
 const keyStore = useKeyStore()
 const currentNode = ref(null)
+
 const activeView = ref('interactive')
 
 const currentNodeId = computed(() => currentNode.value?.data.leadId)

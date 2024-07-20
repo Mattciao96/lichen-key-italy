@@ -67,8 +67,12 @@ const router = createRouter({
           component: () => import('../views/form/FilterTaxaView.vue')
         },
         {
-          path: ':keyId/',
-          component: () => import('../layouts/KeyLayout.vue'),
+          path: ':keyId/nodes/:nodeId/',
+          name: 'key-node',
+          component: () => import('@/layouts/KeyLayout.vue'),
+          meta: { requiresKeyData: true, requiresNodeData: true },
+          // if nodes/:nodeId is not provided, redirect to the first node
+
           children: [
             {
               path: 'key',
@@ -143,7 +147,7 @@ router.beforeEach((to, from, next) => {
     }
   })
 
-  // Handle key data requirement
+  // Handle keyId when navigating to key routes
   if (to.meta.requiresKeyData && to.params.keyId) {
     const keyStore = useKeyStore()
     const keyId = to.params.keyId as string
@@ -152,6 +156,17 @@ router.beforeEach((to, from, next) => {
       keyStore.setKeyId(keyId)
     }
   }
+
+  // Handle nodeId when navigating the inteactive key
+  /*if (to.meta.requiresNodeData && to.params.nodeId) {
+    const keyStore = useKeyStore()
+    const nodeId = to.params.nodeId as string
+    console.log('nodeId', nodeId)
+    console.log('keyStore.currentLeadId', keyStore.currentLeadId)
+    if (nodeId !== keyStore.currentLeadId) {
+      keyStore.setCurrentLeadId(nodeId)
+    }
+  }*/
 
   next()
 })

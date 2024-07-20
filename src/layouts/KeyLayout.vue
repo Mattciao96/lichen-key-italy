@@ -77,10 +77,21 @@ const fetchData = async () => {
   }
   if (keyStore.keyId) {
     await keyStore.fetchData()
+    if (route.params.nodeId) {
+      keyStore.setCurrentLeadId(route.params.nodeId as string)
+    }
   }
 }
 
 onMounted(fetchData)
 
 watch(() => route.params.keyId, fetchData)
+watch(
+  () => route.params.nodeId,
+  (newNodeId) => {
+    if (newNodeId) {
+      keyStore.setCurrentLeadId(newNodeId as string)
+    }
+  }
+)
 </script>

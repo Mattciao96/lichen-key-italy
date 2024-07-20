@@ -12,7 +12,11 @@
       </button>
     </div>
 
-    <InteractiveKey v-if="activeView === 'interactive'" v-model:currentNode="currentNode" />
+    <InteractiveKey
+      v-if="activeView === 'interactive'"
+      :current-node="currentNode"
+      @update:current-node="updateCurrentNode"
+    />
 
     <div v-if="activeView === 'species'">
       <h3>Unique Species List:</h3>
@@ -31,14 +35,16 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
+import { useRouter } from 'vue-router'
 import KeyTable from '@/components/key/KeyTable.vue'
 import InteractiveKey from '@/components/key/KeyInteractive.vue'
 
 const keyStore = useKeyStore()
-const currentNode = ref(null)
+const router = useRouter()
 
+const currentNode = ref(null)
 const activeView = ref('interactive')
 
 const currentNodeId = computed(() => currentNode.value?.data.leadId)
@@ -55,11 +61,24 @@ const stepList = computed(() => {
   return keyStore.getStepsListFromNodeId(currentNodeId.value)
 })
 
+const updateCurrentNode = (newNode) => {
+  currentNode.value = newNode
+  updateURL(newNode.data.leadId)
+}
+
+const updateURL = (nodeId) => {
+  router.push({
+    name: router.currentRoute.value.name,
+    params: { ...router.currentRoute.value.params, nodeId: nodeId.toString() }
+  })
+}
+
 onMounted(async () => {
   if (!keyStore.keyTree) {
     await keyStore.fetchData()
   }
   currentNode.value = keyStore.keyTree.root
+  updateURL(currentNode.value.data.leadId)
 })
 </script>
 

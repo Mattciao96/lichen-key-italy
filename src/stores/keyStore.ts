@@ -151,7 +151,10 @@ export const useKeyStore = defineStore('key', () => {
       // set the id for the interactive keys
       if (newTree.root) {
         setRootLeadId(newTree.root.data.leadId.toString())
-        setCurrentLeadId(newTree.root.data.leadId.toString())
+        // don't assign it if is setted from the outside
+        /*if (!currentLeadId.value) {
+          setCurrentLeadId(newTree.root.data.leadId.toString())
+        }*/
       }
 
       speciesList.value = getUniqueSpeciesWithImages()

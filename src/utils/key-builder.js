@@ -117,9 +117,11 @@ export default class Tree {
       return this.getTreeAsList()
     }
     let startNode = this.find(leadId)
+
     if (!startNode) {
       return this.getTreeAsList()
     }
+
     return this.getTreeAsList(startNode)
   }
 

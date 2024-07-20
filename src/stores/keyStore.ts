@@ -60,6 +60,11 @@ export const useKeyStore = defineStore('key', () => {
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
   const speciesCount = computed(() => uniqueSpeciesWithImages.value.length)
 
+  // for the interactive key
+  // in this way i can check if the current steps are based on the current node
+  const nodeIdOfCurrentSteps = ref<string | null>(null)
+  const currentStepsList = ref<KeyItem[]>([])
+
   const setKeyId = (keyUUID: string) => {
     if (keyId.value !== keyUUID) {
       resetAllExceptKey()
@@ -129,6 +134,7 @@ export const useKeyStore = defineStore('key', () => {
       error.value = 'Key ID is not set'
       return
     }
+    console.log('CORROOOOOOOOOOOO')
 
     isLoading.value = true
     error.value = null
@@ -205,31 +211,67 @@ export const useKeyStore = defineStore('key', () => {
     return Array.from(speciesMap.values()).sort((a, b) => a.name.localeCompare(b.name))
   }
 
-  // for interactive key
-  const getStepsListFromNodeId = (nodeId) => {
+  /*const getStepsListFromNodeId = (nodeId) => {
     const tree = keyTree.value
     if (!tree) {
       return []
     }
+    // turn nodeId into a number
 
-    const stepsList = tree.getTreeAsListById(nodeId)
+    const stepsList = tree.getTreeAsListById(parseInt(nodeId))
     if (!stepsList) {
       return []
     }
 
     stepsList.shift()
     return stepsList
+  }*/
+
+  const setStepsListFromNodeId = (nodeId) => {
+    // if already computed, return the current list
+    if (nodeId === nodeIdOfCurrentSteps.value) {
+      return
+    }
+
+    const tree = keyTree.value
+    if (!tree) {
+      return
+    }
+
+    const tempStepsList = tree.getTreeAsListById(parseInt(nodeId))
+
+    if (!tempStepsList) {
+      return
+    }
+    console.log('ricalcolo i passaggi')
+
+    tempStepsList.shift()
+    nodeIdOfCurrentSteps.value = nodeId
+    //nodeIdOfCurrentSteps.value = nodeId
+
+    currentStepsList.value = tempStepsList
+  }
+
+  const getNodeIdFromLeadId = (leadId: number) => {
+    const tree = keyTree.value
+    if (!tree) {
+      return null
+    }
+
+    return tree.find(leadId)
   }
 
   const resetAllExceptKey = () => {
     isLoading.value = false
     rootLeadId.value = null
     currentLeadId.value = null
+
     error.value = null
     recordsList.value = []
     fullKey.value = null
     keyTree.value = null
     stepsList.value = []
+
     speciesList.value = null
   }
 
@@ -256,13 +298,22 @@ export const useKeyStore = defineStore('key', () => {
     speciesCount,
     keyTree,
     stepsList,
+
     setKeyId,
     setCurrentLeadId,
     resetCurrentLeadIdToRoot,
     fetchData,
+    getNodeIdFromLeadId,
     getUniqueSpeciesWithImages,
     getUniqueSpeciesWithRecords,
-    getStepsListFromNodeId,
+    /* getStepsListFromNodeId,*/
+
+    // for interactive
+
+    setStepsListFromNodeId,
+    nodeIdOfCurrentSteps,
+    currentStepsList,
+
     uniqueSpeciesWithImages,
     resetStore
   }

@@ -6,19 +6,26 @@
   </div>
 
   <div v-else>
-    <KeyTable :steps-list="stepList" />
+    <KeyTable :steps-list="keyStore.currentStepsList" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useKeyStore } from '@/stores/keyStore'
+import { useRoute } from 'vue-router'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import KeyTable from '@/components/key/KeyStepsTable.vue'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 
+const route = useRoute()
 const keyStore = useKeyStore()
-const stepList = computed(() => {
-  return keyStore.getStepsListFromNodeId(0)
+/*const stepList = computed(() => {
+  console.log('ricalcolo')
+  //return keyStore.getStepsListFromNodeId(0)
+  return keyStore.getStepsListFromNodeId(route.params.nodeId)
+})*/
+onMounted(() => {
+  keyStore.setStepsListFromNodeId(route.params.nodeId)
 })
 </script>
 

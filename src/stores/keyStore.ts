@@ -208,10 +208,12 @@ export const useKeyStore = defineStore('key', () => {
     if (nodeId === nodeIdOfCurrentSteps.value) {
       return
     }
+
     if (parseInt(nodeId) === 1) {
       currentStepsList.value = stepsList.value
       return
     }
+    console.log('computing steps')
 
     const tree = keyTree.value
     if (!tree) {
@@ -242,6 +244,12 @@ export const useKeyStore = defineStore('key', () => {
     if (nodeId === nodeIdOfCurrentSpeciesImages.value) {
       return
     }
+
+    if (parseInt(nodeId) === 1) {
+      currentUniqueSpeciesWithImages.value = uniqueSpeciesWithImages.value
+      return
+    }
+    console.log('computing species images')
 
     const tree = keyTree.value
     if (!tree) {
@@ -277,6 +285,8 @@ export const useKeyStore = defineStore('key', () => {
     if (nodeId === nodeIdOfCurrentSpecies.value) {
       return
     }
+
+    console.log('computing species list')
 
     const tree = keyTree.value
     if (!tree) {
@@ -326,6 +336,8 @@ export const useKeyStore = defineStore('key', () => {
     if (nodeId === nodeIdOfCurrentSpeciesWithRecord.value) {
       return
     }
+
+    console.log('computing species with records')
 
     const tree = keyTree.value
     if (!tree) {

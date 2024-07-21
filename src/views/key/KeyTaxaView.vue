@@ -7,8 +7,6 @@
     </div>
 
     <div v-else>
-      <div class="bg-red-300">{{ keyStore.keyId }}</div>
-      <div class="bg-yellow-300 mb-4">Rimasti: {{ keyStore.speciesCount }}</div>
       <div
         class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
       >
@@ -23,7 +21,12 @@
           <p
             class="mt-2 text-center text-xs sm:text-sm xl:text-base font-medium text-gray-800 line-clamp-2"
           >
-            {{ species.name }}
+            <a
+              class="text-sm text-blue-600 hover:underline"
+              :href="`https://italic.units.it/index.php?procedure=taxonpage&num=${species.italicId}`"
+              target="_blank"
+              >{{ species.name }}</a
+            >
           </p>
         </div>
       </div>

@@ -11,11 +11,15 @@
         {{ viewOption.label }}
       </RouterLink>
     </div>
-    <div class="steps-table-container w-[96vw] max-w-[1200px] mx-auto">
+    <div
+      class="steps-table-container w-[96vw] max-w-full mx-auto rounded-md border border-surface-300 overflow-hidden"
+    >
       <component
+        class="text-sm"
         :is="currentVisualization"
-        :visible-steps="displayedData"
+        :visibleSteps="displayedData"
         @scroll-to-anchor="scrollToAnchor"
+        taxonUrl="https://italic.units.it/index.php?procedure=taxonpage&num="
       />
       <div v-if="!allLoaded" ref="loadMoreTrigger" class="load-more-trigger"></div>
     </div>
@@ -29,18 +33,10 @@ import { usePaginatedData } from '@/composables/usePaginatedData'
 import DetailedKeyTable from '@/components/key/DetailedKeyTable.vue'
 import SimpleKeyTable from '@/components/key/SimpleKeyTable.vue'
 import KeyTableDescriptions from '@/components/key/KeyTableDescriptions.vue'
-
-interface KeyItem {
-  leadId: number
-  parentId: number
-  leadText: string
-  leadImage: string | null
-  speciesImage: string | null
-  species_description: string | null
-}
+import type { KeyLead } from '@/types'
 
 const props = defineProps<{
-  stepsList: KeyItem[]
+  stepsList: KeyLead[]
 }>()
 
 const route = useRoute()

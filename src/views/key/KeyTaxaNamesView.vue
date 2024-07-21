@@ -6,16 +6,15 @@
       {{ keyStore.error }}
     </div>
 
-    <div v-else>
-      <div class="bg-red-300">{{ keyStore.keyId }}</div>
-      <div class="bg-yellow-300 mb-4">Rimasti: {{ keyStore.speciesCount }}</div>
-      <ul class="space-y-2">
-        <li
-          v-for="species in displayedData"
-          :key="species.name"
-          class="text-center text-sm sm:text-base font-medium text-gray-800"
-        >
-          {{ species.name }}
+    <div v-else class="flex">
+      <ul class="max-w-[900px] space-y-2">
+        <li v-for="species in displayedData" :key="species.name">
+          <a
+            class="align text-sm font-medium text-blue-600 hover:underline"
+            :href="`https://italic.units.it/index.php?procedure=taxonpage&num=${species.italicId}`"
+            target="_blank"
+            >{{ species.name }}</a
+          >
         </li>
       </ul>
       <div v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></div>
@@ -34,13 +33,25 @@ const route = useRoute()
 const keyStore = useKeyStore()
 
 const { displayedData, allLoaded, loadMoreTrigger, setupIntersectionObserver } = usePaginatedData(
+  () => keyStore.currentUniqueSpeciesWithImages
+)
+
+onMounted(() => {
+  keyStore.setUniqueSpeciesWithImagesFromNodeId(route.params.nodeId as string)
+  setupIntersectionObserver()
+})
+
+/*
+
+const { displayedData, allLoaded, loadMoreTrigger, setupIntersectionObserver } = usePaginatedData(
   () => keyStore.currentUniqueSpeciesList
 )
 
 onMounted(() => {
   keyStore.setUniqueSpeciesListFromNodeId(route.params.nodeId as string)
+
   setupIntersectionObserver()
-})
+})*/
 </script>
 
 <style scoped>

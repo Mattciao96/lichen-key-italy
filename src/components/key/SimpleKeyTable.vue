@@ -14,7 +14,11 @@
         </td>
         <td class="p-1 border-b w-[70%]" v-html="item.leadText"></td>
         <td class="p-1 border-b w-[20%]">
+          <a v-if="item.italicId" :href="`${props.taxonUrl}${item.italicId}`" target="_blank">
+            {{ item.leadId }}
+          </a>
           <a
+            v-else
             @click.prevent="$emit('scroll-to-anchor', item.leadId)"
             href="#"
             class="text-blue-500 hover:underline"
@@ -27,19 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
-
-interface KeyItem {
-  leadId: number
-  parentId: number
-  leadText: string
-  leadImage: string | null
-  speciesImage: string | null
-  species_description: string | null
-}
+import type { KeyLead } from '@/types'
 
 const props = defineProps<{
-  visibleSteps: KeyItem[]
+  visibleSteps: KeyLead[]
+  taxonUrl: string
 }>()
 
 defineEmits(['scroll-to-anchor'])

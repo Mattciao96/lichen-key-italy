@@ -19,6 +19,7 @@ interface KeyItem {
 interface SpeciesInfo {
   name: string
   image: string | null
+  italicId: number | null
 }
 
 interface FullKey {
@@ -67,6 +68,13 @@ export const useKeyStore = defineStore('key', () => {
   const isCurrentNodeValid = ref(true)
   const currentStepsList = ref<KeyItem[]>([])
   const currentUniqueSpeciesWithImages = ref<SpeciesInfo[]>([])
+  const currentSpeciesCount = computed(() => {
+    if (!keyTree.value) {
+      return null
+    }
+    return keyTree.value.getNumberOfUniqueLeaves(parseInt(currentLeadId.value))
+  })
+
   const currentUniqueSpeciesList = ref<{ name: string; records: number[] }[]>([])
   const currentUniqueSpeciesWithRecords = ref<{ name: string; records: number[] }[]>([])
 
@@ -178,7 +186,8 @@ export const useKeyStore = defineStore('key', () => {
       if (item.leadSpecies !== null) {
         speciesMap.set(item.leadSpecies, {
           name: item.leadSpecies,
-          image: item.speciesImage
+          image: item.speciesImage,
+          italicId: item.italicId
         })
       }
     })
@@ -270,7 +279,8 @@ export const useKeyStore = defineStore('key', () => {
       if (item.leadSpecies !== null) {
         speciesMap.set(item.leadSpecies, {
           name: item.leadSpecies,
-          image: item.speciesImage
+          image: item.speciesImage,
+          italicId: item.italicId
         })
       }
     })
@@ -282,7 +292,7 @@ export const useKeyStore = defineStore('key', () => {
     nodeIdOfCurrentSpeciesImages.value = nodeId
   }
 
-  const setUniqueSpeciesListFromNodeId = (nodeId) => {
+  /*const setUniqueSpeciesListFromNodeId = (nodeId) => {
     if (nodeId === nodeIdOfCurrentSpecies.value) {
       return
     }
@@ -317,7 +327,7 @@ export const useKeyStore = defineStore('key', () => {
     )
 
     nodeIdOfCurrentSpecies.value = nodeId
-  }
+  }*/
 
   const getNodeIdFromLeadId = (leadId: number) => {
     const tree = keyTree.value
@@ -414,7 +424,7 @@ export const useKeyStore = defineStore('key', () => {
 
     setStepsListFromNodeId,
     setUniqueSpeciesWithImagesFromNodeId,
-    setUniqueSpeciesListFromNodeId,
+    /*setUniqueSpeciesListFromNodeId,*/
     setUniqueSpeciesWithRecordsFromNodeId,
     nodeIdOfCurrentSteps,
     nodeIdOfCurrentSpecies,
@@ -425,6 +435,7 @@ export const useKeyStore = defineStore('key', () => {
     currentUniqueSpeciesWithImages,
     currentUniqueSpeciesList,
     currentUniqueSpeciesWithRecords,
+    currentSpeciesCount,
     uniqueSpeciesWithImages,
     resetStore
   }

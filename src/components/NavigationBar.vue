@@ -113,8 +113,8 @@ const mobileMenuOpen = ref(false)
 
 const navigation = [
   { name: 'Home', route: { name: '/' } },
-  { name: 'Filters', route: { name: '/filters' } }
-  /* { name: 'Species filter', route: { name: '/filter-species/a' } },*/
+  { name: 'Filters', route: { name: '/filters' } },
+  { name: 'Species filter', route: { name: '/filter-species/a' } }
   /*  { name: 'Full key', route: { name: '/full/species-list' } }*/
 ]
 

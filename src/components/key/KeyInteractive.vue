@@ -1,13 +1,17 @@
 <template>
   <div v-if="currentNode">
+    <!--
     <p class="text-gray-600 mb-4">ID: {{ currentNode.data.leadId }}</p>
 
     <div class="mb-6">
-      <p class="text-gray-700">Number of unique remaining species: {{ uniqueSpeciesCount }}</p>
+      <p class="text-gray-700">
+        Number of unique remaining species: {{ keyStore.currentSpeciesCount }}
+      </p>
     </div>
+-->
 
     <div v-if="currentNode.children.length > 0" class="space-y-4">
-      <h3 class="text-xl font-semibold mb-2">Choose an option:</h3>
+      <!--      <h3 class="text-xl font-semibold mb-2">Choose an option:</h3>-->
       <div class="flex flex-col space-y-4">
         <div
           v-for="child in currentNode.children"
@@ -84,10 +88,10 @@ function navigateToRoot() {
   emit('update:currentNode', keyStore.keyTree.root)
 }
 
-const uniqueSpeciesCount = computed(() => {
+/*const uniqueSpeciesCount = computed(() => {
   if (!props.currentNode) return 0
   return keyStore.keyTree.getNumberOfUniqueLeaves(props.currentNode.data.leadId)
-})
+})*/
 
 function navigateToNode(node) {
   emit('update:currentNode', node)

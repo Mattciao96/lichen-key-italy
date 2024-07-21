@@ -254,9 +254,17 @@ export const useKeyStore = defineStore('key', () => {
 
     tempStepsList.shift()
     nodeIdOfCurrentSteps.value = nodeId
-    //nodeIdOfCurrentSteps.value = nodeId
 
-    currentStepsList.value = tempStepsList
+    // to reset table values to start from 1
+    // remove to get original values
+    const adjustment = parseInt(nodeId) - 1
+    const adjustedStepsList = tempStepsList.map((step) => ({
+      ...step,
+      leadId: typeof step.leadId === 'number' ? step.leadId - adjustment : step.leadId,
+      parentId: typeof step.parentId === 'number' ? step.parentId - adjustment : step.parentId
+    }))
+
+    currentStepsList.value = adjustedStepsList
   }
 
   const getNodeIdFromLeadId = (leadId: number) => {

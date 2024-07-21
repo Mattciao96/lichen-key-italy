@@ -14,7 +14,7 @@ import { useFormStore } from '@/stores/formStore'
  * │   └── ecology (FilterEcologyView)
  * ├── filter-species (FilterTaxaView)
  * ├── keys/:keyId (KeyLayout: key navigation + key content)
- * │   ├── nodes/nodeId (KeyNodesView)
+ * │   ├── nodes/:nodeId (KeyNodesView)
  *
  *
  */

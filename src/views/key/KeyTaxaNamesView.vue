@@ -10,11 +10,7 @@
     <div class="bg-yellow-300">Rimasti: {{ keyStore.speciesCount }}</div>
     <div class="container mx-auto px-4">
       <ul>
-        <li
-          v-for="species in keyStore.uniqueSpeciesWithImages"
-          :key="species.name"
-          class="flex flex-col"
-        >
+        <li v-for="species in displayedSpecies" :key="species.name" class="flex flex-col">
           <span
             class="mt-2 text-center text-xs sm:text-sm xl:text-base font-medium text-gray-800 line-clamp-2"
           >
@@ -22,15 +18,76 @@
           </span>
         </li>
       </ul>
+      <div v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const keyStore = useKeyStore()
+const itemsPerPage = 50
+const currentPage = ref(1)
+const allLoaded = ref(false)
+const loadMoreTrigger = ref(null)
+
+const displayedSpecies = computed(() => {
+  return keyStore.currentUniqueSpeciesList.slice(0, currentPage.value * itemsPerPage)
+})
+
+const loadMore = () => {
+  if (currentPage.value * itemsPerPage >= keyStore.currentUniqueSpeciesList.length) {
+    allLoaded.value = true
+    return
+  }
+  currentPage.value++
+}
+
+let observer: IntersectionObserver | null = null
+
+const setupIntersectionObserver = () => {
+  if (observer) {
+    observer.disconnect()
+  }
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && !allLoaded.value) {
+        loadMore()
+      }
+    },
+    { rootMargin: '200px' }
+  )
+
+  if (loadMoreTrigger.value) {
+    observer.observe(loadMoreTrigger.value)
+  }
+}
+
+onMounted(() => {
+  keyStore.setUniqueSpeciesListFromNodeId(route.params.nodeId as string)
+  setupIntersectionObserver()
+})
+
+onUnmounted(() => {
+  if (observer) {
+    observer.disconnect()
+  }
+})
+
+watch(
+  () => keyStore.currentUniqueSpeciesList,
+  () => {
+    allLoaded.value = false
+    currentPage.value = 1
+    setupIntersectionObserver()
+  }
+)
 </script>
 
 <style scoped>
@@ -39,9 +96,6 @@ const keyStore = useKeyStore()
   font-weight: bold;
   padding: 20px;
   text-align: center;
-}
-.pb-3\/4 {
-  padding-bottom: 75%;
 }
 
 .line-clamp-2 {

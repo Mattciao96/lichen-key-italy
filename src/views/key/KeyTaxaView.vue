@@ -38,15 +38,21 @@ import { useKeyStore } from '@/stores/keyStore'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import LazyImage from '@/components/LazyImage.vue'
 import placeholderImage from '@/assets/placeholder.svg'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const keyStore = useKeyStore()
 const itemsPerPage = 20
 const currentPage = ref(1)
 const allLoaded = ref(false)
 const loadMoreTrigger = ref(null)
 
-const displayedSpecies = computed(() => {
+/*const displayedSpecies = computed(() => {
   return keyStore.uniqueSpeciesWithImages.slice(0, currentPage.value * itemsPerPage)
+})*/
+
+const displayedSpecies = computed(() => {
+  return keyStore.currentUniqueSpeciesWithImages.slice(0, currentPage.value * itemsPerPage)
 })
 
 const getSpeciesUrl = (imagePath: string) => {
@@ -88,6 +94,7 @@ const setupIntersectionObserver = () => {
 }
 
 onMounted(() => {
+  keyStore.setUniqueSpeciesWithImagesFromNodeId(route.params.nodeId)
   setupIntersectionObserver()
 })
 

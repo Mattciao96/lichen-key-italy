@@ -1,5 +1,5 @@
 <template>
-  <TitleForm>Area Filter</TitleForm>
+  <TitleForm>General Filter</TitleForm>
   <div class="space-y-4"><AreaForm /></div>
   <div class="space-y-4 my-4"><SelectRarityForm /></div>
   <ComboBox

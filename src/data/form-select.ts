@@ -45,6 +45,7 @@ export const selectData = [
       { value: 'F', text: 'non-lichenized, non-lichenicolous fungus' }
     ]
   },*/
+
   {
     id: 'srw',
     title: 'Special requirements for water',
@@ -118,6 +119,15 @@ export const selectData = [
     items: [
       { value: 'null', text: 'No' },
       { value: 'p', text: 'Yes' },
+      { value: 'without', text: 'Without those species' }
+    ]
+  },
+  {
+    id: 'non-lichen',
+    title: 'Only non-lichenized species',
+    items: [
+      { value: 'null', text: 'No' },
+      { value: 'lic', text: 'Yes' },
       { value: 'without', text: 'Without those species' }
     ]
   }

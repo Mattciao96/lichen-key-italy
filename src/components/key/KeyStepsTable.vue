@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch, computed } from 'vue'
+import { onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePaginatedData } from '@/composables/usePaginatedData'
 import DetailedKeyTable from '@/components/key/DetailedKeyTable.vue'
@@ -76,13 +76,14 @@ const {
 let disconnectObserver = setupIntersectionObserver()
 
 onMounted(() => {
+  resetAndReload()
+  window.removeEventListener('scroll', handleScroll)
   window.addEventListener('scroll', handleScroll)
 })
 
-onUnmounted(() => {
+/*onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
-  disconnectObserver()
-})
+})*/
 
 const handleScroll = () => {
   disconnectObserver()
@@ -90,21 +91,9 @@ const handleScroll = () => {
 }
 
 watch(
-  () => props.stepsList,
-  () => {
-    resetAndReload()
-    disconnectObserver()
-    disconnectObserver = setupIntersectionObserver()
-  },
-  { deep: true }
-)
-
-watch(
   () => route.params.view,
   () => {
     resetAndReload()
-    disconnectObserver()
-    disconnectObserver = setupIntersectionObserver()
   }
 )
 </script>

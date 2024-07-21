@@ -4,9 +4,12 @@
   <div v-else-if="keyStore.error" class="error-message">
     {{ keyStore.error }}
   </div>
+  <div v-else-if="!keyStore.isCurrentNodeValid" class="error-message">
+    ERROR: Selected passage does not exist
+  </div>
 
   <div v-else>
-    <KeyTable :steps-list="keyStore.currentStepsList" />
+    <KeyTable :stepsList="keyStore.currentStepsList" />
   </div>
 </template>
 
@@ -19,6 +22,7 @@ import { computed, onMounted } from 'vue'
 
 const route = useRoute()
 const keyStore = useKeyStore()
+
 /*const stepList = computed(() => {
   console.log('ricalcolo')
   //return keyStore.getStepsListFromNodeId(0)

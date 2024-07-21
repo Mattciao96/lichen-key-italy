@@ -63,6 +63,7 @@ export const useKeyStore = defineStore('key', () => {
   // for the interactive key
   // in this way i can check if the current steps are based on the current node
   const nodeIdOfCurrentSteps = ref<string | null>(null)
+  const isCurrentNodeValid = ref(true)
   const currentStepsList = ref<KeyItem[]>([])
 
   const setKeyId = (keyUUID: string) => {
@@ -232,18 +233,24 @@ export const useKeyStore = defineStore('key', () => {
     if (nodeId === nodeIdOfCurrentSteps.value) {
       return
     }
+    if (parseInt(nodeId) === 1) {
+      console.log('non ricalcolo')
+      currentStepsList.value = stepsList.value
+      return
+    }
 
     const tree = keyTree.value
     if (!tree) {
       return
     }
 
+    console.log('ricalcolo i passaggi')
     const tempStepsList = tree.getTreeAsListById(parseInt(nodeId))
 
-    if (!tempStepsList) {
+    if (tempStepsList.length === 0) {
+      isCurrentNodeValid.value = false
       return
     }
-    console.log('ricalcolo i passaggi')
 
     tempStepsList.shift()
     nodeIdOfCurrentSteps.value = nodeId
@@ -258,7 +265,14 @@ export const useKeyStore = defineStore('key', () => {
       return null
     }
 
-    return tree.find(leadId)
+    const actualNode = tree.find(leadId)
+    console.log('actualNode', actualNode)
+    // assign the node as invalid
+    if (!actualNode) {
+      isCurrentNodeValid.value = false
+    }
+
+    return actualNode
   }
 
   const resetAllExceptKey = () => {
@@ -286,6 +300,7 @@ export const useKeyStore = defineStore('key', () => {
     keyId.value = null
     rootLeadId.value = null
     currentLeadId.value = null
+    isCurrentNodeValid.value = true
   }
 
   return {
@@ -309,9 +324,9 @@ export const useKeyStore = defineStore('key', () => {
     /* getStepsListFromNodeId,*/
 
     // for interactive
-
     setStepsListFromNodeId,
     nodeIdOfCurrentSteps,
+    isCurrentNodeValid,
     currentStepsList,
 
     uniqueSpeciesWithImages,

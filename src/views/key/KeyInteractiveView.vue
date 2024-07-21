@@ -19,7 +19,6 @@ const currentNodeId = computed(() => parseInt(route.params.nodeId))
 const currentNode = computed(() => keyStore.getNodeIdFromLeadId(currentNodeId.value))
 
 const updateCurrentNode = (newNode) => {
-  currentNode.value = newNode
   updateURL(newNode.data.leadId)
 }
 

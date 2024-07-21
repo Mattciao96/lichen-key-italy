@@ -1,23 +1,25 @@
-// Add images and
-// the first value display is bugged
+import type { KeyLead } from '@/types'
+
 class Node {
-  constructor(data) {
+  data: KeyLead
+  children: Node[]
+  constructor(data: KeyLead) {
     this.data = data
     this.children = []
   }
 
-  addChild(node) {
+  addChild(node: Node) {
     this.children.push(node)
   }
 
   getSpeciesIds() {
-    let speciesIds = []
+    let speciesIds: string[] = []
 
     if (this.data.leadSpeciesId !== null) {
       speciesIds.push(this.data.leadSpeciesId)
     }
 
-    for (let child of this.children) {
+    for (const child of this.children) {
       speciesIds = speciesIds.concat(child.getSpeciesIds())
     }
 
@@ -26,18 +28,23 @@ class Node {
 }
 
 export default class Tree {
+  nodes: { [key: number]: Node }
+  root: Node | null
   constructor() {
     this.nodes = {}
+    this.root = null
   }
 
-  buildTree(data) {
-    for (let item of data) {
-      let node = new Node(item)
-      this.nodes[item.leadId] = node
+  buildTree(data: KeyLead[]) {
+    for (const item of data) {
+      //const node = new Node(item)
+      //this.nodes[item.leadId] = node
+
+      this.nodes[item.leadId] = new Node(item)
     }
 
-    for (let id in this.nodes) {
-      let node = this.nodes[id]
+    for (const id in this.nodes) {
+      const node = this.nodes[id]
       if (this.nodes[node.data.parentId]) {
         this.nodes[node.data.parentId].addChild(node)
       }
@@ -46,20 +53,21 @@ export default class Tree {
     this.root = this.nodes[data[0].leadId]
   }
 
-  isRoot(node) {
+  isRoot(node: Node) {
     return this.root === node
   }
-  find(leadId) {
+  find(leadId: number): Node | null {
     return this.findRecursive(this.root, leadId)
   }
 
-  findRecursive(node, leadId) {
+  findRecursive(node: Node | null, leadId: number): Node | null {
+    if (!node) return null
     if (node.data.leadId === leadId) {
       return node
     }
 
-    for (let child of node.children) {
-      let result = this.findRecursive(child, leadId)
+    for (const child of node.children) {
+      const result = this.findRecursive(child, leadId)
       if (result !== null) {
         return result
       }
@@ -68,11 +76,11 @@ export default class Tree {
     return null
   }
 
-  updateNodes() {
+  /*updateNodes() {
     this.nodes = this.getNodesRecursive(this.root)
-  }
+  }*/
 
-  getNodesRecursive(node) {
+  /*getNodesRecursive(node) {
     let nodes = { [node.data.leadId]: node }
 
     for (let child of node.children) {
@@ -80,47 +88,46 @@ export default class Tree {
     }
 
     return nodes
-  }
+  }*/
 
-  getLeaves(leadId) {
-    let node = this.find(leadId)
+  getLeaves(leadId: number) {
+    const node = this.find(leadId)
     return node ? this.getLeavesRecursive(node) : null
   }
 
-  getLeavesRecursive(node) {
+  getLeavesRecursive(node: Node): Node[] {
     if (node.children.length === 0) {
       return [node]
     }
 
-    let leaves = []
-    for (let child of node.children) {
+    let leaves: Node[] = []
+    for (const child of node.children) {
       leaves = leaves.concat(this.getLeavesRecursive(child))
     }
 
     return leaves
   }
 
-  getNumberOfUniqueLeaves(leadId) {
-    let node = this.find(leadId)
+  getNumberOfUniqueLeaves(leadId: number) {
+    const node = this.find(leadId)
     if (!node) {
       return null
     }
 
-    let leaves = this.getLeavesRecursive(node)
-    let uniqueSpeciesIds = new Set(leaves.map((leaf) => leaf.data.leadSpeciesId))
+    const leaves = this.getLeavesRecursive(node)
+    const uniqueSpeciesIds = new Set(leaves.map((leaf) => leaf.data.leadSpeciesId))
 
     return uniqueSpeciesIds.size
   }
 
-  getTreeAsListById(leadId) {
+  getTreeAsListById(leadId?: number) {
     if (!leadId) {
       return this.getTreeAsList()
     }
-    let startNode = this.find(leadId)
 
+    const startNode = this.find(leadId)
     if (!startNode) {
-      //return this.getTreeAsList()
-      return [] // i have no tree here
+      return []
     }
 
     return this.getTreeAsList(startNode)
@@ -133,7 +140,7 @@ export default class Tree {
 
     let list = [node.data]
 
-    for (let child of node.children) {
+    for (const child of node.children) {
       list = list.concat(this.getTreeAsList(child))
     }
 
@@ -150,22 +157,24 @@ export default class Tree {
     return list
   }
 
-  getNumberOfLeaves(leadId) {
-    let node = this.find(leadId)
+  getNumberOfLeaves(leadId: number) {
+    const node = this.find(leadId)
     return node ? this.getLeavesRecursive(node).length : null
   }
 
-  getNumberOfChildrenLeaves(leadId) {
-    let node = this.find(leadId)
+  getNumberOfChildrenLeaves(leadId: number) {
+    const node = this.find(leadId)
     if (!node) {
       return null
     }
 
-    let numberOfChildrenLeaves = node.children.map((child) => this.getLeavesRecursive(child).length)
+    const numberOfChildrenLeaves = node.children.map(
+      (child) => this.getLeavesRecursive(child).length
+    )
     return numberOfChildrenLeaves
   }
 
-  prune3(leadRecordIds) {
+  prune3(leadRecordIds: string[]) {
     this.root = this.pruneRecursive3(this.root, leadRecordIds)
     this.adjustIds()
   }
@@ -173,12 +182,12 @@ export default class Tree {
     this.adjustIds()
   }
 
-  pruneRecursive3(node, leadRecordIds) {
+  pruneRecursive3(node: Node, leadRecordIds: string[]) {
     node.children = node.children
       .map((child) => this.pruneRecursive3(child, leadRecordIds))
       .filter(Boolean)
 
-    if (leadRecordIds.includes(node.data.leadRecordId)) {
+    if (node.data.leadRecordId !== null && leadRecordIds.includes(node.data.leadRecordId)) {
       return node
     }
 
@@ -187,7 +196,7 @@ export default class Tree {
     }
 
     if (node.children.length === 1) {
-      let parentNode = this.find(node.data.parentId)
+      const parentNode = this.find(node.data.parentId)
       // this cover singles before the first couplet
       // still keeps 0
       if (!parentNode) {
@@ -195,18 +204,12 @@ export default class Tree {
       }
 
       if (parentNode.children.length > 1) {
-        // ! original bugged
         node.children[0].data.parentId = node.data.parentId
         node.children[0].data.leadText = node.data.leadText
-        //node.children[0].data.leadText = 'oh no garbage';
-
         node.children[0].data.leadImage = node.data.leadImage
 
         return node.children[0]
       } else {
-        //! this works but souldn't
-        //node.children[0].parentId = parentNode.leadId;
-        // ? this is correct and, for now works
         node.children[0].data.parentId = parentNode.data.parentId
         return node.children[0]
       }
@@ -230,12 +233,13 @@ export default class Tree {
     return this.root ? this.root.data.leadId : null
   }
 
+  // potrebbe non funzionare correttamente con typescript
   adjustIds() {
     if (!this.root) return
 
     let idCounter = 1
 
-    const adjustIdsRecursive = (node, parentId) => {
+    const adjustIdsRecursive = (node: Node, parentId: number | null) => {
       const oldId = node.data.leadId
 
       if (node.data.leadSpeciesId !== null) {
@@ -250,7 +254,7 @@ export default class Tree {
       delete this.nodes[oldId]
       this.nodes[node.data.leadId] = node
 
-      for (let child of node.children) {
+      for (const child of node.children) {
         adjustIdsRecursive(child, node.data.leadId)
       }
     }

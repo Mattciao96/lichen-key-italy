@@ -1,6 +1,7 @@
+// 4 has only 1, 2 and 3
 export const radioDataSubstratum = [
   {
-    id: '4',
+    id: '4-pseudo',
     title: 'Substratum',
     items: [
       { text: 'Bark and wood', value: '1', image: 'bark.png' },
@@ -9,6 +10,9 @@ export const radioDataSubstratum = [
         text: 'Soil, terricolous mosses and plant debris',
         value: '2',
         image: 'soil.png'
+      },
+      {
+        text: 'On living leaves'
       }
     ]
   }

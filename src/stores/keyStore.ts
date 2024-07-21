@@ -146,6 +146,7 @@ export const useKeyStore = defineStore('key', () => {
       ])
 
       const newTree = buildKeyTree(retrievedFullKey, retrievedRecords)
+      console.log({ newTree })
       const stepsListFromTree = newTree.getTreeAsListById() as KeyItem[]
       stepsListFromTree.shift()
 

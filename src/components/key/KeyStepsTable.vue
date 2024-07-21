@@ -1,11 +1,5 @@
 <template>
   <div>
-    <!--    <CopyToClipBoardButton
-      :steps-list="stepsList"
-      @copy-success="onCopySuccess"
-      @copy-error="onCopyError"
-    />-->
-
     <div class="mb-4 flex flex-wrap gap-2 justify-end">
       <RouterLink
         v-for="viewOption in viewOptions"
@@ -20,18 +14,18 @@
     <div class="steps-table-container w-[96vw] max-w-[1200px] mx-auto">
       <component
         :is="currentVisualization"
-        :visible-steps="visibleSteps"
+        :visible-steps="displayedData"
         @scroll-to-anchor="scrollToAnchor"
       />
-      <div ref="loadMoreTrigger" class="load-more-trigger"></div>
+      <div v-if="!allLoaded" ref="loadMoreTrigger" class="load-more-trigger"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
+import { onMounted, onUnmounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import CopyToClipBoardButton from '@/components/key/CopyToClipBoardButton.vue'
+import { usePaginatedData } from '@/composables/usePaginatedData'
 import DetailedKeyTable from '@/components/key/DetailedKeyTable.vue'
 import SimpleKeyTable from '@/components/key/SimpleKeyTable.vue'
 import KeyTableDescriptions from '@/components/key/KeyTableDescriptions.vue'
@@ -57,11 +51,6 @@ const viewOptions = [
   { name: 'description', label: 'Description' }
 ]
 
-const visibleSteps = ref<KeyItem[]>([])
-const loadMoreTrigger = ref<HTMLElement | null>(null)
-const currentIndex = ref(0)
-const CHUNK_SIZE = 50
-
 const currentView = computed(() => (route.params.view as string) || 'detailed')
 
 const currentVisualization = computed(() => {
@@ -75,35 +64,37 @@ const currentVisualization = computed(() => {
   }
 })
 
-const loadMoreSteps = () => {
-  const nextChunk = props.stepsList.slice(currentIndex.value, currentIndex.value + CHUNK_SIZE)
-  visibleSteps.value.push(...nextChunk)
-  currentIndex.value += CHUNK_SIZE
-}
+const {
+  displayedData,
+  allLoaded,
+  loadMoreTrigger,
+  setupIntersectionObserver,
+  scrollToAnchor,
+  resetAndReload
+} = usePaginatedData(() => props.stepsList, 50, 'leadId')
 
-const handleScroll = () => {
-  if (!loadMoreTrigger.value) return
-  const rect = loadMoreTrigger.value.getBoundingClientRect()
-  if (rect.top <= window.innerHeight && currentIndex.value < props.stepsList.length) {
-    loadMoreSteps()
-  }
-}
+let disconnectObserver = setupIntersectionObserver()
 
 onMounted(() => {
-  loadMoreSteps()
   window.addEventListener('scroll', handleScroll)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  disconnectObserver()
 })
+
+const handleScroll = () => {
+  disconnectObserver()
+  disconnectObserver = setupIntersectionObserver()
+}
 
 watch(
   () => props.stepsList,
   () => {
-    visibleSteps.value = []
-    currentIndex.value = 0
-    loadMoreSteps()
+    resetAndReload()
+    disconnectObserver()
+    disconnectObserver = setupIntersectionObserver()
   },
   { deep: true }
 )
@@ -111,57 +102,11 @@ watch(
 watch(
   () => route.params.view,
   () => {
-    visibleSteps.value = []
-    currentIndex.value = 0
-    loadMoreSteps()
+    resetAndReload()
+    disconnectObserver()
+    disconnectObserver = setupIntersectionObserver()
   }
 )
-
-const scrollToAnchor = async (leadId: number) => {
-  let found = false
-
-  const targetElement = document.getElementById(`couplet${leadId}`)
-  if (targetElement) {
-    found = true
-    scrollToElement(targetElement)
-  } else {
-    while (currentIndex.value < props.stepsList.length && !found) {
-      const nextBatch = props.stepsList.slice(currentIndex.value, currentIndex.value + CHUNK_SIZE)
-      visibleSteps.value.push(...nextBatch)
-      currentIndex.value += CHUNK_SIZE
-
-      await new Promise((resolve) => setTimeout(resolve, 50))
-
-      const newTargetElement = document.getElementById(`couplet${leadId}`)
-      if (newTargetElement) {
-        found = true
-        scrollToElement(newTargetElement)
-      }
-    }
-  }
-
-  if (!found) {
-    console.log(`Element with leadId ${leadId} not found`)
-  }
-}
-
-const scrollToElement = (element: HTMLElement) => {
-  element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-
-  element.parentElement?.classList.add('highlight')
-  setTimeout(() => {
-    element.parentElement?.classList.remove('highlight')
-  }, 2000)
-}
-
-const onCopySuccess = () => {
-  alert('Table copied to clipboard!')
-}
-
-const onCopyError = (error: Error) => {
-  console.error('Failed to copy table: ', error)
-  alert('Failed to copy table. Please try again.')
-}
 </script>
 
 <style scoped>

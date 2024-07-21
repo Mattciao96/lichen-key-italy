@@ -136,7 +136,7 @@ const handleSubmit = async () => {
     //await keyStore.fetchData() // This will fetch and set all necessary data
     speciesStore.reset()
     // Navigate to the key view
-    await router.push(`/${result['key-id']}/species-list`)
+    await router.push(`/${result['key-id']}/nodes/1/species-list`)
   } catch (error) {
     console.error('Error submitting form:', error)
   }

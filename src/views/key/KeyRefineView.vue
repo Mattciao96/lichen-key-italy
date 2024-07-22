@@ -51,11 +51,11 @@ const selectedSpecies = ref([])
 const isSubmitting = ref(false)
 
 const { displayedData, allLoaded, loadMoreTrigger, setupIntersectionObserver } = usePaginatedData(
-  () => keyStore.currentUniqueSpeciesWithRecords
+  () => keyStore.currentUniqueSpeciesWithImages
 )
 
 onMounted(() => {
-  keyStore.setUniqueSpeciesWithRecordsFromNodeId(route.params.nodeId as string)
+  keyStore.setUniqueSpeciesWithImagesFromNodeId(route.params.nodeId as string)
   setupIntersectionObserver()
 })
 

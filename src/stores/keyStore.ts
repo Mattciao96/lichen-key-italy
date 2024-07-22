@@ -285,6 +285,7 @@ export const useKeyStore = defineStore('key', () => {
 
     const speciesMap = new Map<string, SpeciesInfo>()
 
+    /*// orig
     tempStepsList.forEach((item) => {
       if (item.leadSpecies !== null) {
         speciesMap.set(item.leadSpecies, {
@@ -292,6 +293,29 @@ export const useKeyStore = defineStore('key', () => {
           image: item.speciesImage,
           italicId: item.italicId
         })
+      }
+    })
+    // record
+    tempStepsList.forEach((item) => {
+      if (item.leadSpecies !== null) {
+        if (!speciesMap.has(item.leadSpecies)) {
+          speciesMap.set(item.leadSpecies, { name: item.leadSpecies, records: [] })
+        }
+        speciesMap.get(item.leadSpecies)!.records.push(item.leadRecordId)
+      }
+    })*/
+    // combined
+    tempStepsList.forEach((item) => {
+      if (item.leadSpecies !== null) {
+        if (!speciesMap.has(item.leadSpecies)) {
+          speciesMap.set(item.leadSpecies, {
+            name: item.leadSpecies,
+            image: item.speciesImage,
+            italicId: item.italicId,
+            records: []
+          })
+        }
+        speciesMap.get(item.leadSpecies).records.push(item.leadRecordId)
       }
     })
 
@@ -356,7 +380,7 @@ export const useKeyStore = defineStore('key', () => {
     return actualNode
   }
 
-  const setUniqueSpeciesWithRecordsFromNodeId = (nodeId: string) => {
+  /*const setUniqueSpeciesWithRecordsFromNodeId = (nodeId: string) => {
     if (nodeId === nodeIdOfCurrentSpeciesWithRecord.value) {
       return
     }
@@ -401,7 +425,7 @@ export const useKeyStore = defineStore('key', () => {
     } else {
       nodeIdOfCurrentSpeciesWithRecord.value = nodeId
     }
-  }
+  }*/
 
   const resetAllExceptKey = () => {
     isLoading.value = false
@@ -449,7 +473,7 @@ export const useKeyStore = defineStore('key', () => {
     setStepsListFromNodeId,
     setUniqueSpeciesWithImagesFromNodeId,
     /*setUniqueSpeciesListFromNodeId,*/
-    setUniqueSpeciesWithRecordsFromNodeId,
+
     nodeIdOfCurrentSteps,
     nodeIdOfCurrentSpecies,
     nodeIdOfCurrentSpeciesImages,

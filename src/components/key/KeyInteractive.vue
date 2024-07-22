@@ -33,8 +33,8 @@
             />
           </div>
           <div class="p-2 min-h-20 sm:min-h-[78px] sm:h-[78px] flex items-center justify-center">
-            <p class="text-sm sm:text-base text-gray-800 font-medium text-center">
-              {{ child.data.leadText }}
+            <p class="text-sm text-gray-800 font-medium text-center">
+              <span v-html="child.data.leadText"></span>
               <span v-if="child.data.leadSpecies" class="block">
                 <a
                   class="font-medium text-blue-600 hover:underline"

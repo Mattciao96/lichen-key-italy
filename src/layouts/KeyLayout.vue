@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto md:px-4 py-2">
+  <div class="container mx-auto sm:px-4 py-2">
     <LoadingSpinner v-if="keyStore.isLoading" />
 
     <div
@@ -13,8 +13,10 @@
 
     <div v-else>
       <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
-        <div class="mb-4 sm:mb-0 h-16 flex flex-col justify-center items-start">
-          <p class="">
+        <div
+          class="w-full sm:w-auto sm:px-0 mb-4 sm:mb-0 sm:h-16 flex flex-row sm:flex-col justify-between sm:justify-center items-start"
+        >
+          <p>
             <span class="font-bold">{{ keyStore.speciesCount }}</span> total species
           </p>
           <p v-if="keyStore.speciesCount !== keyStore.currentSpeciesCount" class="">

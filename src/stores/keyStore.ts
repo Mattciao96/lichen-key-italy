@@ -62,8 +62,11 @@ export const useKeyStore = defineStore('key', () => {
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
   //const speciesCount = computed(() => uniqueSpeciesWithImages.value.length)
   const speciesCount = computed(() => {
+    if (keyId.value === 'no-data') {
+      return 0
+    }
     if (!keyTree.value) {
-      return null
+      return 0
     }
     if (uniqueSpeciesWithImages.value.length === 1) {
       return 1
@@ -78,6 +81,9 @@ export const useKeyStore = defineStore('key', () => {
   const currentStepsList = ref<KeyItem[]>([])
   const currentUniqueSpeciesWithImages = ref<SpeciesInfo[]>([])
   const currentSpeciesCount = computed(() => {
+    if (keyId.value === 'no-data') {
+      return 0
+    }
     if (!keyTree.value) {
       return null
     }

@@ -38,6 +38,13 @@
 
       <h2>FREE CHOICE OF SPECIES</h2>
       <p>Users can select any subset of species they want to include in a key.</p>
+      <div class="flex justify-center">
+        <RouterLink
+          to="/filters/general"
+          class="w-full font-semibold max-w-xl mb-8 grid place-items-center h-10 rounded-md bg-primary-500 hover:bg-primary-600 text-surface-0"
+          >Generate a Key</RouterLink
+        >
+      </div>
       <p>
         The tool is still in the phase of testing. We would be grateful for feedback from users –
         write to nimis@units.it

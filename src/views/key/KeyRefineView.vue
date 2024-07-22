@@ -10,8 +10,8 @@
     </div>
     <div v-else>
       <form @submit.prevent="handleSubmit" class="space-y-4">
-        <div class="space-y-2">
-          <div v-for="species in displayedData" :key="species.name" class="flex items-center">
+        <ul class="space-y-2">
+          <li v-for="species in displayedData" :key="species.name" class="flex items-center">
             <input
               type="checkbox"
               :id="species.name"
@@ -22,9 +22,10 @@
             <label :for="species.name" class="ml-2 block text-sm text-gray-900">
               {{ species.name }}
             </label>
-          </div>
-        </div>
-        <div v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></div>
+          </li>
+          <li v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></li>
+        </ul>
+
         <button
           type="submit"
           class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"

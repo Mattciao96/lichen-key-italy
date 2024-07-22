@@ -7,16 +7,6 @@ import { openDB } from 'idb'
 import Tree from '@/utils/key-builder'
 import type { KeyLead } from '@/types'
 
-interface KeyItem {
-  leadId: number
-  parentId: number
-  leadText: string
-  leadImage: string | null
-  speciesImage: string | null
-  leadSpecies: string | null
-  leadRecordId: number
-}
-
 interface SpeciesInfo {
   name: string
   image: string | null
@@ -24,7 +14,7 @@ interface SpeciesInfo {
 }
 
 interface FullKey {
-  keyData: KeyItem[]
+  keyData: KeyLead[]
 }
 
 interface KeyDB {
@@ -56,7 +46,7 @@ export const useKeyStore = defineStore('key', () => {
   const recordsList = ref<number[]>([])
   const fullKey = ref<FullKey | null>(null)
   const keyTree = ref<Tree | null>(null)
-  const stepsList = ref<KeyItem[]>([])
+  const stepsList = ref<KeyLead[]>([])
 
   const speciesList = ref<SpeciesInfo[] | null>(null)
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
@@ -78,7 +68,7 @@ export const useKeyStore = defineStore('key', () => {
   const nodeIdOfCurrentSpeciesImages = ref<string | null>(null)
   const nodeIdOfCurrentSpeciesWithRecord = ref<string | null>(null)
   const isCurrentNodeValid = ref(true)
-  const currentStepsList = ref<KeyItem[]>([])
+  const currentStepsList = ref<KeyLead[]>([])
   const currentUniqueSpeciesWithImages = ref<SpeciesInfo[]>([])
   const currentSpeciesCount = computed(() => {
     if (keyId.value === 'no-data') {
@@ -203,8 +193,8 @@ export const useKeyStore = defineStore('key', () => {
     if (speciesList.value !== null) {
       return speciesList.value
     }
-
-    const speciesMap = new Map<string, SpeciesInfo>()
+    // old without records
+    /*const speciesMap = new Map<string, SpeciesInfo>()
 
     stepsList.value.forEach((item) => {
       if (item.leadSpecies !== null) {
@@ -213,6 +203,30 @@ export const useKeyStore = defineStore('key', () => {
           image: item.speciesImage,
           italicId: item.italicId
         })
+      }
+    })*/
+
+    const speciesMap = new Map<
+      string,
+      {
+        name: string
+        image: string
+        italicId: string
+        records: number[]
+      }
+    >()
+
+    stepsList.value.forEach((item) => {
+      if (item.leadSpecies !== null) {
+        if (!speciesMap.has(item.leadSpecies)) {
+          speciesMap.set(item.leadSpecies, {
+            name: item.leadSpecies,
+            image: item.speciesImage,
+            italicId: item.italicId,
+            records: []
+          })
+        }
+        speciesMap.get(item.leadSpecies)!.records.push(item.leadRecordId)
       }
     })
 

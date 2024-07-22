@@ -1,6 +1,6 @@
 <template>
   <div class="w-full flex flex-col">
-    <h1 class="mt-8"></h1>
+    <h1 class="mt-8">ITALIC KEYMAKER</h1>
     <div class="[&>p]:mb-4 [&>h2]:font-bold">
       <p>
         This tool generates keys to subsets of species defined by the user by specifying their

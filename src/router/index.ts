@@ -20,7 +20,7 @@ import { useFormStore } from '@/stores/formStore'
  */
 
 const router = createRouter({
-  history: createWebHistory('/key-test/'),
+  history: createWebHistory('/key-maker/'),
   scrollBehavior() {
     // always scroll to top
     return { top: 0 }

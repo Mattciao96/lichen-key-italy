@@ -112,8 +112,8 @@ export const selectData = [
       { value: 'paras', text: 'Yes' },
       { value: 'without', text: 'Without those species' }
     ]
-  },
-  {
+  }
+  /* {
     id: 'pion',
     title: 'Only pioneer species',
     items: [
@@ -121,8 +121,8 @@ export const selectData = [
       { value: 'p', text: 'Yes' },
       { value: 'without', text: 'Without those species' }
     ]
-  },
-  {
+  },*/
+  /*{
     id: 'non-lichen',
     title: 'Only non-lichenized species',
     items: [
@@ -130,5 +130,5 @@ export const selectData = [
       { value: 'lic', text: 'Yes' },
       { value: 'without', text: 'Without those species' }
     ]
-  }
+  }*/
 ]

@@ -25,17 +25,20 @@
 import Dropdown from 'primevue/dropdown'
 import ClearButtonForm from '@/components/form/ClearButtonForm.vue'
 import { useFormStore } from '@/stores/formStore'
-import { useScrollLock } from '@/composables/useScrollLock'
+import { selectData } from '@/data/form-select'
 
+import { useScrollLock } from '@/composables/useScrollLock'
 const { toggleScroll } = useScrollLock()
 
+const filterData = selectData
 const formStore = useFormStore()
 
-const props = defineProps({
-  filterData: Array
-})
+type Option = {
+  text: string
+  value: string
+}
 
-const updateSelectFormField = (groupId: string, option: GroupItem) => {
+const updateSelectFormField = (groupId: string, option: Option) => {
   formStore.updateFormField(groupId, option)
 }
 </script>

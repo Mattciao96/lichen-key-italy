@@ -9,7 +9,7 @@
       >
         <img class="h-10 w-10" src="/general/banner-key.jpg" alt="Your Company" />
       </div>
-      <span class="font-semibold text-primary-950 text-2xl">ITALIC KEY</span>
+      <span class="font-semibold text-primary-950 text-2xl">ITALIC KEYMAKER</span>
     </div>
 
     <!-- Desktop menu -->

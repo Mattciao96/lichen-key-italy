@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="container px-4 py-8 max-w-2xl p-4 mx-auto">
     <LoadingSpinner v-if="keyStore.isLoading" />
 
     <div v-else-if="keyStore.error" class="error-message">
@@ -10,7 +10,7 @@
       <ul class="max-w-[900px] space-y-2">
         <li v-for="species in displayedData" :key="species.name">
           <a
-            class="align text-sm font-medium text-blue-600 hover:underline"
+            class="text-sm font-medium text-blue-600 hover:underline"
             :href="`https://italic.units.it/index.php?procedure=taxonpage&num=${species.italicId}`"
             target="_blank"
             >{{ species.name }}</a

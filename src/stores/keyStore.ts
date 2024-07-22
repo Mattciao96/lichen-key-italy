@@ -5,6 +5,7 @@ import axios from 'axios'
 import { openDB } from 'idb'
 
 import Tree from '@/utils/key-builder'
+import type { KeyLead } from '@/types'
 
 interface KeyItem {
   leadId: number
@@ -71,6 +72,9 @@ export const useKeyStore = defineStore('key', () => {
   const currentSpeciesCount = computed(() => {
     if (!keyTree.value) {
       return null
+    }
+    if (speciesCount.value === 1) {
+      return 1
     }
     return keyTree.value.getNumberOfUniqueLeaves(parseInt(currentLeadId.value))
   })
@@ -155,8 +159,14 @@ export const useKeyStore = defineStore('key', () => {
 
       const newTree = buildKeyTree(retrievedFullKey, retrievedRecords)
       console.log({ newTree })
-      const stepsListFromTree = newTree.getTreeAsListById() as KeyItem[]
-      stepsListFromTree.shift()
+      // tentative for one species
+      let stepsListFromTree = []
+      if (newTree.root && newTree.root.children.length === 0) {
+        stepsListFromTree = [newTree.root.data]
+      } else {
+        stepsListFromTree = newTree.getTreeAsListById() as KeyLead[]
+        stepsListFromTree.shift()
+      }
 
       fullKey.value = retrievedFullKey
       recordsList.value = retrievedRecords
@@ -334,6 +344,9 @@ export const useKeyStore = defineStore('key', () => {
     if (!tree) {
       return null
     }
+    if (tree.root.children.length === 0) {
+      return tree.root
+    }
 
     const actualNode = tree.find(leadId)
     if (!actualNode) {
@@ -354,8 +367,14 @@ export const useKeyStore = defineStore('key', () => {
     if (!tree) {
       return
     }
+    let tempStepsList = []
+    if (tree.root.children.length === 0) {
+      tempStepsList = [tree.root.data]
+    } else {
+      tempStepsList = tree.getTreeAsListById(parseInt(nodeId))
+    }
 
-    const tempStepsList = tree.getTreeAsListById(parseInt(nodeId))
+    //const tempStepsList = tree.getTreeAsListById(parseInt(nodeId))
 
     if (tempStepsList.length === 0) {
       isCurrentNodeValid.value = false
@@ -377,7 +396,11 @@ export const useKeyStore = defineStore('key', () => {
       a.name.localeCompare(b.name)
     )
 
-    nodeIdOfCurrentSpecies.value = nodeId
+    if (tree.root.children.length === 0) {
+      nodeIdOfCurrentSpeciesWithRecord.value = '1'
+    } else {
+      nodeIdOfCurrentSpeciesWithRecord.value = nodeId
+    }
   }
 
   const resetAllExceptKey = () => {
@@ -397,6 +420,7 @@ export const useKeyStore = defineStore('key', () => {
     currentStepsList.value = []
     currentUniqueSpeciesWithImages.value = []
     currentUniqueSpeciesList.value = []
+    currentUniqueSpeciesWithRecords.value = []
   }
 
   const resetStore = () => {

@@ -12,12 +12,12 @@
 
     <div v-if="currentNode.children.length > 0" class="space-y-4">
       <!--      <h3 class="text-xl font-semibold mb-2">Choose an option:</h3>-->
-      <div class="flex flex-col space-y-4">
+      <div class="flex flex-col space-y-4 items-center">
         <div
           v-for="child in currentNode.children"
           :key="child.data.leadId"
           :class="[
-            'bg-white rounded-md shadow-md overflow-hidden border border-gray-200',
+            'w-full max-w-2xl  pt-2 bg-white rounded-md shadow-sm overflow-hidden border border-gray-200',
             {
               'cursor-pointer hover:shadow-lg transition-shadow duration-300 hover:border-green-700':
                 !child.data.leadSpecies
@@ -25,18 +25,23 @@
           ]"
           @click="!child.data.leadSpecies && navigateToNode(child)"
         >
-          <div class="h-40 overflow-hidden grid place-items-center">
+          <div class="h-28 sm:h-36 overflow-hidden grid place-items-center">
             <img
               :src="getInteractiveImageUrl(child.data)"
               :alt="child.data.leadText"
-              class="max-h-40 w-auto object-contain rounded-md"
+              class="h-28 sm:h-36 w-auto object-contain rounded-md"
             />
           </div>
-          <div class="p-4">
-            <p class="text-gray-800 font-medium text-center">
+          <div class="p-2 min-h-20 sm:min-h-[78px] sm:h-[78px] flex items-center justify-center">
+            <p class="text-sm sm:text-base text-gray-800 font-medium text-center">
               {{ child.data.leadText }}
-              <span v-if="child.data.leadSpecies" class="text-gray-600 italic">
-                ({{ child.data.leadSpecies }})
+              <span v-if="child.data.leadSpecies" class="block">
+                <a
+                  class="font-medium text-blue-600 hover:underline"
+                  :href="`https://italic.units.it/index.php?procedure=taxonpage&num=${child.data.italicId}`"
+                  target="_blank"
+                  >({{ child.data.leadSpecies }})</a
+                >
               </span>
             </p>
           </div>
@@ -44,8 +49,8 @@
       </div>
     </div>
 
-    <div v-else class="bg-yellow-100 border-l-4 border-yellow-500 p-4 my-4">
-      <p class="text-yellow-700">This is a leaf node (no children).</p>
+    <div v-else class="text-center text-lg font-semibold">
+      <p>Not available</p>
     </div>
 
     <button
@@ -66,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
 import placeholderImage from '@/assets/placeholder.svg'
 

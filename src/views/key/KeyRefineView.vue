@@ -5,6 +5,9 @@
     <div v-else-if="keyStore.error" class="text-center text-red-500 text-lg font-semibold">
       Error: {{ keyStore.error }}
     </div>
+    <div v-else-if="keyStore.speciesCount === 1" class="text-center text-lg font-semibold">
+      Not available
+    </div>
     <div v-else>
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <div class="space-y-2">

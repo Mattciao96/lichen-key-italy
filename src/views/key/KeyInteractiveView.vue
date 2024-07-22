@@ -29,23 +29,3 @@ const updateURL = (nodeId) => {
   })
 }
 </script>
-
-<style scoped>
-.button-group {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.button-group button {
-  padding: 10px 20px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  cursor: pointer;
-}
-
-.button-group button.active {
-  background-color: #007bff;
-  color: white;
-}
-</style>

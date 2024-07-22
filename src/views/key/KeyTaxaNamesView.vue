@@ -6,7 +6,7 @@
       {{ keyStore.error }}
     </div>
 
-    <div v-else class="flex">
+    <div v-else class="flex min-h-screen">
       <ul class="max-w-[900px] space-y-2">
         <li v-for="species in displayedData" :key="species.name">
           <a
@@ -16,8 +16,9 @@
             >{{ species.name }}</a
           >
         </li>
+        <li v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></li>
       </ul>
-      <div v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></div>
+      <!--      <div v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></div>-->
     </div>
   </div>
 </template>

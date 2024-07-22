@@ -1,15 +1,11 @@
+// src/stores/useKeyStore.ts
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
-import Tree from '@/utils/key-builder'
-import {
-  getStoredFullKey,
-  getLastFetchTime,
-  storeFullKey,
-  updateLastFetchTime
-} from '@/utils/indexedDB'
+import { openDB } from 'idb'
 
-import type { KeyLead, KeyUniqueSpeciesData } from '@/types'
+import Tree from '@/utils/key-builder'
+import type { KeyLead } from '@/types'
 
 interface SpeciesInfo {
   name: string
@@ -31,6 +27,13 @@ interface KeyDB {
     value: number
   }
 }
+
+const dbPromise = openDB<KeyDB>('keyStore', 1, {
+  upgrade(db) {
+    db.createObjectStore('fullKey')
+    db.createObjectStore('lastFetch')
+  }
+})
 
 export const useKeyStore = defineStore('key', () => {
   const isLoading = ref(false)

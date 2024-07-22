@@ -1,9 +1,4 @@
 /**
- * The leads list from the general key of ITALIC
- */
-export type KeyLeadList = KeyLead[]
-
-/**
  * The single lead from the general key of ITALIC
  */
 export type KeyLead = {
@@ -19,4 +14,21 @@ export type KeyLead = {
   leadImage: string | null
   parentId: number
   italicId: number | null
+}
+
+/**
+ * The full key returned by the ITALIC api
+ */
+export type FullKey = {
+  keyData: KeyLead[]
+}
+
+/**
+ * The type for the data used by gallery, species-list and adjust
+ * */
+export type KeyUniqueSpeciesData = {
+  name: string
+  image: string
+  italicId: string
+  records: number[]
 }

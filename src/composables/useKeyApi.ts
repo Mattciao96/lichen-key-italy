@@ -1,10 +1,76 @@
-// composables/useKeyApi.ts
 import { useMutation, useQuery } from '@tanstack/vue-query'
+import {
+  getStoredFullKey,
+  storeFullKey,
+  getLastFetchTime,
+  updateLastFetchTime
+} from '@/utils/indexedDB'
+
 import axios from 'axios'
 
 const api = axios.create({
   baseURL: 'https://italic.units.it/api/v1'
 })
+
+export function useFullKeyQuery() {
+  return useQuery({
+    queryKey: ['fullKey'],
+    queryFn: async () => {
+      // Check IndexedDB cache first
+      const storedKey = await getStoredFullKey()
+      const lastFetchTime = await getLastFetchTime()
+      const currentTime = Date.now()
+
+      if (storedKey && lastFetchTime && currentTime - lastFetchTime < 24 * 60 * 60 * 1000) {
+        console.log('Using cached full key data')
+        return storedKey
+      }
+
+      // Fetch from API if cache is invalid or missing
+      const result = await axios
+        .get('https://italic.units.it/api/v1/full-key')
+        .then((res) => res.data)
+
+      // Update cache
+      await Promise.all([storeFullKey(result), updateLastFetchTime()])
+
+      return result
+    },
+
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
+  })
+}
+
+export function useKeyRecordsQuery(keyId: string | null) {
+  return useQuery({
+    queryKey: ['keyRecords', keyId],
+    queryFn: async ({ signal }) => {
+      if (!keyId || keyId === 'full' || keyId === 'no-data') {
+        return []
+      }
+      const startTime = performance.now()
+      const response = await axios.post<{ records: number[] }>(
+        'https://italic.units.it/api/v1/key-records',
+        { 'key-id': keyId },
+        { signal }
+      )
+      const endTime = performance.now()
+      console.log(`fetchRecords execution time: ${endTime - startTime} milliseconds`)
+      return response.data.records
+    },
+    onError: (error) => {
+      console.error('KeyRecord query error:', error)
+    },
+    enabled: !!keyId && keyId !== 'full' && keyId !== 'no-data', // Only run the query if keyId is truthy and not 'full'
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
+  })
+}
 
 /*export function useKeyFilterMutation() {
   return useMutation({
@@ -61,7 +127,7 @@ export function useKeyTaxaFilterMutation() {
   })
 }
 
-export function useKeyRecordsQuery(keyId: string) {
+/*export function useKeyRecordsQuery(keyId: string) {
   return useQuery({
     queryKey: ['keyRecords', keyId],
     queryFn: async () => {
@@ -73,9 +139,9 @@ export function useKeyRecordsQuery(keyId: string) {
     },
     enabled: !!keyId
   })
-}
+}*/
 
-export function useFullKeyQuery() {
+/*export function useFullKeyQuery() {
   return useQuery({
     queryKey: ['fullKey'],
     staleTime: Infinity, // Data will never go stale
@@ -94,7 +160,7 @@ export function useFullKeyQuery() {
       return result
     }
   })
-}
+}*/
 
 export function useComboboxItemsQuery(fetchKeyName: string, apiEndpoint: string) {
   return useQuery({

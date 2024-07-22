@@ -1,6 +1,8 @@
 RewriteEngine On
+  Options -Indexes
+  DirectoryIndex index.html
   RewriteBase /key-maker/
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /key-maker/index.html [L]
+  RewriteRule . /key-maker/index.html [L]]

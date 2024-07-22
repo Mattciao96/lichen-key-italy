@@ -27,6 +27,10 @@ const router = createRouter({
   },
   routes: [
     {
+      path: '/index.html',
+      redirect: '/'
+    },
+    {
       path: '/',
       name: 'base',
       component: () => import('@/layouts/MainLayout.vue'),

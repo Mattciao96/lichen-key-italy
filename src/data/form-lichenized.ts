@@ -1,11 +1,11 @@
 export const lichenizedData = [
   {
     id: 'non-lichen',
-    title: 'Only non-lichenized species',
+    title: 'Non lichenized species',
     items: [
-      { value: 'null', text: 'No' },
-      { value: 'lic', text: 'Yes' },
-      { value: 'without', text: 'Without those species' }
+      { value: 'null', text: 'Include non-lichenized species' },
+      { value: 'lic', text: 'Only non-lichenized species' },
+      { value: 'without', text: 'Exclude non-lichenized species' }
     ]
   }
 ]

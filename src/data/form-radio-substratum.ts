@@ -12,7 +12,7 @@ export const radioDataSubstratum = [
         image: 'soil.png'
       },
       {
-        text: 'On living leaves',
+        text: 'Living leaves',
         value: '4',
         image: 'leaf.png'
       }

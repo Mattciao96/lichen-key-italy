@@ -42,9 +42,10 @@ const props = defineProps<{
 const route = useRoute()
 
 const viewOptions = [
-  { name: 'detailed', label: 'Detailed' },
-  { name: 'simple', label: 'Simple' },
-  { name: 'description', label: 'Description' }
+  { name: 'detailed', label: 'Illustrated' },
+
+  { name: 'description', label: 'With description' },
+  { name: 'simple', label: 'Simple' }
 ]
 
 const currentView = computed(() => (route.params.view as string) || 'detailed')

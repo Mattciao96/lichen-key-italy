@@ -30,7 +30,7 @@ export const radioData = [
     items: [
       { text: 'Crustose or leprose', value: '2', image: 'crustose.png' },
       {
-        text: 'Squamulose, or (for cyanobacterial lichens only) microfruticose',
+        text: 'Squamulose (or for cyanolichens only) microfruticose',
         value: '1',
         image: 'squamulose.png'
       }
@@ -129,7 +129,7 @@ export const radioData = [
         image: 'ascocarp.png'
       },
       {
-        text: 'Absent (sterile crusts, non-cyanobacterial crustose lichens only)',
+        text: 'Absent (sterile crusts, crustose phycolichens lichens only)',
         value: '1',
         image: 'no-ascocarp.png'
       }

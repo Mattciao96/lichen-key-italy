@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto md:px-4 py-8">
+  <div class="container mx-auto md:px-4 py-2">
     <LoadingSpinner v-if="keyStore.isLoading" />
 
     <div
@@ -13,13 +13,12 @@
 
     <div v-else>
       <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
-        <div class="mb-4 sm:mb-0">
-          <p class="text-lg font-semibold">Total Species: {{ keyStore.speciesCount }}</p>
-          <p
-            v-if="keyStore.speciesCount !== keyStore.currentSpeciesCount"
-            class="text-lg font-semibold"
-          >
-            Remaining Species: {{ keyStore.currentSpeciesCount }}
+        <div class="mb-4 sm:mb-0 h-16 flex flex-col justify-center items-start">
+          <p class="">
+            <span class="font-bold">{{ keyStore.speciesCount }}</span> total species
+          </p>
+          <p v-if="keyStore.speciesCount !== keyStore.currentSpeciesCount" class="">
+            <span class="font-bold">{{ keyStore.currentSpeciesCount }}</span> remaining species
           </p>
         </div>
         <nav class="flex flex-wrap gap-2">
@@ -53,23 +52,24 @@ const routes = computed(() => [
   {
     path: { name: 'key', params: { keyId: route.params.keyId } },
     name: 'key',
-    label: 'Textual Key'
-  },
-  {
-    path: { name: 'species', params: { keyId: route.params.keyId } },
-    name: 'species',
-    label: 'Species Images'
-  },
-  {
-    path: { name: 'species-list', params: { keyId: route.params.keyId } },
-    name: 'species-list',
-    label: 'Species List'
+    label: 'Textual keys'
   },
   {
     path: { name: 'interactive', params: { keyId: route.params.keyId } },
     name: 'interactive',
-    label: 'Interactive Key'
+    label: 'Interactive key'
   },
+  {
+    path: { name: 'species', params: { keyId: route.params.keyId } },
+    name: 'species',
+    label: 'Gallery'
+  },
+  {
+    path: { name: 'species-list', params: { keyId: route.params.keyId } },
+    name: 'species-list',
+    label: 'Species list'
+  },
+
   {
     path: { name: 'refine', params: { keyId: route.params.keyId } },
     name: 'refine',

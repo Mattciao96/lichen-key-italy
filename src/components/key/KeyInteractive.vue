@@ -52,21 +52,24 @@
     <div v-else class="text-center text-lg font-semibold">
       <p>Not available</p>
     </div>
-
-    <button
-      v-if="!isRoot"
-      @click="navigateToParent"
-      class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-    >
-      Go to Parent
-    </button>
-    <button
-      v-if="!isRoot"
-      @click="navigateToRoot"
-      class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-    >
-      Return to Root
-    </button>
+    <div class="w-full flex justify-center">
+      <div class="mt-4 flex justify-between w-full max-w-2xl">
+        <button
+          v-if="!isRoot"
+          @click="navigateToParent"
+          class="min-w-20 px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
+        >
+          Back
+        </button>
+        <button
+          v-if="!isRoot"
+          @click="navigateToRoot"
+          class="min-w-20 px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
+        >
+          Restart
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 

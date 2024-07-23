@@ -116,6 +116,12 @@ const router = createRouter({
               name: 'refine',
               component: () => import('../views/key/KeyRefineView.vue'),
               meta: { requiresKeyData: true }
+            },
+            {
+              path: 'duplicate',
+              name: 'duplicate',
+              component: () => import('../views/key/KeyDuplicateView.vue'),
+              meta: { requiresKeyData: true }
             }
           ]
         }

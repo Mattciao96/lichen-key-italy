@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, toRaw } from 'vue'
 import axios from 'axios'
 import Tree from '@/utils/key-builder'
 import {
@@ -135,7 +135,7 @@ export const useKeyStore = defineStore('key', () => {
     return response.data.records
   }
 
-  const buildKeyTree = (key: FullKey, records: number[]): Tree => {
+  const buildKeyTree = (key: FullKey, records: string[]): Tree => {
     const tree = new Tree()
     tree.buildTree(key.keyData)
     if (keyId.value === 'full') {
@@ -455,6 +455,18 @@ export const useKeyStore = defineStore('key', () => {
     }
   }*/
 
+  async function getMiniTree(speciesName: string) {
+    const uniqueRecords = keyTree.value.getTreeSpeciesData(speciesName)
+
+    const retrievedFullKey = await fetchFullKey()
+
+    const miniTree = buildKeyTree(retrievedFullKey, uniqueRecords)
+
+    const miniStepsListFromTree = miniTree.getTreeAsListById() as KeyLead[]
+    miniStepsListFromTree.shift()
+    return miniStepsListFromTree
+  }
+
   const resetAllExceptKey = () => {
     isLoading.value = false
     rootLeadId.value = null
@@ -497,6 +509,9 @@ export const useKeyStore = defineStore('key', () => {
     getNodeIdFromLeadId,
     getUniqueSpeciesWithImages,
     getUniqueSpeciesWithRecords,
+
+    // test
+    getMiniTree,
 
     setStepsListFromNodeId,
     setUniqueSpeciesWithImagesFromNodeId,

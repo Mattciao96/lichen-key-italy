@@ -261,4 +261,26 @@ export default class Tree {
 
     adjustIdsRecursive(this.root, null)
   }
+
+  findAllOccurrencesOfSpecies(speciesName: string): { leadId: number; leadRecordId: string }[] {
+    const occurrences: { leadId: number; leadRecordId: string }[] = []
+
+    const findRecursive = (node: Node) => {
+      if (node.data.leadSpecies === speciesName) {
+        occurrences.push({ leadId: node.data.leadId, leadRecordId: node.data.leadRecordId })
+      }
+      for (const child of node.children) {
+        findRecursive(child)
+      }
+    }
+
+    findRecursive(this.root)
+    return occurrences
+  }
+
+  getTreeSpeciesData(speciesName: string) {
+    const occurrences = this.findAllOccurrencesOfSpecies(speciesName)
+    const leadRecordIds = occurrences.map((o) => o.leadRecordId)
+    return leadRecordIds
+  }
 }

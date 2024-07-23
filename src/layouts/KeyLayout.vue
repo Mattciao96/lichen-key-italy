@@ -76,6 +76,11 @@ const routes = computed(() => [
     path: { name: 'refine', params: { keyId: route.params.keyId } },
     name: 'refine',
     label: 'Adjust Key'
+  },
+  {
+    path: { name: 'duplicate', params: { keyId: route.params.keyId } },
+    name: 'refine',
+    label: 'Duplicate records'
   }
 ])
 

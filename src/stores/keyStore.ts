@@ -14,7 +14,7 @@ export const useKeyStore = defineStore('key', () => {
   const currentLeadId = ref<string | null>(null)
 
   const recordsList = ref<string[]>([])
-  const fullKey = ref<FullKey | null>(null)
+  let fullKey = <FullKey | null>null
   const keyTree = ref<Tree | null>(null)
   const stepsList = ref<KeyLead[]>([])
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages(stepsList.value))
@@ -83,7 +83,7 @@ export const useKeyStore = defineStore('key', () => {
         stepsListFromTree.shift()
       }
 
-      fullKey.value = retrievedFullKey
+      fullKey = retrievedFullKey
       recordsList.value = retrievedRecords
       keyTree.value = newTree
       stepsList.value = stepsListFromTree
@@ -219,7 +219,7 @@ export const useKeyStore = defineStore('key', () => {
     currentLeadId.value = null
     error.value = null
     recordsList.value = []
-    fullKey.value = null
+    fullKey = null
     keyTree.value = null
     stepsList.value = []
     nodeIdOfCurrentSteps.value = null

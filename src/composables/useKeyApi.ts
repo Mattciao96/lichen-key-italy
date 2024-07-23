@@ -28,7 +28,7 @@ export const fetchFullKey = async (): Promise<FullKey> => {
   return response.data
 }
 
-export const fetchRecords = async (id: string): Promise<number[]> => {
+export const fetchRecords = async (id: string): Promise<string[]> => {
   if (id === 'full') {
     return []
   }

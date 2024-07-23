@@ -8,47 +8,42 @@ import type { KeyLead, KeyUniqueSpeciesData, FullKey } from '@/types'
 export const useKeyStore = defineStore('key', () => {
   const isLoading = ref(false)
   const error = ref<string | null>(null)
-  const keyId = ref<string | null>(null)
 
+  const keyId = ref<string | null>(null)
   const rootLeadId = ref<string | null>(null)
   const currentLeadId = ref<string | null>(null)
 
-  const recordsList = ref<number[]>([])
+  const recordsList = ref<string[]>([])
   const fullKey = ref<FullKey | null>(null)
   const keyTree = ref<Tree | null>(null)
   const stepsList = ref<KeyLead[]>([])
-
-  const speciesList = ref<KeyUniqueSpeciesData[] | null>(null)
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
+  const speciesCount = computed(() => getSpeciesCount())
 
   const nodeIdOfCurrentSteps = ref<string | null>(null)
-  //const nodeIdOfCurrentSpecies = ref<string | null>(null)
   const nodeIdOfCurrentSpeciesImages = ref<string | null>(null)
   const isCurrentNodeValid = ref(true)
   const currentStepsList = ref<KeyLead[]>([])
   const currentUniqueSpeciesWithImages = ref<KeyUniqueSpeciesData[]>([])
+  const currentSpeciesCount = computed(() => getSpeciesCount(parseInt(currentLeadId.value ?? '0')))
 
-  const speciesCount = computed(() => getSpeciesCount())
-  const currentSpeciesCount = computed(() => getSpeciesCount(parseInt(currentLeadId.value)))
-
-  const setKeyId = (keyUUID: string) => {
-    if (keyId.value !== keyUUID) {
-      resetAllExceptKey()
-    }
-    keyId.value = keyUUID
-  }
-
-  const setRootLeadId = (leadId: string) => {
-    rootLeadId.value = leadId
-    currentLeadId.value = leadId
-  }
-
-  const setCurrentLeadId = (leadId: string) => {
-    currentLeadId.value = leadId
-  }
-
-  const resetCurrentLeadIdToRoot = () => {
-    currentLeadId.value = rootLeadId.value
+  // utils
+  const reviseStepList = (stepsList: KeyLead[]) => {
+    const speciesMap = new Map<string, KeyUniqueSpeciesData>()
+    stepsList.forEach((item) => {
+      if (item.leadSpecies !== null) {
+        if (!speciesMap.has(item.leadSpecies)) {
+          speciesMap.set(item.leadSpecies, {
+            name: item.leadSpecies,
+            image: item.speciesImage,
+            italicId: item.italicId,
+            records: []
+          })
+        }
+        speciesMap.get(item.leadSpecies).records.push(item.leadRecordId)
+      }
+    })
+    return Array.from(speciesMap.values()).sort((a, b) => a.name.localeCompare(b.name))
   }
 
   const buildKeyTree = (key: FullKey, records: string[]): Tree => {
@@ -97,12 +92,32 @@ export const useKeyStore = defineStore('key', () => {
         setRootLeadId(newTree.root.data.leadId.toString())
       }
 
-      speciesList.value = getUniqueSpeciesWithImages()
+      //speciesList.value = getUniqueSpeciesWithImages()
     } catch (e) {
       error.value = e instanceof Error ? e.message : 'An unknown error occurred'
     } finally {
       isLoading.value = false
     }
+  }
+
+  const setKeyId = (keyUUID: string) => {
+    if (keyId.value !== keyUUID) {
+      resetAllExceptKey()
+    }
+    keyId.value = keyUUID
+  }
+
+  const setRootLeadId = (leadId: string) => {
+    rootLeadId.value = leadId
+    currentLeadId.value = leadId
+  }
+
+  const setCurrentLeadId = (leadId: string) => {
+    currentLeadId.value = leadId
+  }
+
+  const resetCurrentLeadIdToRoot = () => {
+    currentLeadId.value = rootLeadId.value
   }
 
   const getSpeciesCount = (nodeId: number | null = null) => {
@@ -115,34 +130,29 @@ export const useKeyStore = defineStore('key', () => {
     return keyTree.value.getNumberOfUniqueLeaves(nodeId ?? 1)
   }
 
-  const reviseStepList = (stepsList: KeyLead[]) => {
-    const speciesMap = new Map<string, KeyUniqueSpeciesData>()
-    stepsList.forEach((item) => {
-      if (item.leadSpecies !== null) {
-        if (!speciesMap.has(item.leadSpecies)) {
-          speciesMap.set(item.leadSpecies, {
-            name: item.leadSpecies,
-            image: item.speciesImage,
-            italicId: item.italicId,
-            records: []
-          })
-        }
-        speciesMap.get(item.leadSpecies).records.push(item.leadRecordId)
-      }
-    })
-    return Array.from(speciesMap.values()).sort((a, b) => a.name.localeCompare(b.name))
-  }
-
   const getUniqueSpeciesWithImages = () => {
-    if (speciesList.value !== null) {
-      return speciesList.value
-    }
-
     const computedSpeciesList = reviseStepList(stepsList.value)
     return computedSpeciesList
   }
 
-  const setStepsListFromNodeId = (nodeId) => {
+  const getNodeIdFromLeadId = (leadId: number) => {
+    const tree = keyTree.value
+    if (!tree || !tree.root) {
+      return null
+    }
+    if (tree.root.children.length === 0) {
+      return tree.root
+    }
+
+    const actualNode = tree.find(leadId)
+    if (!actualNode) {
+      isCurrentNodeValid.value = false
+    }
+
+    return actualNode
+  }
+
+  const setStepsListFromNodeId = (nodeId: string) => {
     if (nodeId === nodeIdOfCurrentSteps.value) {
       return
     }
@@ -178,7 +188,7 @@ export const useKeyStore = defineStore('key', () => {
     currentStepsList.value = adjustedStepsList
   }
 
-  const setUniqueSpeciesWithImagesFromNodeId = (nodeId) => {
+  const setUniqueSpeciesWithImagesFromNodeId = (nodeId: string) => {
     if (nodeId === nodeIdOfCurrentSpeciesImages.value) {
       return
     }
@@ -205,23 +215,6 @@ export const useKeyStore = defineStore('key', () => {
     nodeIdOfCurrentSpeciesImages.value = nodeId
   }
 
-  const getNodeIdFromLeadId = (leadId: number) => {
-    const tree = keyTree.value
-    if (!tree) {
-      return null
-    }
-    if (tree.root.children.length === 0) {
-      return tree.root
-    }
-
-    const actualNode = tree.find(leadId)
-    if (!actualNode) {
-      isCurrentNodeValid.value = false
-    }
-
-    return actualNode
-  }
-
   const resetAllExceptKey = () => {
     isLoading.value = false
     rootLeadId.value = null
@@ -231,7 +224,6 @@ export const useKeyStore = defineStore('key', () => {
     fullKey.value = null
     keyTree.value = null
     stepsList.value = []
-    speciesList.value = null
     nodeIdOfCurrentSteps.value = null
     nodeIdOfCurrentSpeciesImages.value = null
     isCurrentNodeValid.value = true
@@ -254,23 +246,26 @@ export const useKeyStore = defineStore('key', () => {
     speciesCount,
     keyTree,
     stepsList,
-    setKeyId,
-    setCurrentLeadId,
-    resetCurrentLeadIdToRoot,
-    fetchData,
-    getNodeIdFromLeadId,
-    getUniqueSpeciesWithImages,
+    uniqueSpeciesWithImages,
 
-    setStepsListFromNodeId,
-    setUniqueSpeciesWithImagesFromNodeId,
-
+    isCurrentNodeValid,
     nodeIdOfCurrentSteps,
     nodeIdOfCurrentSpeciesImages,
-    isCurrentNodeValid,
     currentStepsList,
     currentUniqueSpeciesWithImages,
     currentSpeciesCount,
-    uniqueSpeciesWithImages,
+
+    fetchData,
+
+    setKeyId,
+    setCurrentLeadId,
+    setStepsListFromNodeId,
+    setUniqueSpeciesWithImagesFromNodeId,
+
+    getNodeIdFromLeadId,
+    getUniqueSpeciesWithImages,
+
+    resetCurrentLeadIdToRoot,
     resetStore
   }
 })

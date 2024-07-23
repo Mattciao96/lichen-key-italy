@@ -42,3 +42,9 @@ export async function updateLastFetchTime(): Promise<void> {
   const db = await openKeyDB()
   await db.put('lastFetch', Date.now(), 'fullKeyFetch')
 }
+
+export async function clearKeyStoreData(): Promise<void> {
+  const db = await openKeyDB()
+  await db.clear('fullKey')
+  await db.clear('lastFetch')
+}

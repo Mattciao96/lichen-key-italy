@@ -9,27 +9,12 @@ import {
   updateLastFetchTime
 } from '@/utils/indexedDB'
 
-import type { KeyLead, KeyUniqueSpeciesData } from '@/types'
+import type { KeyLead, KeyUniqueSpeciesData, FullKey } from '@/types'
 
 interface SpeciesInfo {
   name: string
   image: string | null
   italicId: number | null
-}
-
-interface FullKey {
-  keyData: KeyLead[]
-}
-
-interface KeyDB {
-  fullKey: {
-    key: string
-    value: FullKey
-  }
-  lastFetch: {
-    key: string
-    value: number
-  }
 }
 
 export const useKeyStore = defineStore('key', () => {
@@ -103,7 +88,7 @@ export const useKeyStore = defineStore('key', () => {
     currentLeadId.value = rootLeadId.value
   }
 
-  const fetchFullKey = async (): Promise<FullKey> => {
+  /*const fetchFullKey = async (): Promise<FullKey> => {
     const db = await dbPromise
     const storedKey = await db.get('fullKey', 'currentKey')
     const lastFetchTime = await db.get('lastFetch', 'fullKeyFetch')
@@ -117,6 +102,24 @@ export const useKeyStore = defineStore('key', () => {
 
     await db.put('fullKey', response.data, 'currentKey')
     await db.put('lastFetch', currentTime, 'fullKeyFetch')
+
+    return response.data
+  }*/
+
+  const fetchFullKey = async (): Promise<FullKey> => {
+    const storedKey = await getStoredFullKey()
+    const lastFetchTime = await getLastFetchTime()
+    const currentTime = new Date().getTime()
+
+    if (storedKey && lastFetchTime && currentTime - lastFetchTime < 24 * 60 * 60 * 1000) {
+      return storedKey
+    }
+    console.log('refetch fullkey')
+
+    const response = await axios.get<FullKey>('https://italic.units.it/api/v1/full-key')
+
+    await storeFullKey(response.data)
+    await updateLastFetchTime()
 
     return response.data
   }
@@ -159,7 +162,7 @@ export const useKeyStore = defineStore('key', () => {
       ])
 
       const newTree = buildKeyTree(retrievedFullKey, retrievedRecords)
-      console.log({ newTree })
+
       // tentative for one species
       let stepsListFromTree = []
       if (newTree.root && newTree.root.children.length === 0) {

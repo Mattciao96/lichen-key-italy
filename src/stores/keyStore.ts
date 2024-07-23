@@ -17,7 +17,7 @@ export const useKeyStore = defineStore('key', () => {
   const fullKey = ref<FullKey | null>(null)
   const keyTree = ref<Tree | null>(null)
   const stepsList = ref<KeyLead[]>([])
-  const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
+  const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages(stepsList.value))
   const speciesCount = computed(() => getSpeciesCount())
 
   const nodeIdOfCurrentSteps = ref<string | null>(null)
@@ -91,8 +91,6 @@ export const useKeyStore = defineStore('key', () => {
       if (newTree.root) {
         setRootLeadId(newTree.root.data.leadId.toString())
       }
-
-      //speciesList.value = getUniqueSpeciesWithImages()
     } catch (e) {
       error.value = e instanceof Error ? e.message : 'An unknown error occurred'
     } finally {
@@ -130,8 +128,8 @@ export const useKeyStore = defineStore('key', () => {
     return keyTree.value.getNumberOfUniqueLeaves(nodeId ?? 1)
   }
 
-  const getUniqueSpeciesWithImages = () => {
-    const computedSpeciesList = reviseStepList(stepsList.value)
+  const getUniqueSpeciesWithImages = (stepsList: KeyLead[]) => {
+    const computedSpeciesList = reviseStepList(stepsList)
     return computedSpeciesList
   }
 

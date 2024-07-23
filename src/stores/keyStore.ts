@@ -27,18 +27,6 @@ export const useKeyStore = defineStore('key', () => {
   const speciesList = ref<KeyUniqueSpeciesData[] | null>(null)
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
   //const speciesCount = computed(() => uniqueSpeciesWithImages.value.length)
-  const speciesCount = computed(() => {
-    if (keyId.value === 'no-data') {
-      return 0
-    }
-    if (!keyTree.value) {
-      return 0
-    }
-    if (uniqueSpeciesWithImages.value.length === 1) {
-      return 1
-    }
-    return keyTree.value.getNumberOfUniqueLeaves(1)
-  })
   const nodeIdOfCurrentSteps = ref<string | null>(null)
   const nodeIdOfCurrentSpecies = ref<string | null>(null)
   const nodeIdOfCurrentSpeciesImages = ref<string | null>(null)
@@ -46,20 +34,11 @@ export const useKeyStore = defineStore('key', () => {
   const isCurrentNodeValid = ref(true)
   const currentStepsList = ref<KeyLead[]>([])
   const currentUniqueSpeciesWithImages = ref<KeyUniqueSpeciesData[]>([])
-  const currentSpeciesCount = computed(() => {
-    if (keyId.value === 'no-data') {
-      return 0
-    }
-    if (!keyTree.value) {
-      return null
-    }
-    if (speciesCount.value === 1) {
-      return 1
-    }
-    return keyTree.value.getNumberOfUniqueLeaves(parseInt(currentLeadId.value))
-  })
+  const currentSpeciesCount = computed(() => getSpeciesCount(parseInt(currentLeadId.value)))
 
+  const speciesCount = computed(() => getSpeciesCount())
   const currentUniqueSpeciesList = ref<{ name: string; records: number[] }[]>([])
+
   const currentUniqueSpeciesWithRecords = ref<{ name: string; records: number[] }[]>([])
 
   const setKeyId = (keyUUID: string) => {
@@ -172,19 +151,14 @@ export const useKeyStore = defineStore('key', () => {
     return computedSpeciesList
   }
 
-  const getUniqueSpeciesWithRecords = () => {
-    const speciesMap = new Map<string, { name: string; records: number[] }>()
-
-    stepsList.value.forEach((item) => {
-      if (item.leadSpecies !== null) {
-        if (!speciesMap.has(item.leadSpecies)) {
-          speciesMap.set(item.leadSpecies, { name: item.leadSpecies, records: [] })
-        }
-
-        speciesMap.get(item.leadSpecies)!.records.push(item.leadRecordId)
-      }
-    })
-    return Array.from(speciesMap.values()).sort((a, b) => a.name.localeCompare(b.name))
+  const getSpeciesCount = (nodeId: number | null = null) => {
+    if (keyId.value === 'no-data' || !keyTree.value) {
+      return 0
+    }
+    if (uniqueSpeciesWithImages.value.length === 1) {
+      return 1
+    }
+    return keyTree.value.getNumberOfUniqueLeaves(nodeId ?? 1)
   }
 
   const setStepsListFromNodeId = (nodeId) => {
@@ -328,7 +302,6 @@ export const useKeyStore = defineStore('key', () => {
     fetchData,
     getNodeIdFromLeadId,
     getUniqueSpeciesWithImages,
-    getUniqueSpeciesWithRecords,
 
     setStepsListFromNodeId,
     setUniqueSpeciesWithImagesFromNodeId,

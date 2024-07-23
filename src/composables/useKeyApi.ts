@@ -1,17 +1,45 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
+import type { FullKey } from '@/types'
 import {
   getStoredFullKey,
   storeFullKey,
   getLastFetchTime,
   updateLastFetchTime
 } from '@/utils/indexedDB'
-
 import axios from 'axios'
 
 const api = axios.create({
   baseURL: 'https://italic.units.it/api/v1'
 })
 
+export const fetchFullKey = async (): Promise<FullKey> => {
+  const storedKey = await getStoredFullKey()
+  const lastFetchTime = await getLastFetchTime()
+  const currentTime = new Date().getTime()
+
+  if (storedKey && lastFetchTime && currentTime - lastFetchTime < 24 * 60 * 60 * 1000) {
+    return storedKey
+  }
+
+  const response = await axios.get<FullKey>('https://italic.units.it/api/v1/full-key')
+  await storeFullKey(response.data)
+  await updateLastFetchTime()
+
+  return response.data
+}
+
+export const fetchRecords = async (id: string): Promise<number[]> => {
+  if (id === 'full') {
+    return []
+  }
+  const response = await axios.post<{ records: number[] }>(
+    'https://italic.units.it/api/v1/key-records',
+    { 'key-id': id }
+  )
+  return response.data.records
+}
+
+/*
 export function useFullKeyQuery() {
   return useQuery({
     queryKey: ['fullKey'],
@@ -43,6 +71,8 @@ export function useFullKeyQuery() {
     refetchOnReconnect: false
   })
 }
+*/
+/*
 
 export function useKeyRecordsQuery(keyId: string | null) {
   return useQuery({
@@ -71,6 +101,7 @@ export function useKeyRecordsQuery(keyId: string | null) {
     refetchOnReconnect: false
   })
 }
+*/
 
 /*export function useKeyFilterMutation() {
   return useMutation({

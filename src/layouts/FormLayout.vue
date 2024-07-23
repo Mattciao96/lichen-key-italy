@@ -4,7 +4,7 @@
     <div v-else>
       <FormStepper />
       <!--      <form id="filter-form" @submit.prevent="submitForm">-->
-      <form id="filter-form" @submit.prevent="submitFormWithRefresh">
+      <form id="filter-form" @submit.prevent="submitForm">
         <RouterView />
       </form>
       <NavigationForm :isLoading="isLoading" />
@@ -20,7 +20,6 @@ import { useKeyFilterMutation } from '@/composables/useKeyApi'
 import { useFormStore } from '@/stores/formStore'
 import { useKeyStore } from '@/stores/keyStore'
 import { useRouter, RouterView } from 'vue-router'
-import { clearKeyStoreData } from '@/utils/indexedDB'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const keyFilterMutation = useKeyFilterMutation()
@@ -36,24 +35,6 @@ const submitForm = async () => {
   isLoading.value = true
 
   try {
-    keyStore.resetStore()
-    const filters = formStore.getFormValuesForSubmission()
-    const result = await keyFilterMutation.mutateAsync(filters)
-    keyStore.setKeyId(result['key-id'])
-    formStore.resetForm()
-    await router.push(`/${result['key-id']}/nodes/1/species-list`)
-  } catch (error) {
-    console.error('Error submitting form:', error)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-const submitFormWithRefresh = async () => {
-  isLoading.value = true
-
-  try {
-    await clearKeyStoreData()
     keyStore.resetStore()
     const filters = formStore.getFormValuesForSubmission()
     const result = await keyFilterMutation.mutateAsync(filters)

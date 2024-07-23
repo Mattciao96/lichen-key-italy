@@ -455,18 +455,6 @@ export const useKeyStore = defineStore('key', () => {
     }
   }*/
 
-  async function getMiniTree(speciesName: string) {
-    const uniqueRecords = keyTree.value.getTreeSpeciesData(speciesName)
-
-    const retrievedFullKey = await fetchFullKey()
-
-    const miniTree = buildKeyTree(retrievedFullKey, uniqueRecords)
-
-    const miniStepsListFromTree = miniTree.getTreeAsListById() as KeyLead[]
-    miniStepsListFromTree.shift()
-    return miniStepsListFromTree
-  }
-
   const resetAllExceptKey = () => {
     isLoading.value = false
     rootLeadId.value = null
@@ -509,9 +497,6 @@ export const useKeyStore = defineStore('key', () => {
     getNodeIdFromLeadId,
     getUniqueSpeciesWithImages,
     getUniqueSpeciesWithRecords,
-
-    // test
-    getMiniTree,
 
     setStepsListFromNodeId,
     setUniqueSpeciesWithImagesFromNodeId,

@@ -11,7 +11,7 @@
       </RouterLink>
     </div>
 
-    <div class="lg:w-32 px-2 py-2">
+    <div class="flex lg:[&>button]:min-w-48 gap-4 px-2 py-2">
       <button
         v-if="actualRouteIndex === 2"
         type="submit"
@@ -20,6 +20,16 @@
         class="p-2 w-full bg-primary-500 text-white rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center"
       >
         Submit
+      </button>
+      <button
+        v-if="actualRouteIndex === 2"
+        type="submit"
+        form="filter-form"
+        @click="clearKeyStoreData"
+        :disabled="isLoading"
+        class="p-2 w-full bg-primary-500 text-white rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center"
+      >
+        Submit and refresh
       </button>
     </div>
 
@@ -39,6 +49,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { clearKeyStoreData } from '@/utils/indexedDB'
 
 const route = useRoute()
 const formRoutes = ['/filters/general', '/filters/traits', '/filters/ecology']

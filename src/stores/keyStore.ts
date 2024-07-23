@@ -5,12 +5,6 @@ import { fetchFullKey, fetchRecords } from '@/composables/useKeyApi'
 
 import type { KeyLead, KeyUniqueSpeciesData, FullKey } from '@/types'
 
-interface SpeciesInfo {
-  name: string
-  image: string | null
-  italicId: number | null
-}
-
 export const useKeyStore = defineStore('key', () => {
   const isLoading = ref(false)
   const error = ref<string | null>(null)
@@ -26,20 +20,16 @@ export const useKeyStore = defineStore('key', () => {
 
   const speciesList = ref<KeyUniqueSpeciesData[] | null>(null)
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages())
-  //const speciesCount = computed(() => uniqueSpeciesWithImages.value.length)
+
   const nodeIdOfCurrentSteps = ref<string | null>(null)
-  const nodeIdOfCurrentSpecies = ref<string | null>(null)
+  //const nodeIdOfCurrentSpecies = ref<string | null>(null)
   const nodeIdOfCurrentSpeciesImages = ref<string | null>(null)
-  const nodeIdOfCurrentSpeciesWithRecord = ref<string | null>(null)
   const isCurrentNodeValid = ref(true)
   const currentStepsList = ref<KeyLead[]>([])
   const currentUniqueSpeciesWithImages = ref<KeyUniqueSpeciesData[]>([])
-  const currentSpeciesCount = computed(() => getSpeciesCount(parseInt(currentLeadId.value)))
 
   const speciesCount = computed(() => getSpeciesCount())
-  const currentUniqueSpeciesList = ref<{ name: string; records: number[] }[]>([])
-
-  const currentUniqueSpeciesWithRecords = ref<{ name: string; records: number[] }[]>([])
+  const currentSpeciesCount = computed(() => getSpeciesCount(parseInt(currentLeadId.value)))
 
   const setKeyId = (keyUUID: string) => {
     if (keyId.value !== keyUUID) {
@@ -115,22 +105,19 @@ export const useKeyStore = defineStore('key', () => {
     }
   }
 
-  const getUniqueSpeciesWithImages = () => {
-    if (speciesList.value !== null) {
-      return speciesList.value
+  const getSpeciesCount = (nodeId: number | null = null) => {
+    if (keyId.value === 'no-data' || !keyTree.value) {
+      return 0
     }
+    if (uniqueSpeciesWithImages.value.length === 1) {
+      return 1
+    }
+    return keyTree.value.getNumberOfUniqueLeaves(nodeId ?? 1)
+  }
 
-    const speciesMap = new Map<
-      string,
-      {
-        name: string
-        image: string
-        italicId: string
-        records: number[]
-      }
-    >()
-
-    stepsList.value.forEach((item) => {
+  const reviseStepList = (stepsList: KeyLead[]) => {
+    const speciesMap = new Map<string, KeyUniqueSpeciesData>()
+    stepsList.forEach((item) => {
       if (item.leadSpecies !== null) {
         if (!speciesMap.has(item.leadSpecies)) {
           speciesMap.set(item.leadSpecies, {
@@ -140,25 +127,19 @@ export const useKeyStore = defineStore('key', () => {
             records: []
           })
         }
-        speciesMap.get(item.leadSpecies)!.records.push(item.leadRecordId)
+        speciesMap.get(item.leadSpecies).records.push(item.leadRecordId)
       }
     })
-
-    const computedSpeciesList = Array.from(speciesMap.values()).sort((a, b) =>
-      a.name.localeCompare(b.name)
-    )
-
-    return computedSpeciesList
+    return Array.from(speciesMap.values()).sort((a, b) => a.name.localeCompare(b.name))
   }
 
-  const getSpeciesCount = (nodeId: number | null = null) => {
-    if (keyId.value === 'no-data' || !keyTree.value) {
-      return 0
+  const getUniqueSpeciesWithImages = () => {
+    if (speciesList.value !== null) {
+      return speciesList.value
     }
-    if (uniqueSpeciesWithImages.value.length === 1) {
-      return 1
-    }
-    return keyTree.value.getNumberOfUniqueLeaves(nodeId ?? 1)
+
+    const computedSpeciesList = reviseStepList(stepsList.value)
+    return computedSpeciesList
   }
 
   const setStepsListFromNodeId = (nodeId) => {
@@ -220,27 +201,7 @@ export const useKeyStore = defineStore('key', () => {
       return
     }
 
-    const speciesMap = new Map<string, KeyUniqueSpeciesData>()
-
-    // combined
-    tempStepsList.forEach((item) => {
-      if (item.leadSpecies !== null) {
-        if (!speciesMap.has(item.leadSpecies)) {
-          speciesMap.set(item.leadSpecies, {
-            name: item.leadSpecies,
-            image: item.speciesImage,
-            italicId: item.italicId,
-            records: []
-          })
-        }
-        speciesMap.get(item.leadSpecies).records.push(item.leadRecordId)
-      }
-    })
-
-    currentUniqueSpeciesWithImages.value = Array.from(speciesMap.values()).sort((a, b) =>
-      a.name.localeCompare(b.name)
-    )
-
+    currentUniqueSpeciesWithImages.value = reviseStepList(tempStepsList)
     nodeIdOfCurrentSpeciesImages.value = nodeId
   }
 
@@ -272,13 +233,10 @@ export const useKeyStore = defineStore('key', () => {
     stepsList.value = []
     speciesList.value = null
     nodeIdOfCurrentSteps.value = null
-    nodeIdOfCurrentSpecies.value = null
     nodeIdOfCurrentSpeciesImages.value = null
     isCurrentNodeValid.value = true
     currentStepsList.value = []
     currentUniqueSpeciesWithImages.value = []
-    currentUniqueSpeciesList.value = []
-    currentUniqueSpeciesWithRecords.value = []
   }
 
   const resetStore = () => {
@@ -305,17 +263,12 @@ export const useKeyStore = defineStore('key', () => {
 
     setStepsListFromNodeId,
     setUniqueSpeciesWithImagesFromNodeId,
-    /*setUniqueSpeciesListFromNodeId,*/
 
     nodeIdOfCurrentSteps,
-    nodeIdOfCurrentSpecies,
     nodeIdOfCurrentSpeciesImages,
-    nodeIdOfCurrentSpeciesWithRecord,
     isCurrentNodeValid,
     currentStepsList,
     currentUniqueSpeciesWithImages,
-    currentUniqueSpeciesList,
-    currentUniqueSpeciesWithRecords,
     currentSpeciesCount,
     uniqueSpeciesWithImages,
     resetStore

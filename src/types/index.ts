@@ -28,7 +28,7 @@ export type FullKey = {
  * */
 export type KeyUniqueSpeciesData = {
   name: string
-  image: string
-  italicId: string
+  image: string | null
+  italicId: string | null
   records: number[]
 }

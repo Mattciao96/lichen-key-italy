@@ -1,9 +1,9 @@
 <template>
   <div v-for="group in filterData" :key="group.id">
     <div class="relative py-4 px-0 sm:px-4 gap-2 flex flex-col items-center">
-      <h3 class="text-sm sm:text-normal">{{ group.title }}</h3>
+      <h3 class="text-sm sm:text-base">{{ group.title }}</h3>
       <div
-        class="relative flex gap-2 lg:gap-4 justify-center flex-wrap max-w-[348px] sm:max-w-[488] lg:max-w-[496]"
+        class="relative flex gap-2 lg:gap-4 justify-center flex-wrap max-w-[348px] sm:max-w-[488px] lg:max-w-[496px]"
       >
         <label
           v-for="option in group.items"

@@ -20,7 +20,7 @@
       <div
         v-if="isModalOpen"
         @click="closeModal"
-        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999999]"
       >
         <!-- Modal Content -->
         <div @click.stop class="bg-white rounded-lg w-full max-w-2xl h-[80vh] flex flex-col">

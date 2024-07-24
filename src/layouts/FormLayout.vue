@@ -8,7 +8,7 @@
       </div>
 
       <!--      <form id="filter-form" @submit.prevent="submitForm">-->
-      <form id="filter-form" @submit.prevent="submitForm">
+      <form class="text-sm sm:text-normal" id="filter-form" @submit.prevent="submitForm">
         <RouterView />
       </form>
       <NavigationForm :isLoading="isLoading" />

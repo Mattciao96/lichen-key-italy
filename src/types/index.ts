@@ -26,9 +26,28 @@ export type FullKey = {
 /**
  * The type for the data used by gallery, species-list and adjust
  * */
+
 export type KeyUniqueSpeciesData = {
   name: string
   image: string | null
   italicId: number | null
   records: number[]
+}
+
+/**
+ * The type for teh form data
+ * */
+
+export type FormData = {
+  id: string
+  title: string
+  depend?: {
+    id: string
+    item: string
+  }
+  items: Array<{
+    value: string
+    text: string
+    image?: string
+  }>
 }

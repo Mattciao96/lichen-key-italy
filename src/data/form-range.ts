@@ -1,4 +1,5 @@
-export const rangeData = [
+import type { FormData } from '@/types'
+export const rangeData: FormData[] = [
   {
     id: 'PH',
     title: 'pH of the substratum',

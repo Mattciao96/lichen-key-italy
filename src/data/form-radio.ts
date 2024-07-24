@@ -1,4 +1,5 @@
-export const radioData = [
+import type { FormData } from '@/types'
+export const radioData: FormData[] = [
   /*{
     id: '4',
     title: 'Substratum',

@@ -1,4 +1,5 @@
-export const rarityData = [
+import type { FormData } from '@/types'
+export const rarityData: FormData[] = [
   {
     id: 'COMM',
     title: 'Commonness / Rarity',

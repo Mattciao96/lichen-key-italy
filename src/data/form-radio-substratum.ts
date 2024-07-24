@@ -1,5 +1,6 @@
 // 4 has only 1, 2 and 3
-export const radioDataSubstratum = [
+import type { FormData } from '@/types'
+export const radioDataSubstratum: FormData[] = [
   {
     id: '4-pseudo',
     title: 'Substratum',

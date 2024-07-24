@@ -1,8 +1,12 @@
 <template>
   <div class="max-w-4xl mx-auto">
     <LoadingSpinner v-if="isLoading" />
-    <div v-else>
+    <div class="relative" v-else>
       <FormStepper />
+      <div class="grid place-items-center py-6">
+        <FilterModal />
+      </div>
+
       <!--      <form id="filter-form" @submit.prevent="submitForm">-->
       <form id="filter-form" @submit.prevent="submitForm">
         <RouterView />
@@ -21,6 +25,7 @@ import { useFormStore } from '@/stores/formStore'
 import { useKeyStore } from '@/stores/keyStore'
 import { useRouter, RouterView } from 'vue-router'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import FilterModal from '@/components/form/FilterModal.vue'
 
 const keyFilterMutation = useKeyFilterMutation()
 const formStore = useFormStore()

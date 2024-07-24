@@ -1,4 +1,5 @@
-export const selectData = [
+import type { FormData } from '@/types'
+export const selectData: FormData[] = [
   /*{
     id: 'subst',
     title: 'Substratum',

@@ -1,4 +1,5 @@
-export const lichenizedData = [
+import type { FormData } from '@/types'
+export const lichenizedData: FormData[] = [
   {
     id: 'non-lichen',
     title: 'Non lichenized species',

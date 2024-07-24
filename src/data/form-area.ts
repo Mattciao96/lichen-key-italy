@@ -1,4 +1,6 @@
-export const selectDataArea = [
+import type { FormData } from '@/types'
+
+export const selectDataArea: FormData[] = [
   {
     id: 'area',
     title: 'Taxa to work on',

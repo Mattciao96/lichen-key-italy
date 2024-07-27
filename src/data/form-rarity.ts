@@ -3,7 +3,7 @@ export const rarityData: FormData[] = [
   {
     id: 'COMM',
     title: 'Commonness / Rarity',
-    depend: { id: 'area', item: 'italy' },
+    depend: { id: 'ecoregion', item: 'SELECTED' },
     items: [
       {
         value: '1',

@@ -57,9 +57,15 @@ const isDropdownDisabled = (group) => {
   let dependentValue = formStore.getFormField(group.depend.id)
   dependentValue = dependentValue ? dependentValue.value : ''
 
-  console.log({ coso1: dependentValue, coso2: group })
-  const isDisabled = dependentValue !== group.depend.item
+  //console.log({ coso1: dependentValue, coso2: group })
+  let isDisabled = true
 
+  // selected acts as a keyword to disable the dropdown if the related field is not selected
+  if (group.depend.item === 'SELECTED') {
+    isDisabled = dependentValue === ''
+  } else {
+    isDisabled = dependentValue === group.depend.item
+  }
   // If the dropdown is disabled, remove the corresponding field from the store
   console.log({ isDisabled })
 

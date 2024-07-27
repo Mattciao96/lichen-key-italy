@@ -85,7 +85,7 @@ export const radioData: FormData[] = [
       }
     ]
   },
-  {
+  /*{
     id: '27',
     title: 'Thallus',
 
@@ -97,6 +97,23 @@ export const radioData: FormData[] = [
       },
       {
         text: 'Heteromerous, the photobionts occupying a distinct layer (cyanobacterial lichens only)',
+        value: '2',
+        image: 'hetero.png'
+      }
+    ]
+  },*/
+  {
+    id: '27',
+    title: 'Thallus',
+
+    items: [
+      {
+        text: 'Gelatinous when wet',
+        value: '1',
+        image: 'homo.png'
+      },
+      {
+        text: 'Not gelatinous when wet',
         value: '2',
         image: 'hetero.png'
       }
@@ -121,7 +138,7 @@ export const radioData: FormData[] = [
   },
   {
     id: '39',
-    title: 'Ascocarps',
+    title: 'Ascocarps (crustose phycolichens lichens only!)',
 
     items: [
       {
@@ -130,7 +147,7 @@ export const radioData: FormData[] = [
         image: 'ascocarp.png'
       },
       {
-        text: 'Absent (sterile crusts, crustose phycolichens lichens only)',
+        text: 'Absent (sterile crusts)',
         value: '1',
         image: 'no-ascocarp.png'
       }

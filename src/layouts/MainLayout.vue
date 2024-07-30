@@ -5,15 +5,19 @@
   <main class="p-2 md:p-3 lg:p-4">
     <RouterView />
   </main>
-  <ScrollTop />
+  <ScrollTop v-if="showScrollTop" />
   <Footer />
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import ScrollTop from 'primevue/scrolltop'
 import NavigationBar from '@/components/NavigationBar.vue'
 import Footer from '@/components/Footer.vue'
+const route = useRoute()
+
+const showScrollTop = computed(() => !route.path.startsWith('/filters/'))
 </script>
 
 <style scoped>

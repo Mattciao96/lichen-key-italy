@@ -3,15 +3,15 @@
     <LoadingSpinner v-if="isLoading" />
     <div class="relative" v-else>
       <FormStepper />
-      <div class="grid place-items-center py-6">
-        <FilterModal />
-      </div>
+
+      <!--        <FilterModal />-->
+      <NavigationForm :isLoading="isLoading" :hasMobileMenu="false" />
 
       <!--      <form id="filter-form" @submit.prevent="submitForm">-->
       <form class="text-sm sm:text-base" id="filter-form" @submit.prevent="submitForm">
         <RouterView />
       </form>
-      <NavigationForm :isLoading="isLoading" />
+      <NavigationForm :isLoading="isLoading" :hasMobileMenu="true" />
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ import { useFormStore } from '@/stores/formStore'
 import { useKeyStore } from '@/stores/keyStore'
 import { useRouter, RouterView } from 'vue-router'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import FilterModal from '@/components/form/FilterModal.vue'
+//import FilterModal from '@/components/form/FilterModal.vue'
 
 const keyFilterMutation = useKeyFilterMutation()
 const formStore = useFormStore()

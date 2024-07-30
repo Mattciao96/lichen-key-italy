@@ -1,56 +1,49 @@
 <template>
   <div>
-    <div class="hidden lg:block mt-8 mb-12">
-      <div class="max-w-4xl mx-auto px-8">
-        <div class="grid grid-cols-3 items-center h-20">
-          <div class="justify-self-start">
-            <button
-              v-if="actualRouteIndex > 0"
-              @click="goToPrevious"
-              class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-            >
-              <i class="pi pi-chevron-left mr-2"></i>
-              Previous
-            </button>
-          </div>
+    <div class="hidden md:block w-full max-w-4xl mt-4 px-2 mx-auto">
+      <div class="grid grid-cols-3 place-items-center h-10">
+        <div class="justify-self-start">
+          <button
+            v-if="actualRouteIndex > 0"
+            @click="goToPrevious"
+            class="w-32 h-10 bg-surface-100 text-surface-700 rounded-full text-sm font-medium hover:bg-surface-200 transition-colors"
+          >
+            <i class="pi pi-chevron-left mr-2"></i>
+            Previous
+          </button>
+        </div>
 
-          <div class="justify-self-center flex space-x-4">
+        <div class="justify-self-center flex space-x-4">
+          <div class="justify-self-center">
+            <FilterModal v-if="Object.keys(formStore.formData).length !== 0" />
+          </div>
+        </div>
+
+        <div class="justify-self-end">
+          <button
+            v-if="actualRouteIndex < 2"
+            @click="goToNext"
+            class="w-32 h-10 bg-surface-100 text-surface-700 rounded-full text-sm font-medium hover:bg-surface-200 transition-colors"
+          >
+            Next
+            <i class="pi pi-chevron-right ml-2"></i>
+          </button>
+          <div v-if="actualRouteIndex === 2" class="flex gap-2">
             <button
-              v-if="actualRouteIndex === 2"
               type="submit"
               form="filter-form"
               :disabled="isLoading"
-              class="px-6 py-2 bg-primary-500 text-white rounded-full text-sm font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
+              class="w-32 h-10 bg-primary-500 text-white rounded-full text-sm font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
             >
               Submit
             </button>
             <button
-              v-if="actualRouteIndex === 2"
               type="submit"
               form="filter-form"
-              @click="clearKeyStoreData"
               :disabled="isLoading"
-              class="px-6 py-2 bg-secondary-500 text-white rounded-full text-sm font-medium hover:bg-secondary-600 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-opacity-50 transition-colors"
+              class="w-32 h-10 bg-primary-500 text-white rounded-full text-sm font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
             >
-              Submit and refresh
-            </button>
-            <button
-              v-if="actualRouteIndex !== 2"
-              @click="toggleFilters"
-              class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-            >
-              See Filters
-            </button>
-          </div>
-
-          <div class="justify-self-end">
-            <button
-              v-if="actualRouteIndex < 2"
-              @click="goToNext"
-              class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-            >
-              Next
-              <i class="pi pi-chevron-right ml-2"></i>
+              Submit / refresh
             </button>
           </div>
         </div>
@@ -58,41 +51,39 @@
     </div>
 
     <!-- Mobile view -->
-    <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg">
-      <div class="grid grid-cols-3 items-center h-16 px-4">
+    <div
+      v-if="hasMobileMenu"
+      class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-surface-300"
+    >
+      <div class="grid grid-cols-3 items-center h-14 px-4">
         <div class="justify-self-start">
           <button
             v-if="actualRouteIndex > 0"
             @click="goToPrevious"
-            class="w-10 h-10 flex items-center justify-center text-gray-600"
+            class="w-10 h-10 flex items-center justify-center text-surface-600"
           >
             <i class="pi pi-chevron-left text-xl"></i>
           </button>
         </div>
 
         <div class="justify-self-center">
-          <button
-            @click="toggleFilters"
-            class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm font-medium"
-          >
-            See Filters
-          </button>
+          <FilterModal v-if="Object.keys(formStore.formData).length !== 0" />
         </div>
 
         <div class="justify-self-end">
           <button
             v-if="actualRouteIndex < 2"
             @click="goToNext"
-            class="w-10 h-10 flex items-center justify-center text-gray-600"
+            class="w-10 h-10 flex items-center justify-center text-surface-600"
           >
             <i class="pi pi-chevron-right text-xl"></i>
           </button>
           <button
-            v-else
+            v-if="actualRouteIndex === 2"
             type="submit"
             form="filter-form"
             :disabled="isLoading"
-            class="px-4 py-2 bg-primary-500 text-white rounded-full text-sm font-medium"
+            class="w-20 h-10 bg-primary-500 text-white rounded-full text-sm font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
           >
             Submit
           </button>
@@ -104,11 +95,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { RouterLink, useRouter, useRoute } from 'vue-router'
-import { clearKeyStoreData } from '@/utils/indexedDB'
+import { useRouter, useRoute } from 'vue-router'
+import FilterModal from '@/components/form/FilterModal.vue'
+import { useFormStore } from '@/stores/formStore'
 
 const router = useRouter()
 const route = useRoute()
+const formStore = useFormStore()
 
 const formRoutes = ['/filters/general', '/filters/traits', '/filters/ecology']
 const actualRoute = computed(() => route.fullPath)
@@ -141,5 +134,6 @@ const toggleFilters = () => {
 
 defineProps<{
   isLoading: boolean
+  hasMobileMenu: boolean
 }>()
 </script>

@@ -8,7 +8,7 @@ import { useFormStore } from '@/stores/formStore'
  *
  * / (MainLayout: navbar + footer + scroller)
  * ├── '' (HomeView)
- * ├── filter (FilterLayout: step navigation + command navigation & submit)
+ * ├── filters (FilterLayout: step navigation + command navigation & submit)
  * │   ├── general (FilterGeneralView)
  * │   ├── traits (FilterTraitsView)
  * │   └── ecology (FilterEcologyView)

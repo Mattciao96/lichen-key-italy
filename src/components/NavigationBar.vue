@@ -1,7 +1,5 @@
 <template>
-  <nav
-    class="flex-1 items-center max-w container-fluid relative z-50 flex justify-between bg-surface-0/95 backdrop-blur supports-[backdrop-filter]:bg-surface-0/60"
-  >
+  <nav class="flex-1 items-center max-w container-fluid relative z-50 flex justify-between">
     <!-- logo -->
     <div class="flex gap-2 items-center">
       <div

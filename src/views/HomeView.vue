@@ -56,8 +56,8 @@
 <script setup lang="ts"></script>
 <style scoped>
 .text-title {
-  font-size: max(38px, min(9vw, 60px));
+  font-size: clamp(38px, 9vw, 50px);
   line-height: 1;
-  letter-spacing: -0.02em;
+  /*  letter-spacing: -0.02em;*/
 }
 </style>

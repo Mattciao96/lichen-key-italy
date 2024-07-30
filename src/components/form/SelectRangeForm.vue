@@ -1,7 +1,7 @@
 <template>
   <div v-for="group in rangeData" :key="group.id">
     <label :for="group.id">{{ group.title }}:</label>
-    <div class="pt-1 grid grid-cols-1 md:grid-cols-2 gap-2">
+    <div class="grid grid-cols-1 gap-2 pt-1 md:grid-cols-2">
       <div
         class="grid grid-cols-[50px_minmax(0,_1fr)] md:block"
         v-for="suffix in ['1', '2']"
@@ -25,7 +25,7 @@
           <button
             v-if="formStore.existsFormField(`${group.id}${suffix}`)"
             @click="formStore.removeFormField(`${group.id}${suffix}`)"
-            class="w-10 h-8 grid place-items-center bg-surface-0 absolute top-[3px] right-[3px] z-2"
+            class="z-2 absolute right-[3px] top-[3px] grid h-8 w-10 place-items-center bg-surface-0"
           >
             <i class="pi pi-times-circle text-surface-800"></i>
           </button>

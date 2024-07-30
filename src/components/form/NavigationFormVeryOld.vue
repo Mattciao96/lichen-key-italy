@@ -1,23 +1,23 @@
 <template>
-  <div class="flex justify-around my-4">
-    <div class="lg:w-32 px-2 py-2">
+  <div class="my-4 flex justify-around">
+    <div class="px-2 py-2 lg:w-32">
       <RouterLink
         v-if="actualRouteIndex > 0"
         :to="previousRoute"
-        class="p-2 w-full bg-gray-200 border border-gray-300 rounded-md flex items-center justify-center gap-2"
+        class="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-gray-200 p-2"
       >
         <i class="pi pi-arrow-left"></i>
         Previous
       </RouterLink>
     </div>
 
-    <div class="flex lg:[&>button]:min-w-48 gap-4 px-2 py-2">
+    <div class="flex gap-4 px-2 py-2 lg:[&>button]:min-w-48">
       <button
         v-if="actualRouteIndex === 2"
         type="submit"
         form="filter-form"
         :disabled="isLoading"
-        class="p-2 w-full bg-primary-500 text-white rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center"
+        class="flex w-full items-center justify-center rounded-md bg-primary-500 p-2 text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
       >
         Submit
       </button>
@@ -27,17 +27,17 @@
         form="filter-form"
         @click="clearKeyStoreData"
         :disabled="isLoading"
-        class="p-2 w-full bg-primary-500 text-white rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center"
+        class="flex w-full items-center justify-center rounded-md bg-primary-500 p-2 text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
       >
         Submit and refresh
       </button>
     </div>
 
-    <div class="lg:w-32 px-2 py-2">
+    <div class="px-2 py-2 lg:w-32">
       <RouterLink
         v-if="actualRouteIndex < 2"
         :to="nextRoute"
-        class="p-2 w-full bg-gray-200 border border-gray-300 rounded-md text-black flex items-center justify-center gap-2"
+        class="flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-gray-200 p-2 text-black"
       >
         Next
         <i class="pi pi-arrow-right"></i>

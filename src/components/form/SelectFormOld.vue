@@ -11,7 +11,7 @@
           :placeholder="group.title"
           :autoOptionFocus="true"
           append-to="self"
-          class="w-full md:w-[400px] !z-1"
+          class="!z-1 w-full md:w-[400px]"
           @show="toggleScroll"
           @hide="toggleScroll"
         />

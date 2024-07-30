@@ -1,8 +1,8 @@
 <template>
   <TitleForm>General Filter</TitleForm>
   <div class="space-y-4"><AreaForm /></div>
-  <div class="space-y-4 my-4"><SelectRarityForm /></div>
-  <div class="space-y-2 my-4"><SelectForm :filterData="lichenizedData" /></div>
+  <div class="my-4 space-y-4"><SelectRarityForm /></div>
+  <div class="my-4 space-y-2"><SelectForm :filterData="lichenizedData" /></div>
   <ComboBox
     placeholder="Genus"
     api-endpoint="https://italic.units.it/api/v1/genera"

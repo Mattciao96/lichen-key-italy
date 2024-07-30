@@ -25,7 +25,7 @@
           :placeholder="group.title"
           :autoOptionFocus="true"
           append-to="self"
-          class="w-full md:w-[400px] !z-1"
+          class="!z-1 w-full md:w-[400px]"
           :disabled="isDropdownDisabled(group)"
           @show="toggleScroll"
           @hide="toggleScroll"
@@ -33,7 +33,7 @@
         <button
           v-if="formStore.existsFormField(group.id)"
           @click="removeFormField(group.id)"
-          class="w-10 h-8 grid place-items-center bg-surface-0 absolute top-[3px] right-[3px] z-2"
+          class="z-2 absolute right-[3px] top-[3px] grid h-8 w-10 place-items-center bg-surface-0"
         >
           <i class="pi pi-times-circle text-surface-800"></i>
         </button>

@@ -16,7 +16,7 @@
           class="flex flex-col"
         >
           <span
-            class="mt-2 text-center text-xs sm:text-sm xl:text-base font-medium text-gray-800 line-clamp-2"
+            class="mt-2 line-clamp-2 text-center text-xs font-medium text-gray-800 sm:text-sm xl:text-base"
           >
             {{ species.name }}
           </span>

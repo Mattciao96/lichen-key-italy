@@ -1,7 +1,7 @@
 <template>
   <TitleForm>Ecology Filter</TitleForm>
   <div class="mb-2"><GroupFormSubstratum /></div>
-  <div class="space-y-2 mb-2"><SelectRangeForm /></div>
+  <div class="mb-2 space-y-2"><SelectRangeForm /></div>
   <div class="space-y-2"><SelectForm :filterData="selectData" /></div>
 </template>
 

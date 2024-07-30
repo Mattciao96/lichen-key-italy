@@ -1,22 +1,22 @@
 <template>
-  <table class="table-fixed w-full bg-white rounded-md">
-    <thead class="sticky -top-1 bg-white z-10">
+  <table class="w-full table-fixed rounded-md bg-white">
+    <thead class="sticky -top-1 z-10 bg-white">
       <tr class="bg-gray-100">
-        <th class="p-1 border-b w-[5%]">Couplet</th>
-        <th class="p-1 border-b w-[85%] md:w-[70%]">Lead Text</th>
-        <th class="p-1 border-b w-[10%] md:w-[25%]">Lead to</th>
+        <th class="w-[5%] border-b p-1">Couplet</th>
+        <th class="w-[85%] border-b p-1 md:w-[70%]">Lead Text</th>
+        <th class="w-[10%] border-b p-1 md:w-[25%]">Lead to</th>
       </tr>
     </thead>
     <tbody>
       <template v-for="item in visibleSteps" :key="item.leadId">
-        <tr :class="['hover:bg-gray-50 md:border-b ', { 'border-b': !item.italicId }]">
-          <td class="p-1 w-[5%]" :id="`couplet${item.parentId}`">
+        <tr :class="['hover:bg-gray-50 md:border-b', { 'border-b': !item.italicId }]">
+          <td class="w-[5%] p-1" :id="`couplet${item.parentId}`">
             {{ item.parentId }}
           </td>
-          <td class="p-1 w-[85%] md:w-[70%]" v-html="item.leadText"></td>
-          <td class="p-1 w-[10%] md:w-[25%] font-medium">
+          <td class="w-[85%] p-1 md:w-[70%]" v-html="item.leadText"></td>
+          <td class="w-[10%] p-1 font-medium md:w-[25%]">
             <a
-              class="hidden md:block text-sm text-blue-600 hover:underline"
+              class="hidden text-sm text-blue-600 hover:underline md:block"
               v-if="item.italicId"
               :href="`${props.taxonUrl}${item.italicId}`"
               target="_blank"
@@ -33,11 +33,11 @@
           </td>
         </tr>
         <!--Mobile    -->
-        <tr v-if="item.species_description" class="md:hidden hover:bg-gray-50">
-          <td class="p-1 border-b text-right"></td>
-          <td colspan="2" class="p-1 border-b">
+        <tr v-if="item.species_description" class="hover:bg-gray-50 md:hidden">
+          <td class="border-b p-1 text-right"></td>
+          <td colspan="2" class="border-b p-1">
             <a
-              class="text-sm text-blue-600 hover:underline font-medium"
+              class="text-sm font-medium text-blue-600 hover:underline"
               v-if="item.italicId"
               :href="`${props.taxonUrl}${item.italicId}`"
               target="_blank"

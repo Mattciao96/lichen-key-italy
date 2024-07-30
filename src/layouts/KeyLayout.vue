@@ -1,10 +1,10 @@
 <template>
-  <div class="container mx-auto sm:px-4 py-2">
+  <div class="container mx-auto py-2 sm:px-4">
     <LoadingSpinner v-if="keyStore.isLoading" />
 
     <div
       v-else-if="keyStore.error"
-      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      class="relative rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700"
       role="alert"
     >
       <strong class="font-bold">Error!</strong>
@@ -12,9 +12,9 @@
     </div>
 
     <div v-else>
-      <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+      <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
         <div
-          class="w-full sm:w-auto sm:px-0 mb-4 sm:mb-0 sm:h-16 flex flex-row sm:flex-col justify-between sm:justify-center items-start"
+          class="mb-4 flex w-full flex-row items-start justify-between sm:mb-0 sm:h-16 sm:w-auto sm:flex-col sm:justify-center sm:px-0"
         >
           <p>
             <span class="font-bold">{{ keyStore.speciesCount }}</span> total species
@@ -28,7 +28,7 @@
             v-for="(route, index) in routes"
             :key="index"
             :to="route.path"
-            class="px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
+            class="rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
             activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
           >
             {{ route.label }}

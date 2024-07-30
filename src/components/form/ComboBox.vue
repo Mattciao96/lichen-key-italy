@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col pb-2">
     <label>{{ props.placeholder }}</label>
-    <div class="pt-1 relative flex md:mr-auto">
+    <div class="relative flex pt-1 md:mr-auto">
       <Dropdown
         v-model="formStore.formData[props.storeFieldId]"
         :options="items"
@@ -35,7 +35,7 @@
       <button
         v-if="formStore.existsFormField(props.storeFieldId)"
         @click="formStore.removeFormField(props.storeFieldId)"
-        class="w-10 h-8 grid place-items-center bg-surface-0 absolute top-[7px] right-[3px] z-2"
+        class="z-2 absolute right-[3px] top-[7px] grid h-8 w-10 place-items-center bg-surface-0"
       >
         <i class="pi pi-times-circle text-surface-800"></i>
       </button>

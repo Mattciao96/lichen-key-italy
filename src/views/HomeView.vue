@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full flex flex-col">
-    <h1 class="mt-4 mb-8 text-center text-title">ITALIC KEYMAKER</h1>
-    <div class="[&>p]:mb-4 [&>h2]:font-bold">
+  <div class="flex w-full flex-col">
+    <h1 class="text-title mb-8 mt-4 text-center">ITALIC KEYMAKER</h1>
+    <div class="[&>h2]:font-bold [&>p]:mb-4">
       <p>
         This tool generates keys to subsets of species defined by specifying their distribution,
         traits and ecological requirements. The smaller keys are obtained from the general key to
@@ -41,7 +41,7 @@
       <div class="flex justify-center">
         <RouterLink
           to="/filters/general"
-          class="w-full font-semibold max-w-xl mb-8 grid place-items-center h-10 rounded-md bg-primary-500 hover:bg-primary-600 text-surface-0"
+          class="mb-8 grid h-10 w-full max-w-xl place-items-center rounded-md bg-primary-500 font-semibold text-surface-0 hover:bg-primary-600"
           >Generate a Key</RouterLink
         >
       </div>

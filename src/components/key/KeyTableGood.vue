@@ -4,23 +4,23 @@
     @copy-success="onCopySuccess"
     @copy-error="onCopyError"
   />
-  <div class="steps-table-container w-[96vw] max-w-[1200px] mx-auto">
-    <table class="w-full bg-white border border-gray-300">
-      <thead class="sticky top-0 bg-white z-10">
+  <div class="steps-table-container mx-auto w-[96vw] max-w-[1200px]">
+    <table class="w-full border border-gray-300 bg-white">
+      <thead class="sticky top-0 z-10 bg-white">
         <tr class="bg-gray-100">
-          <th class="p-1 border-b w-[10%]">Couplet</th>
-          <th class="p-1 border-b w-[70%]">Lead Text</th>
-          <th class="p-1 border-b w-[20%]">Lead to</th>
+          <th class="w-[10%] border-b p-1">Couplet</th>
+          <th class="w-[70%] border-b p-1">Lead Text</th>
+          <th class="w-[20%] border-b p-1">Lead to</th>
         </tr>
       </thead>
       <tbody>
         <template v-for="item in visibleSteps" :key="item.leadId">
           <tr class="hover:bg-gray-50">
-            <td class="p-1 border-b w-[10%]" :id="`couplet${item.parentId}`">
+            <td class="w-[10%] border-b p-1" :id="`couplet${item.parentId}`">
               {{ item.parentId }}
             </td>
-            <td class="p-1 border-b w-[70%]" v-html="item.leadText"></td>
-            <td class="p-1 border-b w-[20%]">
+            <td class="w-[70%] border-b p-1" v-html="item.leadText"></td>
+            <td class="w-[20%] border-b p-1">
               <a
                 @click.prevent="scrollToAnchor(item.leadId)"
                 href="#"
@@ -30,18 +30,18 @@
             </td>
           </tr>
           <tr v-if="item.species_description" class="hover:bg-gray-50">
-            <td class="p-1 border-b w-[2%]"></td>
-            <td class="p-1 border-b w-[65%]">
+            <td class="w-[2%] border-b p-1"></td>
+            <td class="w-[65%] border-b p-1">
               <span class="text-xs"><b>Description:</b></span>
               <span class="text-xs" v-html="item.species_description"> </span>
             </td>
-            <td class="p-1 border-b w-[10%]">
+            <td class="w-[10%] border-b p-1">
               <img
                 v-if="item.speciesImage"
                 :src="getSpeciesUrl(item.speciesImage)"
                 alt="Species Image"
                 loading="lazy"
-                class="w-full h- object-contain rounded-sm"
+                class="h- w-full rounded-sm object-contain"
               />
             </td>
           </tr>

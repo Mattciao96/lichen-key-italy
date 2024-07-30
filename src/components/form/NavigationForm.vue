@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div class="hidden md:block w-full max-w-4xl mt-4 px-2 mx-auto">
-      <div class="grid grid-cols-3 place-items-center h-10">
+    <div class="mx-auto mt-4 hidden w-full max-w-4xl px-2 md:block">
+      <div class="grid h-10 grid-cols-3 place-items-center">
         <div class="justify-self-start">
           <button
             v-if="actualRouteIndex > 0"
             @click="goToPrevious"
-            class="w-32 h-10 bg-surface-100 text-surface-700 rounded-full text-sm font-medium hover:bg-surface-200 transition-colors"
+            class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200"
           >
             <i class="pi pi-chevron-left mr-2"></i>
             Previous
           </button>
         </div>
 
-        <div class="justify-self-center flex space-x-4">
+        <div class="flex space-x-4 justify-self-center">
           <div class="justify-self-center">
             <FilterModal v-if="Object.keys(formStore.formData).length !== 0" />
           </div>
@@ -23,7 +23,7 @@
           <button
             v-if="actualRouteIndex < 2"
             @click="goToNext"
-            class="w-32 h-10 bg-surface-100 text-surface-700 rounded-full text-sm font-medium hover:bg-surface-200 transition-colors"
+            class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200"
           >
             Next
             <i class="pi pi-chevron-right ml-2"></i>
@@ -33,7 +33,7 @@
               type="submit"
               form="filter-form"
               :disabled="isLoading"
-              class="w-32 h-10 bg-primary-500 text-white rounded-full text-sm font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
+              class="h-10 w-32 rounded-full bg-primary-500 text-sm font-medium text-white transition-colors hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
             >
               Submit
             </button>
@@ -41,7 +41,7 @@
               type="submit"
               form="filter-form"
               :disabled="isLoading"
-              class="w-32 h-10 bg-primary-500 text-white rounded-full text-sm font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
+              class="h-10 w-32 rounded-full bg-primary-500 text-sm font-medium text-white transition-colors hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
             >
               Submit / refresh
             </button>
@@ -53,14 +53,14 @@
     <!-- Mobile view -->
     <div
       v-if="hasMobileMenu"
-      class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-surface-300"
+      class="fixed bottom-0 left-0 right-0 border-t border-surface-300 bg-white md:hidden"
     >
-      <div class="grid grid-cols-3 items-center h-14 px-4">
+      <div class="grid h-14 grid-cols-3 items-center px-4">
         <div class="justify-self-start">
           <button
             v-if="actualRouteIndex > 0"
             @click="goToPrevious"
-            class="w-10 h-10 flex items-center justify-center text-surface-600"
+            class="flex h-10 w-10 items-center justify-center text-surface-600"
           >
             <i class="pi pi-chevron-left text-xl"></i>
           </button>
@@ -74,7 +74,7 @@
           <button
             v-if="actualRouteIndex < 2"
             @click="goToNext"
-            class="w-10 h-10 flex items-center justify-center text-surface-600"
+            class="flex h-10 w-10 items-center justify-center text-surface-600"
           >
             <i class="pi pi-chevron-right text-xl"></i>
           </button>
@@ -83,7 +83,7 @@
             type="submit"
             form="filter-form"
             :disabled="isLoading"
-            class="w-20 h-10 bg-primary-500 text-white rounded-full text-sm font-medium hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
+            class="h-10 w-20 rounded-full bg-primary-500 text-sm font-medium text-white transition-colors hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
           >
             Submit
           </button>

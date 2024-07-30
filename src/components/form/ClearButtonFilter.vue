@@ -1,7 +1,7 @@
 <template>
   <button
     @click="removeFilterField(storeFieldId)"
-    class="w-10 h-8 grid place-items-center absolute top-1/2 -translate-y-1/2 right-[0px] z-2"
+    class="z-2 absolute right-[0px] top-1/2 grid h-8 w-10 -translate-y-1/2 place-items-center"
   >
     <i class="pi pi-times-circle text-surface-800"></i>
   </button>

@@ -1,5 +1,5 @@
 <template>
-  <header class="min-h-[4rem] top-0 z-20 border-b border-surface-300 shadow-sm flex items-center">
+  <header class="top-0 z-20 flex min-h-[4rem] items-center border-b border-surface-300 shadow-sm">
     <NavigationBar />
   </header>
   <main class="p-2 md:p-3 lg:p-4">

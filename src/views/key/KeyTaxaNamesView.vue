@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-4 py-8 max-w-2xl p-4 mx-auto">
+  <div class="container mx-auto max-w-2xl p-4 px-4 py-8">
     <LoadingSpinner v-if="keyStore.isLoading" />
 
     <div v-else-if="keyStore.error" class="error-message">

@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto">
+  <div class="mx-auto max-w-4xl">
     <LoadingSpinner v-if="isLoading" />
     <div class="relative" v-else>
       <FormStepper />

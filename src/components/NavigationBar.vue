@@ -1,13 +1,13 @@
 <template>
-  <nav class="flex-1 items-center max-w container-fluid relative z-50 flex justify-between">
+  <nav class="max-w container-fluid relative z-50 flex flex-1 items-center justify-between">
     <!-- logo -->
-    <div class="flex gap-2 items-center">
+    <div class="flex items-center gap-2">
       <div
-        class="flex flex-shrink-0 items-center border border-surface-900 rounded-full overflow-hidden"
+        class="flex flex-shrink-0 items-center overflow-hidden rounded-full border border-surface-900"
       >
         <img class="h-10 w-10" src="/general/banner-key.jpg" alt="Your Company" />
       </div>
-      <span class="font-semibold text-primary-950 text-2xl">ITALIC KEYMAKER</span>
+      <span class="text-2xl font-semibold text-primary-950">ITALIC KEYMAKER</span>
     </div>
 
     <!-- Desktop menu -->
@@ -33,7 +33,7 @@
   <button
     @click="toggleMobileMenu"
     type="button"
-    class="sm:hidden absolute top-4 right-4 z-[1002] inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary-500 focus:outline-none"
+    class="absolute right-4 top-4 z-[1002] inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-primary-500 focus:outline-none sm:hidden"
     aria-controls="mobile-menu"
     :aria-expanded="mobileMenuOpen"
   >
@@ -73,16 +73,16 @@
     class="fixed inset-0 z-[1000] transition-all duration-300 ease-in-out"
     :class="{
       'pointer-events-none opacity-0 backdrop-blur-none': !mobileMenuOpen,
-      'pointer-events-auto opacity-100 backdrop-blur-sm bg-black/50': mobileMenuOpen
+      'pointer-events-auto bg-black/50 opacity-100 backdrop-blur-sm': mobileMenuOpen
     }"
     @click="toggleMobileMenu"
   >
     <div
-      class="fixed top-0 right-0 bottom-0 w-[300px] max-w-[75vw] bg-white shadow-xl transition-transform duration-300 ease-in-out"
+      class="fixed bottom-0 right-0 top-0 w-[300px] max-w-[75vw] bg-white shadow-xl transition-transform duration-300 ease-in-out"
       :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"
       @click.stop
     >
-      <div class="p-4 space-y-4 mt-16">
+      <div class="mt-16 space-y-4 p-4">
         <!-- Added mt-16 to account for the button -->
         <!-- Menu items -->
         <RouterLink
@@ -91,7 +91,7 @@
           :to="item.route.name"
           :class="[
             'text-surface-800 hover:text-primary-500',
-            'block px-3 py-2 rounded-md text-base font-medium'
+            'block rounded-md px-3 py-2 text-base font-medium'
           ]"
           :aria-current="item.current ? 'page' : undefined"
           @click="toggleMobileMenu"

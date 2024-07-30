@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div class="mb-4 flex flex-wrap gap-2 justify-end">
+    <div class="mb-4 flex flex-wrap justify-end gap-2">
       <RouterLink
         v-for="viewOption in viewOptions"
         :key="viewOption.name"
         :to="{ name: 'key-view', params: { keyId: $route.params.keyId, view: viewOption.name } }"
-        class="px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
+        class="rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
         activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
       >
         {{ viewOption.label }}
       </RouterLink>
     </div>
     <div
-      class="steps-table-container w-[96vw] max-w-full mx-auto rounded-md border border-surface-300 overflow-hidden"
+      class="steps-table-container mx-auto w-[96vw] max-w-full overflow-hidden rounded-md border border-surface-300"
     >
       <component
         class="text-sm"

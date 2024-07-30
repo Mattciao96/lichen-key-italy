@@ -2,7 +2,7 @@
   <div>
     <h2>Species with Multiple Occurrences</h2>
     <div v-for="species in displayedData" :key="species">
-      <h3 class="font-semibold text-xl">{{ species }}</h3>
+      <h3 class="text-xl font-semibold">{{ species }}</h3>
       <div v-if="speciesMiniTrees[species]">
         <table>
           <thead>

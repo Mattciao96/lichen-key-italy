@@ -12,28 +12,28 @@
 
     <div v-if="currentNode.children.length > 0" class="space-y-4">
       <!--      <h3 class="text-xl font-semibold mb-2">Choose an option:</h3>-->
-      <div class="flex flex-col space-y-4 items-center">
+      <div class="flex flex-col items-center space-y-4">
         <div
           v-for="child in currentNode.children"
           :key="child.data.leadId"
           :class="[
-            'w-full max-w-2xl  pt-2 bg-white rounded-md shadow-sm overflow-hidden border border-gray-200',
+            'w-full max-w-2xl overflow-hidden rounded-md border border-gray-200 bg-white pt-2 shadow-sm',
             {
-              'cursor-pointer hover:shadow-lg transition-shadow duration-300 hover:border-green-700':
+              'cursor-pointer transition-shadow duration-300 hover:border-green-700 hover:shadow-lg':
                 !child.data.leadSpecies
             }
           ]"
           @click="!child.data.leadSpecies && navigateToNode(child)"
         >
-          <div class="h-28 sm:h-36 overflow-hidden grid place-items-center">
+          <div class="grid h-28 place-items-center overflow-hidden sm:h-36">
             <img
               :src="getInteractiveImageUrl(child.data)"
               :alt="child.data.leadText"
-              class="h-28 sm:h-36 w-auto object-contain rounded-md"
+              class="h-28 w-auto rounded-md object-contain sm:h-36"
             />
           </div>
-          <div class="p-2 min-h-20 sm:min-h-[78px] sm:h-[78px] flex items-center justify-center">
-            <p class="text-sm text-gray-800 font-medium text-center">
+          <div class="flex min-h-20 items-center justify-center p-2 sm:h-[78px] sm:min-h-[78px]">
+            <p class="text-center text-sm font-medium text-gray-800">
               <span v-html="child.data.leadText"></span>
               <span v-if="child.data.leadSpecies" class="block">
                 <a
@@ -52,19 +52,19 @@
     <div v-else class="text-center text-lg font-semibold">
       <p>Not available</p>
     </div>
-    <div class="w-full flex justify-center">
-      <div class="mt-4 flex justify-between w-full max-w-2xl">
+    <div class="flex w-full justify-center">
+      <div class="mt-4 flex w-full max-w-2xl justify-between">
         <button
           v-if="!isRoot"
           @click="navigateToParent"
-          class="min-w-20 px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
+          class="min-w-20 rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
         >
           Back
         </button>
         <button
           v-if="!isRoot"
           @click="navigateToRoot"
-          class="min-w-20 px-3 py-2 text-sm font-medium rounded transition duration-150 ease-in-out border border-surface-300 bg-white text-surface-700 hover:bg-primary-500/30"
+          class="min-w-20 rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
         >
           Restart
         </button>

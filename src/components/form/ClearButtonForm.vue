@@ -2,7 +2,7 @@
   <button
     v-if="formStore.existsFormField(storeFieldId)"
     @click="formStore.removeFormField(storeFieldId)"
-    class="w-10 h-8 grid place-items-center bg-surface-0 absolute top-[3px] right-[3px] z-2"
+    class="z-2 absolute right-[3px] top-[3px] grid h-8 w-10 place-items-center bg-surface-0"
   >
     <i class="pi pi-times-circle text-surface-800"></i>
   </button>

@@ -8,10 +8,10 @@
 
     <div v-else>
       <div
-        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+        class="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
       >
         <div v-for="species in displayedData" :key="species.name" class="flex flex-col">
-          <div class="relative pb-3/4 w-full overflow-hidden rounded-md">
+          <div class="pb-3/4 relative w-full overflow-hidden rounded-md">
             <LazyImage
               :src="getSpeciesUrl(species.image)"
               :alt="species.name"
@@ -19,7 +19,7 @@
             />
           </div>
           <p
-            class="mt-2 text-center text-xs sm:text-sm xl:text-base font-medium text-gray-800 line-clamp-2"
+            class="mt-2 line-clamp-2 text-center text-xs font-medium text-gray-800 sm:text-sm xl:text-base"
           >
             <a
               class="text-sm text-blue-600 hover:underline"

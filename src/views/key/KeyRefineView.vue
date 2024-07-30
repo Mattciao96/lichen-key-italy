@@ -1,8 +1,8 @@
 <template>
-  <div class="max-w-2xl mx-auto p-4">
+  <div class="mx-auto max-w-2xl p-4">
     <div v-if="keyStore.isLoading" class="text-center text-lg font-semibold">Loading...</div>
     <div v-else-if="isSubmitting" class="text-center text-lg font-semibold">Submitting...</div>
-    <div v-else-if="keyStore.error" class="text-center text-red-500 text-lg font-semibold">
+    <div v-else-if="keyStore.error" class="text-center text-lg font-semibold text-red-500">
       Error: {{ keyStore.error }}
     </div>
     <div v-else-if="keyStore.speciesCount === 1" class="text-center text-lg font-semibold">
@@ -17,7 +17,7 @@
               :id="species.name"
               v-model="selectedSpecies"
               :value="species"
-              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
             <label :for="species.name" class="ml-2 block text-sm text-gray-900">
               {{ species.name }}
@@ -28,7 +28,7 @@
 
         <button
           type="submit"
-          class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          class="w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Submit
         </button>

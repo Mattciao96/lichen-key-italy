@@ -1,7 +1,7 @@
 <template>
   <button
     @click="copyToClipboard"
-    class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+    class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
   >
     Copy to Clipboard
   </button>

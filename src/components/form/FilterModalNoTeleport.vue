@@ -3,7 +3,7 @@
     <!-- Button to open the modal -->
     <button
       @click="openModal"
-      class="w-32 h-10 bg-surface-100 text-surface-700 rounded-full text-sm font-medium hover:bg-surface-200 transition-colors"
+      class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200"
     >
       See Filters
     </button>
@@ -20,22 +20,22 @@
       <div
         v-if="isModalOpen"
         @click="closeModal"
-        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999999]"
+        class="fixed inset-0 z-[999999] flex items-center justify-center bg-black bg-opacity-50"
       >
         <!-- Modal Content -->
-        <div @click.stop class="bg-white rounded-lg w-full mx-1 max-w-2xl h-[80vh] flex flex-col">
+        <div @click.stop class="mx-1 flex h-[80vh] w-full max-w-2xl flex-col rounded-lg bg-white">
           <!-- Fixed Header -->
-          <div class="p-4 border-b border-surface-200">
+          <div class="border-b border-surface-200 p-4">
             <h2 class="text-2xl font-semibold">Selected Filters</h2>
           </div>
 
           <!-- Scrollable Content -->
-          <div class="flex-grow overflow-y-auto px-1 sm:px-4 py-4">
+          <div class="flex-grow overflow-y-auto px-1 py-4 sm:px-4">
             <ul class="space-y-2 text-sm">
               <li
                 v-for="filter in selectedFilters"
                 :key="filter.id"
-                class="bg-surface-100 p-3 pr-6 rounded relative"
+                class="relative rounded bg-surface-100 p-3 pr-6"
               >
                 <span class="font-semibold">{{ filter.title }}:</span> {{ filter.text }}
                 <ClearButtonFilter :storeFieldId="filter.id" />
@@ -44,17 +44,17 @@
           </div>
 
           <!-- Fixed Footer -->
-          <div class="p-4 border-t border-surface-200 grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-2 gap-4 border-t border-surface-200 p-4">
             <button
               @click="closeModal"
-              class="w-full bg-red-500 border border-surface-300 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              class="w-full rounded border border-surface-300 bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
             >
               Close
             </button>
             <button
               type="submit"
               form="filter-form"
-              class="w-full bg-primary-500 border border-surface-300 text-white px-4 py-2 rounded hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
+              class="w-full rounded border border-surface-300 bg-primary-500 px-4 py-2 text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
             >
               Submit
             </button>

@@ -5,7 +5,8 @@ import { combinedData } from '@/data/form-combined'
 export const useFormStore = defineStore('form', {
   state: () => ({
     formData: reactive({}),
-    referenceData: combinedData
+    referenceData: combinedData,
+    passedFilterFormData: {} // not reactive, only used to see the filter
   }),
   actions: {
     updateFormField(groupId, value) {
@@ -26,6 +27,14 @@ export const useFormStore = defineStore('form', {
     resetForm() {
       this.formData = {}
     },
+    resetPassedFilterFormData() {
+      this.passedFilterFormData = {}
+    },
+
+    setPassedFilterFormData() {
+      // Create a non-reactive copy of formData
+      this.passedFilterFormData = JSON.parse(JSON.stringify(this.formData))
+    },
 
     getSelectedFilters() {
       return Object.fromEntries(
@@ -39,8 +48,21 @@ export const useFormStore = defineStore('form', {
       )
     },
 
-    getSelectedFiltersWithDetails() {
-      const selectedFilters = this.getSelectedFilters()
+    getPassedSelectedFilters() {
+      return Object.fromEntries(
+        Object.entries(this.passedFilterFormData).map(([key, value]) => {
+          if (typeof value === 'object' && value !== null) {
+            return [key, value.value]
+          } else {
+            return [key, value]
+          }
+        })
+      )
+    },
+
+    getSelectedFiltersWithDetails(filters = 'new') {
+      const selectedFilters =
+        filters === 'new' ? this.getSelectedFilters() : this.getPassedSelectedFilters()
       const result = []
 
       for (const referenceItem of this.referenceData) {

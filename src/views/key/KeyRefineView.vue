@@ -40,11 +40,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
+import { useFormStore } from '@/stores/formStore'
 import { useRouter, useRoute } from 'vue-router'
 import { useKeyRecordsMutation } from '@/composables/useKeyApi'
 import { usePaginatedData } from '@/composables/usePaginatedData'
 
 const keyStore = useKeyStore()
+const formStore = useFormStore()
 const router = useRouter()
 const route = useRoute()
 const keyRecordMutation = useKeyRecordsMutation()
@@ -66,6 +68,7 @@ const handleSubmit = async () => {
     const selectedRecords = selectedSpecies.value.flatMap((species) => species.records)
 
     try {
+      formStore.resetPassedFilterFormData() // reset saved old filters
       const result = await keyRecordMutation.mutateAsync(selectedRecords)
       keyStore.resetStore()
       keyStore.setKeyId(result['key-id'])

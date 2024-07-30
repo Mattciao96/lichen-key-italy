@@ -33,6 +33,10 @@
           >
             {{ route.label }}
           </RouterLink>
+          <!--button to see filters-->
+          <div v-if="Object.keys(formStore.passedFilterFormData).length !== 0">
+            <FilterModalShowOnly />
+          </div>
         </nav>
       </div>
 
@@ -45,9 +49,12 @@
 import { onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useKeyStore } from '@/stores/keyStore'
+import { useFormStore } from '@/stores/formStore'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import FilterModalShowOnly from '@/components/form/FilterModalShowOnly.vue'
 
 const keyStore = useKeyStore()
+const formStore = useFormStore()
 const route = useRoute()
 
 const routes = computed(() => [

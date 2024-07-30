@@ -40,10 +40,12 @@ const submitForm = async () => {
   isLoading.value = true
 
   try {
+    formStore.resetPassedFilterFormData() // reset saved old filters
     keyStore.resetStore()
     const filters = formStore.getFormValuesForSubmission()
     const result = await keyFilterMutation.mutateAsync(filters)
     keyStore.setKeyId(result['key-id'])
+    formStore.setPassedFilterFormData() // save new filters in the memory
     formStore.resetForm()
     await router.push(`/${result['key-id']}/nodes/1/species-list`)
   } catch (error) {

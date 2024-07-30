@@ -126,7 +126,7 @@ const handleSubmit = async () => {
   try {
     /*const keyStore = useKeyStore()
     const formStore = useFormStore()*/
-
+    formStore.resetPassedFilterFormData() // reset saved old filters
     keyStore.resetStore() // This replaces recordStore.resetRecords()
 
     const filters = speciesStore.selectedSpecies

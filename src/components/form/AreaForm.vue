@@ -3,6 +3,20 @@
     <div class="flex flex-col pb-2">
       <label class="pb-1" :for="group.id">{{ group.title }}:</label>
       <div class="relative flex md:mr-auto">
+        <!--        <Dropdown
+          v-if="group.id === 'area'"
+          :options="group.items"
+          optionLabel="text"
+          v-model="formStore.formData[group.id]"
+          @change="(option) => updateSelectFormField(group.id, option.value)"
+          :placeholder="group.title"
+          :autoOptionFocus="true"
+          append-to="self"
+          class="w-full md:w-[400px] !z-1"
+          :disabled="isDropdownDisabled(group)"
+          @show="toggleScroll"
+          @hide="toggleScroll"
+        />-->
         <Dropdown
           :options="group.items"
           optionLabel="text"

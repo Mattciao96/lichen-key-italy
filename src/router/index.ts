@@ -172,6 +172,11 @@ router.beforeEach((to, from, next) => {
     }
   }
 
+  // to set default italy
+  if (to.path.startsWith('/filters/') && !from.path.startsWith('/filters/')) {
+    const formStore = useFormStore()
+    formStore.updateFormField('area', { value: 'italy', text: 'Only species known from Italy' })
+  }
   // Handle nodeId when navigating the inteactive key
   /*if (to.meta.requiresNodeData && to.params.nodeId) {
     const keyStore = useKeyStore()

@@ -1,5 +1,5 @@
 <template>
-<button
+  <button
     v-if="formStore.existsFormField(storeFieldId)"
     @click="formStore.removeFormField(storeFieldId)"
     class="w-10 h-8 grid place-items-center bg-surface-0 absolute top-[3px] right-[3px] z-2"

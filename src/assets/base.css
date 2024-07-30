@@ -32,7 +32,7 @@
   --primary-highlight-inverse: var(--primary-700);
   --primary-highlight-hover-opacity: 0.2;
 }
-.dark{
+.dark {
   --primary: var(--primary-400);
   --primary-inverse: var(--surface-900);
   --primary-hover: var(--primary-300);
@@ -44,7 +44,7 @@
 }
 
 .customized-primary {
-  &:not(.dark){
+  &:not(.dark) {
     --primary: var(--primary-950);
     --primary-inverse: var(--surface-0);
     --primary-hover: var(--primary-800);
@@ -54,7 +54,7 @@
     --primary-highlight-inverse: var(--surface-0);
     --primary-highlight-hover-opacity: 0.8;
   }
-  &.dark{
+  &.dark {
     --primary: var(--primary-50);
     --primary-inverse: var(--surface-950);
     --primary-hover: var(--primary-100);
@@ -63,7 +63,6 @@
     --primary-highlight-opacity: 0.1;
     --primary-highlight-inverse: var(--surface-0);
     --primary-highlight-hover-opacity: 0.2;
-
   }
 }
 

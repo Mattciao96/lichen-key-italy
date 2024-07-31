@@ -23,6 +23,7 @@
             <span class="font-bold">{{ keyStore.currentSpeciesCount }}</span> remaining species
           </p>
         </div>
+
         <nav class="flex flex-wrap gap-2">
           <RouterLink
             v-for="(route, index) in routes"
@@ -47,7 +48,7 @@
 
 <script setup lang="ts">
 import { onMounted, watch, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useKeyStore } from '@/stores/keyStore'
 import { useFormStore } from '@/stores/formStore'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'

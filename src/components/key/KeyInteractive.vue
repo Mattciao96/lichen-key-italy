@@ -9,6 +9,24 @@
       </p>
     </div>
 -->
+    <div class="mb-4 flex h-10 w-full justify-center">
+      <div class="flex w-full max-w-2xl justify-between">
+        <button
+          v-if="!isRoot"
+          @click="navigateToParent"
+          class="min-w-20 rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
+        >
+          Back
+        </button>
+        <button
+          v-if="!isRoot"
+          @click="navigateToRoot"
+          class="min-w-20 rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
+        >
+          Restart
+        </button>
+      </div>
+    </div>
 
     <div v-if="currentNode.children.length > 0" class="space-y-4">
       <!--      <h3 class="text-xl font-semibold mb-2">Choose an option:</h3>-->
@@ -51,24 +69,6 @@
 
     <div v-else class="text-center text-lg font-semibold">
       <p>Not available</p>
-    </div>
-    <div class="flex w-full justify-center">
-      <div class="mt-4 flex w-full max-w-2xl justify-between">
-        <button
-          v-if="!isRoot"
-          @click="navigateToParent"
-          class="min-w-20 rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
-        >
-          Back
-        </button>
-        <button
-          v-if="!isRoot"
-          @click="navigateToRoot"
-          class="min-w-20 rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
-        >
-          Restart
-        </button>
-      </div>
     </div>
   </div>
 </template>

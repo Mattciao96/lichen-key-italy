@@ -12,9 +12,9 @@
     </div>
 
     <div v-else>
-      <div class="mb-6 flex flex-col items-start justify-between lg:flex-row lg:items-center">
+      <div class="mb-1 flex flex-col items-start justify-between lg:flex-row lg:items-center">
         <div
-          class="mb-4 flex w-full flex-row-reverse items-start justify-between lg:mb-0 lg:h-16 lg:w-auto lg:flex-col lg:justify-center lg:px-0"
+          class="mb-2 flex w-full flex-row-reverse items-start justify-between lg:mb-0 lg:h-16 lg:w-auto lg:flex-col lg:justify-center lg:px-0"
         >
           <p>
             <span class="font-bold">{{ keyStore.speciesCount }}</span> total species

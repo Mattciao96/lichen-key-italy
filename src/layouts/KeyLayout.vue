@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto py-2 sm:px-4">
+  <div class="container mx-auto py-2 lg:px-4">
     <LoadingSpinner v-if="keyStore.isLoading" />
 
     <div
@@ -8,13 +8,13 @@
       role="alert"
     >
       <strong class="font-bold">Error!</strong>
-      <span class="block sm:inline">{{ keyStore.error }}</span>
+      <span class="block lg:inline">{{ keyStore.error }}</span>
     </div>
 
     <div v-else>
-      <div class="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
+      <div class="mb-6 flex flex-col items-start justify-between lg:flex-row lg:items-center">
         <div
-          class="mb-4 flex w-full flex-row items-start justify-between sm:mb-0 sm:h-16 sm:w-auto sm:flex-col sm:justify-center sm:px-0"
+          class="mb-4 flex w-full flex-row-reverse items-start justify-between lg:mb-0 lg:h-16 lg:w-auto lg:flex-col lg:justify-center lg:px-0"
         >
           <p>
             <span class="font-bold">{{ keyStore.speciesCount }}</span> total species
@@ -24,7 +24,7 @@
           </p>
         </div>
 
-        <nav class="flex flex-wrap gap-2">
+        <!--        <nav class="flex flex-wrap gap-2">
           <RouterLink
             v-for="(route, index) in routes"
             :key="index"
@@ -34,11 +34,31 @@
           >
             {{ route.label }}
           </RouterLink>
-          <!--button to see filters-->
+          &lt;!&ndash;button to see filters&ndash;&gt;
           <div v-if="Object.keys(formStore.passedFilterFormData).length !== 0">
             <FilterModalShowOnly />
           </div>
-        </nav>
+        </nav>-->
+        <div class="max-w-full overflow-x-auto">
+          <nav class="flex flex-nowrap gap-2 pb-2">
+            <RouterLink
+              v-for="(route, index) in routes"
+              :key="index"
+              :to="route.path"
+              class="whitespace-nowrap rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
+              activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
+            >
+              {{ route.label }}
+            </RouterLink>
+            <!--button to see filters-->
+            <div
+              v-if="Object.keys(formStore.passedFilterFormData).length !== 0"
+              class="flex-shrink-0"
+            >
+              <FilterModalShowOnly />
+            </div>
+          </nav>
+        </div>
       </div>
 
       <RouterView></RouterView>
@@ -70,14 +90,14 @@ const routes = computed(() => [
     label: 'Interactive key'
   },
   {
-    path: { name: 'species', params: { keyId: route.params.keyId } },
-    name: 'species',
-    label: 'Gallery'
-  },
-  {
     path: { name: 'species-list', params: { keyId: route.params.keyId } },
     name: 'species-list',
     label: 'Species list'
+  },
+  {
+    path: { name: 'species', params: { keyId: route.params.keyId } },
+    name: 'species',
+    label: 'Gallery'
   },
 
   {

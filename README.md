@@ -9,4 +9,11 @@
 2024-07-01 taxa
 
 ## Filters
-- Are kept when the key is the same in indexeddb
+- Are kept when the key is the same localstorage
+
+Steps:
+- submit filter
+- clear localstorage filter-key
+- clear localstorage passedFilterFormData
+- add new filter-key and passedFilterFormData
+- in router, if keyid in localstorage is the same in the keyid in the url, then keep the filters

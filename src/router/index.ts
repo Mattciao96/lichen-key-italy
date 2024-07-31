@@ -165,10 +165,22 @@ router.beforeEach((to, from, next) => {
   // Handle keyId when navigating to key routes
   if (to.meta.requiresKeyData && to.params.keyId) {
     const keyStore = useKeyStore()
+    const formStore = useFormStore()
     const keyId = to.params.keyId as string
 
     if (keyId !== keyStore.keyId) {
       keyStore.setKeyId(keyId)
+    }
+
+    // Check if the keyId in the URL matches the one in localStorage
+    // To mantain filters
+    const storedFilterKey = localStorage.getItem('filterKey')
+    if (keyId === storedFilterKey) {
+      // If it matches, update the formStore's passedFilterFormData
+      const storedPassedFilterFormData = localStorage.getItem('passedFilterFormData')
+      if (storedPassedFilterFormData) {
+        formStore.passedFilterFormData = JSON.parse(storedPassedFilterFormData)
+      }
     }
   }
 

@@ -47,6 +47,15 @@ const submitForm = async () => {
     keyStore.setKeyId(result['key-id'])
     formStore.setPassedFilterFormData() // save new filters in the memory
     formStore.resetForm()
+
+    // clear local storage
+    localStorage.removeItem('filterKey')
+    localStorage.removeItem('passedFilterFormData')
+
+    // add filters
+    localStorage.setItem('filterKey', result['key-id'])
+    localStorage.setItem('passedFilterFormData', JSON.stringify(formStore.passedFilterFormData))
+
     await router.push(`/${result['key-id']}/nodes/1/species-list`)
   } catch (error) {
     console.error('Error submitting form:', error)

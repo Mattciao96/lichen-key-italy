@@ -40,6 +40,7 @@
             <button
               type="submit"
               form="filter-form"
+              @click="clearKeyStoreData"
               :disabled="isLoading"
               class="h-10 w-32 rounded-full bg-primary-500 text-sm font-medium text-white transition-colors hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
             >
@@ -98,6 +99,7 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import FilterModal from '@/components/form/FilterModal.vue'
 import { useFormStore } from '@/stores/formStore'
+import { clearKeyStoreData } from '@/utils/indexedDB'
 
 const router = useRouter()
 const route = useRoute()

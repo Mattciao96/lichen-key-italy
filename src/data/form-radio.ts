@@ -206,7 +206,7 @@ export const radioData: FormData[] = [
   },
   {
     id: '46',
-    title: 'Ascocarps',
+    title: 'Apothecia',
 
     items: [
       {
@@ -363,12 +363,12 @@ export const radioData: FormData[] = [
       {
         text: 'K+ red',
         value: '4',
-        image: 'kred.png'
+        image: 'kred2.png'
       },
       {
-        text: 'K+ yellow turning to red',
+        text: 'K+ yellow turning red or brown',
         value: '5',
-        image: 'kyellowtored.png'
+        image: 'yellowbrown.png'
       }
     ]
   }

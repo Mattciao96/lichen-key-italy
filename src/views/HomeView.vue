@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full flex-col">
-    <h1 class="text-title mb-8 mt-4 text-center">ITALIC KEYMAKER</h1>
-    <div class="[&>h2]:font-bold [&>p]:mb-4">
+    <h1 class="text-title mb-8 mt-4 hidden text-center">ITALIC KEYMAKER</h1>
+    <div class="mt-8 [&>h2]:font-bold [&>p]:mb-4">
       <p>
         This tool generates keys to subsets of species defined by specifying their distribution,
         traits and ecological requirements. The smaller keys are obtained from the general key to

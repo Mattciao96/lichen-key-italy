@@ -5,7 +5,7 @@
       @click="openModal"
       class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200"
     >
-      See Filters
+      Selected Filters
     </button>
 
     <!-- Teleport the modal to body -->
@@ -49,7 +49,7 @@
             <div class="grid grid-cols-2 gap-4 border-t border-surface-200 p-4">
               <button
                 @click="closeModal"
-                class="w-full rounded border border-surface-300 bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                class="w-full rounded border border-surface-300 bg-surface-500 px-4 py-2 text-surface-0 hover:bg-surface-600 focus:outline-none focus:ring-2 focus:ring-surface-500 focus:ring-opacity-50"
               >
                 Close
               </button>

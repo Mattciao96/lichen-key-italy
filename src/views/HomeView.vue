@@ -1,12 +1,18 @@
 <template>
   <div class="flex w-full flex-col">
     <h1 class="text-title mb-8 mt-4 hidden text-center">ITALIC KEYMAKER</h1>
-    <div class="mt-8 text-balance [&>h2]:font-bold [&>p]:mb-4">
+    <div class="mt-8 [&>h2]:font-bold [&>p]:mb-4">
+      <p>M. Conti, S. Martellos, P.L. Nimis</p>
       <p>
         This tool generates keys to subsets of species defined by specifying their distribution,
-        traits and ecological requirements. The smaller keys are obtained from the general key to
-        the lichens of Italy by eliminating all couplets leading to species which do no share all
-        specified characters. There are 3 main filters:
+        traits and ecological requirements. The smaller keys are obtained from
+        <a
+          class="text-blue-600 hover:underline"
+          href="https://dryades.units.it/home/index.php?procedure=ext_key_home&key_type=lic&key_id=1692"
+          >the general key to the lichens of Italy</a
+        >
+        by P.L. Nimis, by eliminating all species which do no share the specified characters. There
+        are 3 main filters:
       </p>
       <h2>GENERAL FILTER</h2>
       <p>

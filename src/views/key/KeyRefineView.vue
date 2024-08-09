@@ -13,7 +13,9 @@
       Not available
     </div>
     <div v-else>
-      <p class="mb-4 text-center text-lg font-semibold">Select species to remove from the key</p>
+      <p class="mb-4 text-center text-lg">
+        Select one or multiple species to remove them from the key
+      </p>
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <ul class="space-y-3">
           <li v-for="species in displayedData" :key="species.name" class="flex items-center gap-2">

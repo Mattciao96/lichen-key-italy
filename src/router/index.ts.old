@@ -3,22 +3,21 @@ import { useKeyStore } from '@/stores/keyStore'
 import { useSpeciesStore } from '@/stores/speciesStore'
 import { useFormStore } from '@/stores/formStore'
 
-// Import all components
-import MainLayout from '@/layouts/MainLayout.vue'
-import HomeView from '@/views/HomeView.vue'
-import FormLayout from '@/layouts/FormLayout.vue'
-import FilterGeneralView from '@/views/form/FilterGeneralView.vue'
-import FilterTraitsView from '@/views/form/FilterTraitsView.vue'
-import FilterEcologyView from '@/views/form/FilterEcologyView.vue'
-import FilterTaxaView from '../views/form/FilterTaxaView.vue'
-import KeyLayout from '@/layouts/KeyLayout.vue'
-import KeyStepsView from '../views/key/KeyStepsView.vue'
-import KeyTaxaView from '../views/key/KeyTaxaView.vue'
-import KeyTaxaNamesView from '../views/key/KeyTaxaNamesView.vue'
-import KeyInteractiveView from '../views/key/KeyInteractiveView.vue'
-import KeyRefineView from '../views/key/KeyRefineView.vue'
-import KeyDuplicateView from '../views/key/KeyDuplicateView.vue'
-import NotFoundView from '@/views/NotFoundView.vue'
+/**
+ * SITE STRUCTURE
+ *
+ * / (MainLayout: navbar + footer + scroller)
+ * ├── '' (HomeView)
+ * ├── filters (FilterLayout: step navigation + command navigation & submit)
+ * │   ├── general (FilterGeneralView)
+ * │   ├── traits (FilterTraitsView)
+ * │   └── ecology (FilterEcologyView)
+ * ├── filter-species (FilterTaxaView)
+ * ├── keys/:keyId (KeyLayout: key navigation + key content)
+ * │   ├── nodes/:nodeId (KeyNodesView)
+ *
+ *
+ */
 
 const router = createRouter({
   history: createWebHistory('/key-maker/'),
@@ -34,17 +33,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'base',
-      component: MainLayout,
+      component: () => import('@/layouts/MainLayout.vue'),
       children: [
         {
           path: '',
           name: 'home',
-          component: HomeView
+          component: () => import('@/views/HomeView.vue')
         },
         {
           path: 'filters/',
           name: 'filters',
-          component: FormLayout,
+          component: () => import('@/layouts/FormLayout.vue'),
           redirect() {
             return { name: 'general' }
           },
@@ -52,30 +51,32 @@ const router = createRouter({
             {
               path: 'general',
               name: 'general',
-              component: FilterGeneralView
+              component: () => import('@/views/form/FilterGeneralView.vue')
             },
             {
               path: 'traits',
               name: 'traits',
-              component: FilterTraitsView
+              component: () => import('@/views/form/FilterTraitsView.vue')
             },
             {
               path: 'ecology',
               name: 'ecology',
-              component: FilterEcologyView
+              component: () => import('@/views/form/FilterEcologyView.vue')
             }
           ]
         },
         {
           path: 'filter-species/:letter?',
           name: 'FilterTaxa',
-          component: FilterTaxaView
+          component: () => import('../views/form/FilterTaxaView.vue')
         },
         {
           path: ':keyId/nodes/:nodeId/',
           name: 'key-node',
-          component: KeyLayout,
+          component: () => import('@/layouts/KeyLayout.vue'),
           meta: { requiresKeyData: true, requiresNodeData: true },
+          // if nodes/:nodeId is not provided, redirect to the first node
+
           children: [
             {
               path: 'key',
@@ -87,7 +88,7 @@ const router = createRouter({
                 {
                   path: ':view',
                   name: 'key-view',
-                  component: KeyStepsView,
+                  component: () => import('../views/key/KeyStepsView.vue'),
                   meta: { requiresKeyData: true }
                 }
               ]
@@ -95,31 +96,31 @@ const router = createRouter({
             {
               path: 'species',
               name: 'species',
-              component: KeyTaxaView,
+              component: () => import('../views/key/KeyTaxaView.vue'),
               meta: { requiresKeyData: true }
             },
             {
               path: 'species-list',
               name: 'species-list',
-              component: KeyTaxaNamesView,
+              component: () => import('../views/key/KeyTaxaNamesView.vue'),
               meta: { requiresKeyData: true }
             },
             {
               path: 'interactive',
               name: 'interactive',
-              component: KeyInteractiveView,
+              component: () => import('../views/key/KeyInteractiveView.vue'),
               meta: { requiresKeyData: true }
             },
             {
               path: 'refine',
               name: 'refine',
-              component: KeyRefineView,
+              component: () => import('../views/key/KeyRefineView.vue'),
               meta: { requiresKeyData: true }
             },
             {
               path: 'duplicate',
               name: 'duplicate',
-              component: KeyDuplicateView,
+              component: () => import('../views/key/KeyDuplicateView.vue'),
               meta: { requiresKeyData: true }
             }
           ]
@@ -129,7 +130,7 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
-      component: NotFoundView
+      component: () => import('@/views/NotFoundView.vue')
     }
   ]
 })
@@ -172,7 +173,7 @@ router.beforeEach((to, from, next) => {
     }
 
     // Check if the keyId in the URL matches the one in localStorage
-    // To maintain filters
+    // To mantain filters
     const storedFilterKey = localStorage.getItem('filterKey')
     if (keyId === storedFilterKey) {
       // If it matches, update the formStore's passedFilterFormData
@@ -188,6 +189,16 @@ router.beforeEach((to, from, next) => {
     const formStore = useFormStore()
     formStore.updateFormField('area', { value: 'italy', text: 'Only species known from Italy' })
   }
+  // Handle nodeId when navigating the inteactive key
+  /*if (to.meta.requiresNodeData && to.params.nodeId) {
+    const keyStore = useKeyStore()
+    const nodeId = to.params.nodeId as string
+    console.log('nodeId', nodeId)
+    console.log('keyStore.currentLeadId', keyStore.currentLeadId)
+    if (nodeId !== keyStore.currentLeadId) {
+      keyStore.setCurrentLeadId(nodeId)
+    }
+  }*/
 
   next()
 })

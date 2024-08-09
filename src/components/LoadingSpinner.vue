@@ -1,11 +1,11 @@
 <template>
   <div class="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p>Loading...</p>
+    <ProgressSpinner strokeWidth="3" animationDuration=".5s" />
   </div>
 </template>
 
 <script setup lang="ts">
+import ProgressSpinner from 'primevue/progressspinner'
 // No props or logic needed for this simple component
 </script>
 

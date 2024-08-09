@@ -31,7 +31,7 @@ export const radioData: FormData[] = [
     items: [
       { text: 'Crustose or leprose', value: '2', image: 'crustose.png' },
       {
-        text: 'Squamulose (or for cyanolichens only) microfruticose',
+        text: 'Squamulose',
         value: '1',
         image: 'squamulose.png'
       }
@@ -136,23 +136,7 @@ export const radioData: FormData[] = [
       }
     ]
   },
-  {
-    id: '39',
-    title: 'Ascocarps (crustose phycolichens lichens only!)',
 
-    items: [
-      {
-        text: 'Present',
-        value: '2',
-        image: 'ascocarp.png'
-      },
-      {
-        text: 'Absent (sterile crusts)',
-        value: '1',
-        image: 'no-ascocarp.png'
-      }
-    ]
-  },
   {
     id: '38',
     title: 'Vegetative diaspores (soredia, blastidia, isidia, schizidia etc.)',
@@ -369,6 +353,23 @@ export const radioData: FormData[] = [
         text: 'K+ yellow turning red or brown',
         value: '5',
         image: 'yellowbrown.png'
+      }
+    ]
+  },
+  {
+    id: '39',
+    title: 'Ascocarps (crustose phycolichens only!)',
+
+    items: [
+      {
+        text: 'Present',
+        value: '2',
+        image: 'ascocarp.png'
+      },
+      {
+        text: 'Absent (sterile crusts)',
+        value: '1',
+        image: 'no-ascocarp.png'
       }
     ]
   }

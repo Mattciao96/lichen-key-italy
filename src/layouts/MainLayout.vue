@@ -22,7 +22,7 @@ const showScrollTop = computed(() => !route.path.startsWith('/filters/'))
 
 <style scoped>
 main {
-  min-height: calc(100vh - 64px - 14rem);
+  min-height: calc(100vh - 64px - 14rem + 32px);
   max-width: 1280px;
   margin: 0 auto;
 }

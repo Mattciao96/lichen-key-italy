@@ -112,7 +112,8 @@ const mobileMenuOpen = ref(false)
 const navigation = [
   { name: 'Home', route: { name: '/' } },
   { name: 'Filters', route: { name: '/filters' } },
-  { name: 'Free choice of species', route: { name: '/filter-species/a' } }
+  { name: 'Free choice of species', route: { name: '/filter-species/a' } },
+  { name: 'How to cite', route: { name: '/how-to-cite' } }
   /*  { name: 'Full key', route: { name: '/full/species-list' } }*/
 ]
 

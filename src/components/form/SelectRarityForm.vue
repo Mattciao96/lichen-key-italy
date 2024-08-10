@@ -67,7 +67,6 @@ const isDropdownDisabled = (group) => {
     isDisabled = dependentValue === group.depend.item
   }
   // If the dropdown is disabled, remove the corresponding field from the store
-  console.log({ isDisabled })
 
   if (isDisabled) {
     nextTick(() => {

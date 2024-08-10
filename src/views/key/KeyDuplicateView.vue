@@ -71,7 +71,6 @@ const { displayedData, allLoaded, loadMoreTrigger, setupIntersectionObserver } =
 const loadMiniTreesForDisplayedSpecies = async () => {
   for (const species of displayedData.value) {
     if (!speciesMiniTrees.value[species]) {
-      console.log('loading mini tree for', species)
       speciesMiniTrees.value[species] = await keyStore.getMiniTree(species)
     }
   }

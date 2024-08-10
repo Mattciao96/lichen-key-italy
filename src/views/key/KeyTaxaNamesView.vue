@@ -18,7 +18,6 @@
         </li>
         <li v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></li>
       </ul>
-      <!--      <div v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></div>-->
     </div>
   </div>
 </template>
@@ -41,18 +40,6 @@ onMounted(() => {
   keyStore.setUniqueSpeciesWithImagesFromNodeId(route.params.nodeId as string)
   setupIntersectionObserver()
 })
-
-/*
-
-const { displayedData, allLoaded, loadMoreTrigger, setupIntersectionObserver } = usePaginatedData(
-  () => keyStore.currentUniqueSpeciesList
-)
-
-onMounted(() => {
-  keyStore.setUniqueSpeciesListFromNodeId(route.params.nodeId as string)
-
-  setupIntersectionObserver()
-})*/
 </script>
 
 <style scoped>

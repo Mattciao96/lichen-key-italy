@@ -131,7 +131,6 @@ const goToNext = () => {
 
 const toggleFilters = () => {
   // Implement your filter toggle logic here
-  console.log('Toggle filters')
 }
 
 defineProps<{

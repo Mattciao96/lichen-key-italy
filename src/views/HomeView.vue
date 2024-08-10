@@ -62,11 +62,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { endpoints } from '@/config/endpoints'
-
-console.log(endpoints.fullKey)
-</script>
+<script setup lang="ts"></script>
 <style scoped>
 .text-title {
   font-size: clamp(38px, 9vw, 50px);

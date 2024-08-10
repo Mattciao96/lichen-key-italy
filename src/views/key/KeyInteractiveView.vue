@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
 import { useRouter, useRoute } from 'vue-router'

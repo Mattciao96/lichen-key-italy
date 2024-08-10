@@ -46,7 +46,6 @@ const { toggleScroll } = useScrollLock()
 const formStore = useFormStore()
 
 const updateSelectFormField = (groupId, option) => {
-  console.log({ groupId, option })
   formStore.updateFormField(groupId, option)
 }
 </script>

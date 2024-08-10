@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Button to open the modal -->
     <button
       @click="openModal"
       class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200"

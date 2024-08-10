@@ -34,13 +34,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* You can remove the loading-related styles from here */
 .error-message {
   color: red;
   font-weight: bold;
   padding: 20px;
   text-align: center;
 }
-
-/* Other styles... */
 </style>

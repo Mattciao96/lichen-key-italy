@@ -1,5 +1,4 @@
 <template>
-  <!-- Button to open the modal -->
   <button
     @click="openModal"
     class="rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"

@@ -42,7 +42,7 @@ export function useKeyFilterMutation() {
       const startTime = performance.now()
       const result = await axios.post(endpoints.keyFromFilters, filters).then((res) => res.data)
       const endTime = performance.now()
-      console.log(`useKeyFilterMutation execution time: ${endTime - startTime} milliseconds`)
+      //console.log(`useKeyFilterMutation execution time: ${endTime - startTime} milliseconds`)
       return result
     }
   })
@@ -57,7 +57,7 @@ export function useKeyRecordsMutation() {
         .post(endpoints.keyFromRecords, { records: records })
         .then((res) => res.data)
       const endTime = performance.now()
-      console.log(`useKeyFilterMutation execution time: ${endTime - startTime} milliseconds`)
+      //console.log(`useKeyFilterMutation execution time: ${endTime - startTime} milliseconds`)
       return result
     }
   })
@@ -69,7 +69,7 @@ export function useKeyTaxaFilterMutation() {
       const startTime = performance.now()
       const result = await axios.post(endpoints.keyFromSpecies, filters).then((res) => res.data)
       const endTime = performance.now()
-      console.log(`useKeyTaxaFilterMutation execution time: ${endTime - startTime} milliseconds`)
+      //console.log(`useKeyTaxaFilterMutation execution time: ${endTime - startTime} milliseconds`)
       return result
     }
   })

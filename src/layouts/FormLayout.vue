@@ -4,10 +4,8 @@
     <div class="relative" v-else>
       <FormStepper />
 
-      <!--        <FilterModal />-->
       <NavigationForm :isLoading="isLoading" :hasMobileMenu="false" />
 
-      <!--      <form id="filter-form" @submit.prevent="submitForm">-->
       <form class="text-sm sm:text-base" id="filter-form" @submit.prevent="submitForm">
         <RouterView />
       </form>

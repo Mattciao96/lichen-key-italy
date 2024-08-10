@@ -1,14 +1,5 @@
 <template>
   <div v-if="currentNode">
-    <!--
-    <p class="text-gray-600 mb-4">ID: {{ currentNode.data.leadId }}</p>
-
-    <div class="mb-6">
-      <p class="text-gray-700">
-        Number of unique remaining species: {{ keyStore.currentSpeciesCount }}
-      </p>
-    </div>
--->
     <div class="mb-4 flex h-10 w-full justify-center">
       <div class="flex w-full max-w-2xl justify-between">
         <button
@@ -74,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
 import { paths } from '@/config/endpoints'
 import placeholderImage from '@/assets/placeholder.svg'
@@ -96,11 +87,6 @@ const isRoot = computed(() => {
 function navigateToRoot() {
   emit('update:currentNode', keyStore.keyTree.root)
 }
-
-/*const uniqueSpeciesCount = computed(() => {
-  if (!props.currentNode) return 0
-  return keyStore.keyTree.getNumberOfUniqueLeaves(props.currentNode.data.leadId)
-})*/
 
 function navigateToNode(node) {
   emit('update:currentNode', node)

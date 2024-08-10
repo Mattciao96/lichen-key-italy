@@ -16,7 +16,6 @@ const props = defineProps<{
 const formStore = useFormStore()
 
 const removeFilterField = (groupId) => {
-  console.log('Removing filter field:', groupId)
   formStore.removeFormField(groupId)
   const dependents = formStore.referenceData.filter(
     (group) => group.depend && group.depend.id === groupId

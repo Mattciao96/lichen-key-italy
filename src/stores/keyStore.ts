@@ -159,7 +159,6 @@ export const useKeyStore = defineStore('key', () => {
       currentStepsList.value = stepsList.value
       return
     }
-    console.log('computing steps')
 
     const tree = keyTree.value
     if (!tree) {
@@ -195,7 +194,6 @@ export const useKeyStore = defineStore('key', () => {
       currentUniqueSpeciesWithImages.value = uniqueSpeciesWithImages.value
       return
     }
-    console.log('computing species images')
 
     const tree = keyTree.value
     if (!tree) {

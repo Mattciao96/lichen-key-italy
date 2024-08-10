@@ -25,21 +25,6 @@
           </p>
         </div>
 
-        <!--        <nav class="flex flex-wrap gap-2">
-          <RouterLink
-            v-for="(route, index) in routes"
-            :key="index"
-            :to="route.path"
-            class="rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
-            activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
-          >
-            {{ route.label }}
-          </RouterLink>
-          &lt;!&ndash;button to see filters&ndash;&gt;
-          <div v-if="Object.keys(formStore.passedFilterFormData).length !== 0">
-            <FilterModalShowOnly />
-          </div>
-        </nav>-->
         <div class="max-w-full overflow-x-auto">
           <nav class="flex flex-nowrap gap-2 pb-2">
             <RouterLink

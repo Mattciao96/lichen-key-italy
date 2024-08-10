@@ -1,44 +1,38 @@
 <template>
-  <div class="loading-overlay">
-    <ProgressSpinner strokeWidth="3" animationDuration=".5s" />
+  <div class="fixed inset-0 z-[9999] flex flex-col items-center justify-center">
+    <div class="relative h-[100px] w-[100px]">
+      <!-- Pulse animation elements -->
+      <div class="animate-pulse-1 absolute inset-0"></div>
+      <div class="animate-pulse-2 absolute inset-0"></div>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import ProgressSpinner from 'primevue/progressspinner'
-// No props or logic needed for this simple component
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.loading-spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
+@keyframes pulse {
   0% {
-    transform: rotate(0deg);
+    transform: scale(0);
+    opacity: 1;
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
+    opacity: 0;
   }
+}
+
+.animate-pulse-1 {
+  animation: pulse 2s linear infinite;
+}
+
+.animate-pulse-2 {
+  animation: pulse 2s linear infinite;
+  animation-delay: -1s;
+}
+
+.animate-pulse-1,
+.animate-pulse-2 {
+  @apply rounded-full bg-primary-500 transition-colors duration-300 ease-linear;
 }
 </style>

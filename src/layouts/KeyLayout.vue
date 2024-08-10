@@ -17,10 +17,11 @@
           class="mb-2 flex w-full flex-row-reverse items-start justify-between lg:mb-0 lg:h-16 lg:w-auto lg:flex-col lg:justify-center lg:px-0"
         >
           <p>
-            <span class="font-bold">{{ keyStore.speciesCount }}</span> total species
+            <span class="font-bold tracking-wide">{{ keyStore.speciesCount }}</span> total species
           </p>
           <p v-if="keyStore.speciesCount !== keyStore.currentSpeciesCount" class="">
-            <span class="font-bold">{{ keyStore.currentSpeciesCount }}</span> remaining species
+            <span class="font-bold tracking-wide">{{ keyStore.currentSpeciesCount }}</span>
+            remaining species
           </p>
         </div>
 

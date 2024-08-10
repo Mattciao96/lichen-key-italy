@@ -18,7 +18,7 @@
           :key="item.route.name"
           :to="item.route.name"
           :class="[
-            'text-surface-800 hover:text-primary-500',
+            'flex items-center justify-center text-center text-surface-800 hover:text-primary-500',
             'rounded-md px-3 py-2 text-sm font-medium'
           ]"
           :aria-current="item.current ? 'page' : undefined"

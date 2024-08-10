@@ -32,7 +32,7 @@ export const fetchRecords = async (id: string): Promise<string[]> => {
   if (id === 'full') {
     return []
   }
-  const response = await axios.post<{ records: number[] }>(
+  const response = await axios.post<{ records: string[] }>(
     'https://italic.units.it/api/v1/key-records',
     { 'key-id': id }
   )

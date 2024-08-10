@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { useQuery } from '@tanstack/vue-query'
+import { useSpeciesQuery } from '@/composables/useKeyApi'
 import { useRoute, useRouter } from 'vue-router'
 import { useSpeciesStore } from '@/stores/speciesStore'
 import { useKeyStore } from '@/stores/keyStore'
@@ -81,21 +81,7 @@ const keyTaxaFilterMutation = useKeyTaxaFilterMutation()
 
 const selectedSpeciesLocal = ref<string[]>(speciesStore.selectedSpecies)
 
-const {
-  data: checklist,
-  isLoading,
-  error
-} = useQuery({
-  queryKey: ['checklist'],
-  queryFn: () =>
-    fetch('https://italic.units.it/api/v1/checklist')
-      .then((res) => res.json())
-      .then((data) => data.checklist),
-  staleTime: Infinity,
-  refetchOnMount: false,
-  refetchOnWindowFocus: false,
-  refetchOnReconnect: false
-})
+const { data: checklist, isLoading, error } = useSpeciesQuery()
 
 const availableLetters = computed(() =>
   checklist.value

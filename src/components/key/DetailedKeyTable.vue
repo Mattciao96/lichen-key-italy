@@ -42,7 +42,7 @@
           <td class="w-[10%] border-b p-1">
             <img
               v-if="item.speciesImage"
-              :src="getSpeciesUrl(item.speciesImage)"
+              :src="imageUrlToThumbNailUrl(item.speciesImage)"
               alt="Species Image"
               loading="lazy"
               class="max-w-full rounded-sm object-contain lg:h-auto lg:w-full"
@@ -66,7 +66,7 @@
           <td colspan="3" class="border-b p-1">
             <img
               v-if="item.speciesImage"
-              :src="getSpeciesUrl(item.speciesImage)"
+              :src="imageUrlToThumbNailUrl(item.speciesImage)"
               alt="Species Image"
               loading="lazy"
               class="h-auto w-full rounded-sm object-contain"
@@ -82,21 +82,11 @@
 
 <script setup lang="ts">
 import type { KeyLead } from '@/types'
-import placeholderImage from '@/assets/placeholder.svg'
-
+import { imageUrlToThumbNailUrl } from '@/utils/imageUtils'
 const props = defineProps<{
   visibleSteps: KeyLead[]
   taxonUrl: string
 }>()
 
 defineEmits(['scroll-to-anchor'])
-
-const getSpeciesUrl = (imagePath: string | null) => {
-  if (!imagePath) {
-    return placeholderImage
-  }
-  const path = imagePath.split('/')
-  path.splice(2, 1, 'thumbnails')
-  return `https://italic.units.it/flora/${path.join('/')}`
-}
 </script>

@@ -13,7 +13,7 @@
         <div v-for="species in displayedData" :key="species.name" class="flex flex-col">
           <div class="pb-3/4 relative w-full overflow-hidden rounded-md">
             <LazyImage
-              :src="getSpeciesUrl(species.image)"
+              :src="imageUrlToThumbNailUrl(species.image)"
               :alt="species.name"
               :placeholder="placeholderImage"
             />
@@ -23,7 +23,7 @@
           >
             <a
               class="text-sm text-blue-600 hover:underline"
-              :href="`https://italic.units.it/index.php?procedure=taxonpage&num=${species.italicId}`"
+              :href="`${paths.taxonPagePath}${species.italicId}`"
               target="_blank"
               >{{ species.name }}</a
             >
@@ -43,6 +43,8 @@ import { usePaginatedData } from '@/composables/usePaginatedData'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import LazyImage from '@/components/LazyImage.vue'
 import placeholderImage from '@/assets/placeholder.svg'
+import { paths } from '@/config/endpoints'
+import { imageUrlToThumbNailUrl } from '@/utils/imageUtils'
 
 const route = useRoute()
 const keyStore = useKeyStore()
@@ -50,15 +52,6 @@ const keyStore = useKeyStore()
 const { displayedData, allLoaded, loadMoreTrigger, setupIntersectionObserver } = usePaginatedData(
   () => keyStore.currentUniqueSpeciesWithImages
 )
-
-const getSpeciesUrl = (imagePath: string) => {
-  if (!imagePath) {
-    return placeholderImage
-  }
-  const path = imagePath.split('/')
-  path.splice(2, 1, 'thumbnails')
-  return `https://italic.units.it/flora/${path.join('/')}`
-}
 
 onMounted(() => {
   keyStore.setUniqueSpeciesWithImagesFromNodeId(route.params.nodeId as string)

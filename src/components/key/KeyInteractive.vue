@@ -56,7 +56,7 @@
               <span v-if="child.data.leadSpecies" class="block">
                 <a
                   class="font-medium text-blue-600 hover:underline"
-                  :href="`https://italic.units.it/index.php?procedure=taxonpage&num=${child.data.italicId}`"
+                  :href="`${paths.taxonPagePath}${child.data.italicId}`"
                   target="_blank"
                   >({{ child.data.leadSpecies }})</a
                 >
@@ -76,6 +76,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
+import { paths } from '@/config/endpoints'
 import placeholderImage from '@/assets/placeholder.svg'
 
 const props = defineProps({
@@ -118,10 +119,10 @@ const getInteractiveImageUrl = (nodeData) => {
   if (nodeData.speciesImage) {
     let imgPath = nodeData.speciesImage
     imgPath = imgPath.replace('images/species/images', 'images/species/thumbnails')
-    return `https://italic.units.it/flora/${imgPath}`
+    return `${paths.imagesPath}${imgPath}`
   }
   if (nodeData.leadImage) {
-    return `https://italic.units.it/flora/${nodeData.leadImage}`
+    return `${paths.imagesPath}${nodeData.leadImage}`
   }
   return placeholderImage
 }

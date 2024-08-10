@@ -19,7 +19,7 @@
         :is="currentVisualization"
         :visibleSteps="displayedData"
         @scroll-to-anchor="scrollToAnchor"
-        taxonUrl="https://italic.units.it/index.php?procedure=taxonpage&num="
+        :taxonUrl="paths.taxonPagePath"
       />
       <div v-if="!allLoaded" ref="loadMoreTrigger" class="load-more-trigger"></div>
     </div>
@@ -33,6 +33,7 @@ import { usePaginatedData } from '@/composables/usePaginatedData'
 import DetailedKeyTable from '@/components/key/DetailedKeyTable.vue'
 import SimpleKeyTable from '@/components/key/SimpleKeyTable.vue'
 import KeyTableDescriptions from '@/components/key/KeyTableDescriptions.vue'
+import { paths } from '@/config/endpoints'
 import type { KeyLead } from '@/types'
 
 const props = defineProps<{

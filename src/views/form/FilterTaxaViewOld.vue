@@ -12,12 +12,12 @@
           :to="`/filter-species/${letter.toLowerCase()}`"
           :class="[
             'flex min-h-7 min-w-8 items-center justify-center rounded-md text-sm font-medium',
-            currentLetter === letter
+            currentLetter.toUpperCase() === letter
               ? 'bg-primary-500 text-white'
               : 'bg-surface-200 text-surface-900 hover:bg-surface-300'
           ]"
         >
-          {{ letter }}
+          <span> {{ letter }}</span>
         </router-link>
       </div>
       <form @submit.prevent="handleSubmit" class="space-y-4">
@@ -30,6 +30,7 @@
                 v-model="selectedSpeciesLocal"
                 :value="species"
                 class="peer absolute h-5 w-5 cursor-pointer opacity-0"
+                @change="updateSelectedSpecies(species, $event.target.checked)"
               />
               <div
                 class="absolute h-5 w-5 rounded border border-gray-300 bg-white peer-checked:bg-primary-500"
@@ -69,6 +70,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useSpeciesStore } from '@/stores/speciesStore'
 import { useKeyStore } from '@/stores/keyStore'
 import { useFormStore } from '@/stores/formStore'
+import axios from 'axios'
 import { useKeyTaxaFilterMutation } from '@/composables/useKeyApi'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
@@ -79,7 +81,12 @@ const formStore = useFormStore()
 const keyStore = useKeyStore()
 const keyTaxaFilterMutation = useKeyTaxaFilterMutation()
 
-const selectedSpeciesLocal = ref<string[]>(speciesStore.selectedSpecies)
+const selectedSpeciesLocal = ref<string[]>([])
+
+const fetchChecklist = async () => {
+  const response = await axios.get('https://italic.units.it/api/v1/checklist')
+  return response.data.checklist
+}
 
 const {
   data: checklist,
@@ -87,29 +94,29 @@ const {
   error
 } = useQuery({
   queryKey: ['checklist'],
-  queryFn: () =>
-    fetch('https://italic.units.it/api/v1/checklist')
-      .then((res) => res.json())
-      .then((data) => data.checklist),
+  queryFn: fetchChecklist,
   staleTime: Infinity,
   refetchOnMount: false,
   refetchOnWindowFocus: false,
   refetchOnReconnect: false
 })
 
-const availableLetters = computed(() =>
-  checklist.value
-    ? [...new Set(checklist.value.map((species) => species[0].toUpperCase()))].sort()
-    : []
-)
+const availableLetters = computed(() => {
+  if (!checklist.value) return []
+  const letters = new Set(checklist.value.map((species) => species[0].toUpperCase()))
+  return Array.from(letters).sort()
+})
 
-const currentLetter = computed(() => ((route.params.letter as string) || 'a').toUpperCase())
+const currentLetter = computed(() => {
+  return (route.params.letter as string) || 'a'
+})
 
-const currentPageSpecies = computed(
-  () =>
-    checklist.value?.filter((species) => species.toUpperCase().startsWith(currentLetter.value)) ||
-    []
-)
+const currentPageSpecies = computed(() => {
+  if (!checklist.value) return []
+  return checklist.value.filter((species) =>
+    species.toUpperCase().startsWith(currentLetter.value.toUpperCase())
+  )
+})
 
 watch(
   () => route.params.letter,
@@ -123,32 +130,50 @@ watch(
   { immediate: true }
 )
 
-const toggleSpecies = (species: string) => {
-  const index = selectedSpeciesLocal.value.indexOf(species)
-  if (index === -1) {
-    selectedSpeciesLocal.value.push(species)
+const updateSelectedSpecies = (species: string, isChecked: boolean) => {
+  if (isChecked) {
     speciesStore.addSpecies(species)
   } else {
-    selectedSpeciesLocal.value.splice(index, 1)
     speciesStore.removeSpecies(species)
   }
 }
 
-const handleSubmit = async () => {
-  try {
-    formStore.resetPassedFilterFormData()
-    keyStore.resetStore()
+const toggleSpecies = (species: string) => {
+  const isCurrentlySelected = selectedSpeciesLocal.value.includes(species)
+  updateSelectedSpecies(species, !isCurrentlySelected)
+  // Toggle the local state
+  if (isCurrentlySelected) {
+    selectedSpeciesLocal.value = selectedSpeciesLocal.value.filter((s) => s !== species)
+  } else {
+    selectedSpeciesLocal.value.push(species)
+  }
+}
 
-    const result = await keyTaxaFilterMutation.mutateAsync(speciesStore.selectedSpecies)
+const handleSubmit = async () => {
+  console.log('Selected species:', speciesStore.selectedSpecies)
+  try {
+    /*const keyStore = useKeyStore()
+    const formStore = useFormStore()*/
+    formStore.resetPassedFilterFormData() // reset saved old filters
+    keyStore.resetStore() // This replaces recordStore.resetRecords()
+
+    const filters = speciesStore.selectedSpecies
+    const result = await keyTaxaFilterMutation.mutateAsync(filters)
 
     keyStore.setKeyId(result['key-id'])
+    //await keyStore.fetchData() // This will fetch and set all necessary data
     speciesStore.reset()
+    // Navigate to the key view
     await router.push(`/${result['key-id']}/nodes/1/species-list`)
   } catch (error) {
     console.error('Error submitting form:', error)
   }
 }
 
+// Initialize local selected species from store
+selectedSpeciesLocal.value = speciesStore.selectedSpecies
+
+// Update local selected species when store changes
 watch(
   () => speciesStore.selectedSpecies,
   (newSelectedSpecies) => {

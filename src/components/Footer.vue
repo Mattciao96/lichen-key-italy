@@ -9,7 +9,7 @@
       How to Cite
     </RouterLink>
     <a
-      href="https://github.com/your-repo-link"
+      href="https://github.com/orgs/plant-data/repositories"
       target="_blank"
       rel="noopener noreferrer"
       class="flex items-center text-surface-900"

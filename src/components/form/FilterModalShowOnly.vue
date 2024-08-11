@@ -20,10 +20,17 @@
       <div
         v-if="isModalOpen"
         @click="closeModal"
+        @keydown.esc="closeModal"
         class="fixed inset-0 z-[999999] flex items-center justify-center bg-black bg-opacity-50"
       >
         <!-- Modal Content -->
-        <div @click.stop class="mx-1 flex h-[80vh] w-full max-w-2xl flex-col rounded-lg bg-white">
+        <div
+          ref="modalRef"
+          @click.stop
+          @keydown="handleTabKey"
+          class="mx-1 flex h-[80vh] w-full max-w-2xl flex-col rounded-lg bg-white"
+          tabindex="-1"
+        >
           <!-- Fixed Header -->
           <div class="border-b border-surface-200 p-4">
             <h2 class="text-2xl font-semibold">Selected Filters</h2>
@@ -58,30 +65,70 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onUnmounted, Teleport } from 'vue'
+import { ref, computed, watch, onUnmounted, nextTick } from 'vue'
 import { useFormStore } from '@/stores/formStore'
 
 const formStore = useFormStore()
 const isModalOpen = ref(false)
+const modalRef = ref<HTMLElement | null>(null)
+const lastFocusedElement = ref<HTMLElement | null>(null)
 
 const selectedFilters = computed(() => formStore.getSelectedFiltersWithDetails('old'))
 
 const openModal = () => {
+  lastFocusedElement.value = document.activeElement as HTMLElement
   isModalOpen.value = true
+  nextTick(() => {
+    focusFirstElement()
+  })
 }
 
 const closeModal = () => {
   isModalOpen.value = false
+  lastFocusedElement.value?.focus()
+}
+
+const focusFirstElement = () => {
+  const focusableElements = modalRef.value?.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )
+  if (focusableElements && focusableElements.length > 0) {
+    ;(focusableElements[0] as HTMLElement).focus()
+  }
+}
+
+const handleTabKey = (e: KeyboardEvent) => {
+  const focusableElements = modalRef.value?.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )
+  if (!focusableElements) return
+
+  const firstElement = focusableElements[0] as HTMLElement
+  const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
+
+  if (e.shiftKey) {
+    // Shift + Tab
+    if (document.activeElement === firstElement) {
+      lastElement.focus()
+      e.preventDefault()
+    }
+  } else {
+    // Tab
+    if (document.activeElement === lastElement) {
+      firstElement.focus()
+      e.preventDefault()
+    }
+  }
 }
 
 // Function to toggle body scroll
-const toggleBodyScroll = (disable) => {
+const toggleBodyScroll = (disable: boolean) => {
   if (disable) {
     document.body.style.overflow = 'hidden'
-    document.documentElement.style.overflow = 'hidden' // Add this line
+    document.documentElement.style.overflow = 'hidden'
   } else {
     document.body.style.overflow = ''
-    document.documentElement.style.overflow = '' // Add this line
+    document.documentElement.style.overflow = ''
   }
 }
 

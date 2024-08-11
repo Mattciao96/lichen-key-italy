@@ -70,7 +70,7 @@
 
   <!-- Mobile menu, show/hide based on menu state -->
   <div
-    class="fixed inset-0 z-[1000] transition-all duration-300 ease-in-out"
+    class="fixed inset-0 z-[1000] block transition-all duration-300 ease-in-out sm:hidden"
     :class="{
       'pointer-events-none opacity-0 backdrop-blur-none': !mobileMenuOpen,
       'pointer-events-auto bg-black/50 opacity-100 backdrop-blur-sm': mobileMenuOpen

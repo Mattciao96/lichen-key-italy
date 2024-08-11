@@ -3,7 +3,6 @@ import { useKeyStore } from '@/stores/keyStore'
 import { useSpeciesStore } from '@/stores/speciesStore'
 import { useFormStore } from '@/stores/formStore'
 
-// Import all components
 import MainLayout from '@/layouts/MainLayout.vue'
 import HomeView from '@/views/HomeView.vue'
 import FormLayout from '@/layouts/FormLayout.vue'

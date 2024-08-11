@@ -51,7 +51,7 @@
               :src="imageUrlToThumbNailUrl(item.speciesImage)"
               alt="Species Image"
               loading="lazy"
-              class="h-auto max-h-[250px] w-full min-w-full rounded-md object-cover"
+              class="h-auto max-h-[250px] min-h-[250px] w-full min-w-full rounded-md object-cover"
             />
           </td>
         </tr>
@@ -76,7 +76,7 @@
                 :src="imageUrlToThumbNailUrl(item.speciesImage)"
                 alt="Species Image"
                 loading="lazy"
-                class="h-auto max-h-[300px] w-full max-w-[350px] rounded-md object-cover"
+                class="h-auto max-h-[300px] min-h-[300px] w-[350px] min-w-[350px] max-w-full rounded-md object-cover"
               />
             </div>
             <span class="text-xs"><b>Description:</b></span>

@@ -2,7 +2,7 @@
   <div class="flex w-full flex-col">
     <h1 class="text-title mb-8 mt-4 hidden text-center">ITALIC KEYMAKER</h1>
     <div class="mt-8 [&>h2]:font-bold [&>p]:mb-4">
-      <p>M. Conti, S. Martellos, P.L. Nimis</p>
+      <!--      <p>M. Conti, S. Martellos, P.L. Nimis</p>-->
       <p>
         This tool generates keys to subsets of species defined by specifying their distribution,
         traits and ecological requirements. The smaller keys are obtained from
@@ -41,8 +41,8 @@
         Not illustrated (with descriptions only), 3) Plain (only the dichotomous skeleton, without
         pictures and descriptions), 4) interactive (also including pictures of characters). B) A
         list of the species resulting from the query. C) A photo gallery of the species resulting
-        from the query. If users want to delete some species from the query, they can use the option
-        “adjust key” specifying only the species they want to retain.
+        from the query. If users want to delete some species from the key, they can use the option
+        “adjust key”.
       </p>
 
       <h2>FREE CHOICE OF SPECIES</h2>

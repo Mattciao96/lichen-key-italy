@@ -1,5 +1,33 @@
 import type { FormData } from '@/types'
+interface RegionEcoregionMap {
+  [regionId: string]: string[]
+}
 
+export const regionToEcoregionMap: RegionEcoregionMap = {
+  // All ecoregions
+  ITA: ['A', 'A1', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+  Abr: ['B', 'C', 'D', 'E'],
+  Bas: ['B', 'C', 'D', 'F', 'G', 'H'],
+  Cal: ['B', 'C', 'D', 'F', 'G', 'H'],
+  Camp: ['B', 'C', 'D', 'F', 'G'],
+  Emil: ['A', 'A1', 'C', 'D', 'E'],
+  Frl: ['A', 'A1', 'C', 'E', 'F', 'H'],
+  Laz: ['B', 'C', 'F', 'G'],
+  Lig: ['A', 'A1', 'C', 'D', 'F', 'G'],
+  Lomb: ['A', 'A1', 'C', 'D', 'E'],
+  Marc: ['B', 'C', 'D', 'E'],
+  Mol: ['B', 'C', 'D', 'H'],
+  Piem: ['A', 'A1', 'C', 'D', 'E'],
+  Pugl: ['C', 'D', 'D', 'F', 'H'],
+  Sar: ['B', 'C', 'D', 'F', 'G', 'H'],
+  Si: ['B', 'C', 'D', 'F', 'G', 'H'],
+  Tosc: ['A', 'C', 'D', 'F', 'G'],
+  TAA: ['A', 'A1', 'C', 'D'],
+  Umb: ['B', 'C', 'D', 'F'],
+  VA: ['A', 'A1', 'C', 'D'],
+  Ven: ['A', 'A1', 'C', 'F', 'E'],
+  VG: ['D']
+}
 export const selectDataArea: FormData[] = [
   {
     id: 'area',
@@ -48,16 +76,14 @@ export const selectDataArea: FormData[] = [
     items: [
       { value: 'All', text: 'All ecoregions' },
       { value: 'A', text: 'Alpine' },
-      { value: 'H', text: 'Dry Mediterranean' },
-      { value: 'D', text: 'Dry Submediterranean' },
-      { value: 'G', text: 'Humid Mediterranean' },
-      { value: 'F', text: 'Humid Submediterranean' },
-
-      { value: 'C', text: 'Montane' },
+      { value: 'A1', text: 'Subalpine' },
       { value: 'B', text: 'Oromediterranean' },
+      { value: 'C', text: 'Montane' },
+      { value: 'D', text: 'Dry Submediterranean' },
       { value: 'E', text: 'Padanian' },
-
-      { value: 'A1', text: 'Subalpine' }
+      { value: 'F', text: 'Humid Submediterranean' },
+      { value: 'G', text: 'Humid Mediterranean' },
+      { value: 'H', text: 'Dry Mediterranean' }
     ]
   }
 ]

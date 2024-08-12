@@ -2,7 +2,7 @@
   <div class="flex w-full flex-col">
     <h1 class="text-title mb-8 mt-4 hidden text-center">ITALIC KEYMAKER</h1>
     <div class="mt-8 [&>h2]:font-bold [&>p]:mb-4">
-      <h2 class="mb-1">HOW TO CITE</h2>
+      <h2 class="mb-1">To cite the Keymaker:</h2>
       <p>
         Conti M., Martellos S., Nimis P.L. (XXXX) – ITALIC Keymaker.
         https://italic.units.it/key-maker/ Accessed on: DD/MM/YYYY

@@ -3,9 +3,9 @@
     <!-- Button to open the modal -->
     <button
       @click="openModal"
-      class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200"
+      class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium leading-none text-surface-700 transition-colors hover:bg-surface-200 md:w-[154px]"
     >
-      Selected Filters
+      Selected Parameters
     </button>
 
     <!-- Teleport the modal to body -->
@@ -74,7 +74,7 @@ import { useFormStore } from '@/stores/formStore'
 import { useScrollLock } from '@/composables/useScrollLock'
 import ClearButtonFilter from '@/components/form/ClearButtonFilter.vue'
 
-const { toggleScroll } = useScrollLock()
+const { toggleScroll, blockScroll, unblockScroll } = useScrollLock()
 const formStore = useFormStore()
 const isModalOpen = ref(false)
 const modalRef = ref<HTMLElement | null>(null)
@@ -141,13 +141,18 @@ const handleTabKey = (e: KeyboardEvent) => {
 
 // Watch for changes in isModalOpen and toggle body scroll accordingly
 watch(isModalOpen, (newValue) => {
-  //toggleBodyScroll(newValue)
-  toggleScroll()
+  if (newValue) {
+    //toggleBodyScroll(true)
+    blockScroll()
+  } else {
+    //toggleBodyScroll(false)
+    unblockScroll()
+  }
 })
 
 // Ensure body scroll is re-enabled when component is unmounted
 onUnmounted(() => {
   //toggleBodyScroll(false)
-  toggleScroll()
+  unblockScroll()
 })
 </script>

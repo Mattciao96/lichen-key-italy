@@ -7,7 +7,11 @@
       >
         <img class="h-10 w-10" src="/general/banner-key.jpg" alt="Your Company" />
       </div>
-      <span class="text-2xl font-semibold text-primary-950">ITALIC KEYMAKER</span>
+      <span
+        class="homepage relative min-w-[218px] text-2xl font-semibold text-primary-950"
+        :class="{ 'is-home': isHomePage }"
+        >ITALIC KEYMAKER</span
+      >
     </div>
 
     <!-- Desktop menu -->
@@ -19,7 +23,7 @@
           :to="item.route.name"
           :class="[
             'flex items-center justify-center text-center text-surface-800 hover:text-primary-500',
-            'rounded-md px-3 py-2 text-sm font-medium'
+            'rounded-md px-0 py-2 text-sm font-medium lg:px-3'
           ]"
           :aria-current="item.current ? 'page' : undefined"
         >
@@ -104,11 +108,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
-
+import { ref, computed } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+const route = useRoute()
 const mobileMenuOpen = ref(false)
-
+const isHomePage = computed(() => route.path === '/')
 const navigation = [
   { name: 'Home', route: { name: '/' } },
   { name: 'Filters', route: { name: '/filters' } },
@@ -130,5 +134,15 @@ const toggleMobileMenu = () => {
   max-width: 1400px;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+.is-home::after {
+  content: 'M. Conti, S. Martellos, P.L. Nimis';
+  position: absolute;
+  font-size: 0.5em;
+  left: 2px;
+  top: 22px;
+
+  z-index: -1;
+  white-space: nowrap;
 }
 </style>

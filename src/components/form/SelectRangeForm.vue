@@ -18,7 +18,7 @@
             :placeholder="`${group.title} ${suffix === '1' ? 'min' : 'max'}`"
             :autoOptionFocus="true"
             append-to="self"
-            class="w-full md:w-[354px]"
+            class="w-full md:w-[320px] lg:w-[354px]"
             @show="toggleScroll"
             @hide="toggleScroll"
           />

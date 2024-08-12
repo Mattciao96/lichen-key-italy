@@ -49,7 +49,7 @@
       v-if="hasMobileMenu"
       class="fixed bottom-0 left-0 right-0 border-t border-surface-300 bg-white md:hidden"
     >
-      <div class="grid h-14 grid-cols-[40px_1fr_60px] items-center px-4">
+      <div class="grid h-14 grid-cols-[35px_1fr_35px] items-center px-4">
         <div class="justify-self-start">
           <button
             v-if="actualRouteIndex > 0"

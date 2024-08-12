@@ -110,7 +110,7 @@ const handleSubmit = async () => {
       const result = await keyRecordMutation.mutateAsync(remainingRecords)
       keyStore.resetStore()
       keyStore.setKeyId(result['key-id'])
-      await router.push(`/${result['key-id']}/nodes/1/species-list`)
+      await router.push(`/${result['key-id']}/nodes/1/species`)
     } catch (error) {
       console.error('Error submitting remaining species:', error)
     } finally {

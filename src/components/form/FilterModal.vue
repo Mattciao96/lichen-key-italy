@@ -3,9 +3,9 @@
     <!-- Button to open the modal -->
     <button
       @click="openModal"
-      class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium leading-none text-surface-700 transition-colors hover:bg-surface-200 md:w-[154px]"
+      class="h-10 w-28 rounded-full bg-surface-100 text-sm font-medium leading-none text-surface-700 transition-colors hover:bg-surface-200"
     >
-      Selected Parameters
+      Your query
     </button>
 
     <!-- Teleport the modal to body -->

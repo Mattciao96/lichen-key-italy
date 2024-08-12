@@ -9,14 +9,7 @@
   <!-- Teleport the modal to body -->
   <Teleport to="body">
     <!-- Modal Overlay -->
-    <Transition
-      enter-active-class="transition ease-out duration-300"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-active-class="transition ease-in duration-200"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
+    <Transition>
       <div
         v-if="isModalOpen"
         @click="closeModal"
@@ -67,7 +60,9 @@
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted, nextTick } from 'vue'
 import { useFormStore } from '@/stores/formStore'
+import { useScrollLock } from '@/composables/useScrollLock'
 
+const { toggleScroll } = useScrollLock()
 const formStore = useFormStore()
 const isModalOpen = ref(false)
 const modalRef = ref<HTMLElement | null>(null)
@@ -122,7 +117,7 @@ const handleTabKey = (e: KeyboardEvent) => {
 }
 
 // Function to toggle body scroll
-const toggleBodyScroll = (disable: boolean) => {
+/*const toggleBodyScroll = (disable: boolean) => {
   if (disable) {
     document.body.style.overflow = 'hidden'
     document.documentElement.style.overflow = 'hidden'
@@ -130,15 +125,17 @@ const toggleBodyScroll = (disable: boolean) => {
     document.body.style.overflow = ''
     document.documentElement.style.overflow = ''
   }
-}
+}*/
 
 // Watch for changes in isModalOpen and toggle body scroll accordingly
 watch(isModalOpen, (newValue) => {
-  toggleBodyScroll(newValue)
+  //toggleBodyScroll(newValue)
+  toggleScroll()
 })
 
 // Ensure body scroll is re-enabled when component is unmounted
 onUnmounted(() => {
-  toggleBodyScroll(false)
+  //toggleBodyScroll(false)
+  toggleScroll()
 })
 </script>

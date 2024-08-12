@@ -65,7 +65,7 @@
                 form="filter-form"
                 class="w-full rounded border border-surface-300 bg-primary-500 px-4 py-2 text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
               >
-                Submit
+                Make key
               </button>
             </div>
           </div>

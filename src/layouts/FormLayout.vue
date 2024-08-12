@@ -3,13 +3,16 @@
     <LoadingSpinner v-if="isLoading" />
     <div class="relative" v-else>
       <FormStepper />
-
       <NavigationForm :isLoading="isLoading" :hasMobileMenu="false" />
 
       <form class="text-sm sm:text-base" id="filter-form" @submit.prevent="submitForm">
         <RouterView />
       </form>
+      <div class="h-8 w-full"></div>
       <NavigationForm :isLoading="isLoading" :hasMobileMenu="true" />
+      <div class="h-4 w-full"></div>
+      <FormStepper />
+      <div class="h-8 w-full"></div>
     </div>
   </div>
 </template>

@@ -6,40 +6,47 @@
           <button
             v-if="actualRouteIndex > 0"
             @click="goToPrevious"
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-surface-100 text-surface-700 transition-colors hover:bg-surface-200"
+            class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200"
           >
-            <i class="pi pi-chevron-left text-sm"></i>
+            <i class="pi pi-chevron-left mr-2"></i>
+            Previous
           </button>
         </div>
 
         <div class="flex space-x-4 justify-self-center">
-          <FilterModal v-if="Object.keys(formStore.formData).length !== 0" />
-          <button
-            type="submit"
-            form="filter-form"
-            :disabled="isLoading"
-            class="w h-10 rounded-full bg-surface-100 px-4 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200 focus:outline-none focus:ring-2 focus:ring-surface-300 focus:ring-opacity-50"
-          >
-            Make key
-          </button>
+          <div class="justify-self-center">
+            <FilterModal v-if="Object.keys(formStore.formData).length !== 0" />
+          </div>
         </div>
 
         <div class="justify-self-end">
           <button
             v-if="actualRouteIndex < 2"
             @click="goToNext"
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-surface-100 text-surface-700 transition-colors hover:bg-surface-200"
+            class="h-10 w-32 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200"
           >
-            <i class="pi pi-chevron-right text-sm"></i>
+            Next
+            <i class="pi pi-chevron-right ml-2"></i>
           </button>
-          <button
-            v-if="actualRouteIndex === 2"
-            @click="clearKeyStoreData"
-            :disabled="isLoading"
-            class="h-8 w-8 rounded-full bg-surface-100 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200 focus:outline-none focus:ring-2 focus:ring-surface-300 focus:ring-opacity-50"
-          >
-            <i class="pi pi-refresh text-sm"></i>
-          </button>
+          <div v-if="actualRouteIndex === 2" class="flex gap-2">
+            <button
+              type="submit"
+              form="filter-form"
+              :disabled="isLoading"
+              class="h-10 w-32 rounded-full bg-primary-500 text-sm font-medium text-white transition-colors hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
+            >
+              Submit
+            </button>
+            <button
+              type="submit"
+              form="filter-form"
+              @click="clearKeyStoreData"
+              :disabled="isLoading"
+              class="h-10 w-32 rounded-full bg-primary-500 text-sm font-medium text-white transition-colors hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
+            >
+              Submit / refresh
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -49,44 +56,37 @@
       v-if="hasMobileMenu"
       class="fixed bottom-0 left-0 right-0 border-t border-surface-300 bg-white md:hidden"
     >
-      <div class="grid h-14 grid-cols-[40px_1fr_60px] items-center px-4">
+      <div class="grid h-14 grid-cols-3 items-center px-4">
         <div class="justify-self-start">
           <button
             v-if="actualRouteIndex > 0"
             @click="goToPrevious"
-            class="flex h-8 w-8 items-center justify-center text-surface-600"
+            class="flex h-10 w-10 items-center justify-center text-surface-600"
           >
-            <i class="pi pi-chevron-left text-sm"></i>
+            <i class="pi pi-chevron-left text-xl"></i>
           </button>
         </div>
 
-        <div class="flex space-x-2 justify-self-center">
+        <div class="justify-self-center">
           <FilterModal v-if="Object.keys(formStore.formData).length !== 0" />
-          <button
-            type="submit"
-            form="filter-form"
-            :disabled="isLoading"
-            class="h-10 rounded-full bg-surface-100 px-4 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200 focus:outline-none focus:ring-2 focus:ring-surface-300 focus:ring-opacity-50"
-          >
-            Make key
-          </button>
         </div>
 
         <div class="justify-self-end">
           <button
             v-if="actualRouteIndex < 2"
             @click="goToNext"
-            class="flex h-8 w-8 items-center justify-center text-surface-600"
+            class="flex h-10 w-10 items-center justify-center text-surface-600"
           >
-            <i class="pi pi-chevron-right text-sm"></i>
+            <i class="pi pi-chevron-right text-xl"></i>
           </button>
           <button
             v-if="actualRouteIndex === 2"
-            @click="clearKeyStoreData"
+            type="submit"
+            form="filter-form"
             :disabled="isLoading"
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-surface-100 text-surface-700 transition-colors hover:bg-surface-200 focus:outline-none focus:ring-2 focus:ring-surface-300 focus:ring-opacity-50"
+            class="h-10 w-20 rounded-full bg-primary-500 text-sm font-medium text-white transition-colors hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
           >
-            <i class="pi pi-refresh text-sm"></i>
+            Submit
           </button>
         </div>
       </div>
@@ -127,6 +127,10 @@ const goToNext = () => {
   if (actualRouteIndex.value < 2) {
     router.push(formRoutes[actualRouteIndex.value + 1])
   }
+}
+
+const toggleFilters = () => {
+  // Implement your filter toggle logic here
 }
 
 defineProps<{

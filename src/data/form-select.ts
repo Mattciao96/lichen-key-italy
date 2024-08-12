@@ -57,9 +57,9 @@ export const selectData: FormData[] = [
       },
       {
         value: 'l',
-        text: 'periodical submerged, e.g. in creeks or on coastal maritime rocks'
+        text: 'periodically submerged, e.g. in creeks or on coastal maritime rocks'
       },
-      { value: 'u', text: 'on surface seldom wetted by rain, e.g. underhangs' }
+      { value: 'u', text: 'on surfaces seldom wetted by rain, e.g. underhangs' }
     ]
   },
   {

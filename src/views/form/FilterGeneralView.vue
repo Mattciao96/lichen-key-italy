@@ -1,5 +1,5 @@
 <template>
-  <TitleForm>General Filter</TitleForm>
+  <TitleForm>General</TitleForm>
   <div class="space-y-4"><AreaForm /></div>
   <div class="my-4 space-y-4"><SelectRarityForm /></div>
   <div class="my-4 space-y-2"><SelectForm :filterData="lichenizedData" /></div>

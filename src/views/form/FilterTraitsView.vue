@@ -1,5 +1,5 @@
 <template>
-  <TitleForm>Traits Filter</TitleForm>
+  <TitleForm>Traits</TitleForm>
   <GroupForm />
 </template>
 

@@ -34,7 +34,7 @@
             type="submit"
             form="filter-form"
             :disabled="isLoading"
-            class="flex h-10 items-center justify-center rounded-full bg-primary-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-600"
+            class="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-600"
           >
             Make key
             <i class="pi pi-key ml-2 text-sm"></i>

@@ -1,18 +1,7 @@
 import type { FormData } from '@/types'
 export const radioData: FormData[] = [
-  /*{
-    id: '4',
-    title: 'Substratum',
-    items: [
-      { text: 'Bark and wood', value: '1', image: 'bark.png' },
-      { text: 'Rock', value: '3', image: 'rock.png' },
-      {
-        text: 'Soil, terricolous mosses and plant debris',
-        value: '2',
-        image: 'soil.png'
-      }
-    ]
-  },*/
+  /*
+  // New pseudo trait
   {
     id: '26',
     title: 'Thallus',
@@ -33,6 +22,24 @@ export const radioData: FormData[] = [
       {
         text: 'Squamulose',
         value: '1',
+        image: 'squamulose.png'
+      }
+    ]
+  },*/
+  {
+    id: '26-pseudo',
+    title: 'Thallus',
+    items: [
+      { text: 'Fruticose', value: '1', image: 'fruticose.png' },
+      {
+        text: 'Foliose',
+        value: '2',
+        image: 'foliose.png'
+      },
+      { text: 'Crustose or leprose', value: '3', image: 'crustose.png' },
+      {
+        text: 'Squamulose',
+        value: '4',
         image: 'squamulose.png'
       }
     ]
@@ -358,7 +365,7 @@ export const radioData: FormData[] = [
   },
   {
     id: '39',
-    title: 'Ascocarps (crustose phycolichens only!)',
+    title: 'Ascocarps <b>(crustose phycolichens only!)</b>',
 
     items: [
       {

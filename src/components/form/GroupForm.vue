@@ -1,7 +1,7 @@
 <template>
   <div v-for="group in filterData" :key="group.id">
     <div class="relative flex flex-col items-center gap-2 px-0 py-4 sm:px-4">
-      <h3 class="text-sm sm:text-base">{{ group.title }}</h3>
+      <h3 class="text-sm sm:text-base" v-html="group.title"></h3>
       <div
         class="relative flex max-w-[348px] flex-wrap justify-center gap-2 sm:max-w-[488px] lg:max-w-[496px] lg:gap-4"
       >

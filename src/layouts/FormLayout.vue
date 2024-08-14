@@ -9,9 +9,9 @@
         <RouterView />
       </form>
       <div class="h-8 w-full"></div>
-      <NavigationForm :isLoading="isLoading" :hasMobileMenu="true" />
+      <NavigationForm :isLoading="isLoading" :hasMobileMenu="true" /><!--
       <div class="h-4 w-full"></div>
-      <FormStepper />
+      <FormStepper />-->
       <div class="h-8 w-full"></div>
     </div>
   </div>

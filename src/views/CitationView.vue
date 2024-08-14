@@ -4,12 +4,12 @@
     <div class="mt-8 [&>h2]:font-bold [&>p]:mb-4">
       <h2 class="mb-1">To cite the Keymaker:</h2>
       <p>
-        Conti M., Martellos S., Nimis P.L. (XXXX) – ITALIC Keymaker.
+        Conti M., Martellos S., Nimis P.L. (20YY) – ITALIC Keymaker.
         https://italic.units.it/key-maker/ Accessed on: DD/MM/YYYY
       </p>
       <h2 class="mb-1">To cite a key:</h2>
       <p>
-        Nimis P.L. (YYYY) The lichens of Italy - An interactive guide.
+        Nimis P.L. (20YY) The lichens of Italy - An interactive guide.
         https://italic.units.it/flora/ (continuously updated) Accessed on: DD/MM/YYYY
       </p>
       <h2 class="mb-1">Example:</h2>

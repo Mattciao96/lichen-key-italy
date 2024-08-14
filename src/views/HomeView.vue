@@ -32,8 +32,12 @@
       <p>
         Species can be filtered by substrate-type, and by specifying a range of the ecological
         indicator values: pH of the substrate, light, availability of water, eutrophication,
-        poleophoby etc, For more details on the indicator values we suggest to consult the Data
-        Section of ITALIC.
+        poleophoby etc, For more details on the indicator values we suggest to consult the
+        <a
+          class="text-blue-600 hover:underline"
+          href="https://italic.units.it/index.php?procedure=base&t=59&c=60"
+          >Data Section of ITALIC.</a
+        >
       </p>
       <p>
         Once a query is completed, the system produces: A) A series of keys in 4 different formats

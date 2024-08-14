@@ -8,6 +8,7 @@
         traits and ecological requirements. The smaller keys are obtained from
         <a
           class="text-blue-600 hover:underline"
+          target="_blank"
           href="https://dryades.units.it/home/index.php?procedure=ext_key_home&key_type=lic&key_id=1692"
           >the general key to the lichens of Italy</a
         >
@@ -35,6 +36,7 @@
         poleophoby etc, For more details on the indicator values we suggest to consult the
         <a
           class="text-blue-600 hover:underline"
+          target="_blank"
           href="https://italic.units.it/index.php?procedure=base&t=59&c=60"
           >Data Section of ITALIC.</a
         >

@@ -45,7 +45,7 @@ const route = useRoute()
 const viewOptions = [
   { name: 'detailed', label: 'Illustrated' },
 
-  { name: 'description', label: 'With description' },
+  { name: 'description', label: 'With descriptions' },
   { name: 'simple', label: 'Simple' }
 ]
 

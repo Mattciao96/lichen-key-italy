@@ -48,46 +48,48 @@
       v-if="hasMobileMenu"
       class="fixed bottom-0 left-0 right-0 border-t border-surface-300 bg-white md:hidden"
     >
-      <div class="grid h-14 grid-cols-[35px_1fr_35px] items-center px-4">
-        <div class="justify-self-start">
-          <button
-            v-if="actualRouteIndex > 0"
-            @click="goToPrevious"
-            class="flex h-8 w-8 items-center justify-center text-surface-600"
-          >
-            <i class="pi pi-chevron-left text-sm"></i>
-          </button>
-        </div>
+      <div class="flex h-16 items-center justify-between px-6">
+        <button
+          v-if="actualRouteIndex > 0"
+          @click="goToPrevious"
+          class="flex flex-col items-center justify-center"
+        >
+          <i class="pi pi-chevron-left mb-1 text-base text-primary-500"></i>
+          <span class="text-sm font-medium text-primary-500">Previous</span>
+        </button>
+        <div v-else class="w-16"></div>
 
-        <div class="flex space-x-2 justify-self-center">
-          <FilterModal v-if="Object.keys(formStore.formData).length !== 0" />
-          <button
-            type="submit"
-            form="filter-form"
-            :disabled="isLoading"
-            class="h-10 rounded-full bg-surface-100 px-4 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-200 focus:outline-none focus:ring-2 focus:ring-surface-300 focus:ring-opacity-50"
-          >
-            Make key
-          </button>
-        </div>
+        <!--        <button
+          v-if="Object.keys(formStore.formData).length !== 0 && actualRouteIndex === 2"
+          @click="showFilterModal"
+          class="flex flex-col items-center justify-center"
+        >
+          <i class="pi pi-list mb-1 text-base text-surface-600"></i>
+          <span class="text-sm font-medium text-black">Your query</span>
+        </button>-->
+        <FilterModal
+          v-if="Object.keys(formStore.formData).length !== 0 && actualRouteIndex === 2"
+          buttonStyle="alternative"
+        />
 
-        <div class="justify-self-end">
-          <button
-            v-if="actualRouteIndex < 2"
-            @click="goToNext"
-            class="flex h-8 w-8 items-center justify-center text-surface-600"
-          >
-            <i class="pi pi-chevron-right text-sm"></i>
-          </button>
-          <button
-            v-if="actualRouteIndex === 2"
-            @click="clearKeyStoreData"
-            :disabled="isLoading"
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-surface-100 text-surface-700 transition-colors hover:bg-surface-200 focus:outline-none focus:ring-2 focus:ring-surface-300 focus:ring-opacity-50"
-          >
-            <i class="pi pi-refresh text-sm"></i>
-          </button>
-        </div>
+        <button
+          v-if="actualRouteIndex < 2"
+          @click="goToNext"
+          class="flex flex-col items-center justify-center"
+        >
+          <i class="pi pi-chevron-right mb-1 text-base text-primary-500"></i>
+          <span class="text-sm font-medium text-primary-500">Next</span>
+        </button>
+        <button
+          v-else
+          type="submit"
+          form="filter-form"
+          :disabled="isLoading"
+          class="flex flex-col items-center justify-center"
+        >
+          <i class="pi pi-key mb-1 text-base text-blue-500"></i>
+          <span class="text-sm font-medium text-blue-500">Make key</span>
+        </button>
       </div>
     </div>
   </div>

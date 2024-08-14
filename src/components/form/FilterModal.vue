@@ -1,11 +1,19 @@
 <template>
   <div>
-    <!-- Button to open the modal -->
+    <!-- Button to open the modal with conditional styling -->
     <button
       @click="openModal"
-      class="h-10 w-28 rounded-full bg-surface-100 text-sm font-medium leading-none text-surface-700 transition-colors hover:bg-surface-200"
+      :class="[
+        props.buttonStyle === 'default'
+          ? 'h-10 w-28 rounded-full bg-surface-100 text-sm font-medium leading-none text-surface-700 transition-colors hover:bg-surface-200'
+          : 'flex flex-col items-center justify-center'
+      ]"
     >
-      Your query
+      <template v-if="props.buttonStyle === 'alternative'">
+        <i class="pi pi-list mb-1 text-base text-surface-600"></i>
+        <span class="text-sm font-medium text-black">Your query</span>
+      </template>
+      <template v-else> Your query </template>
     </button>
 
     <!-- Teleport the modal to body -->
@@ -74,7 +82,15 @@ import { useFormStore } from '@/stores/formStore'
 import { useScrollLock } from '@/composables/useScrollLock'
 import ClearButtonFilter from '@/components/form/ClearButtonFilter.vue'
 
-const { toggleScroll, blockScroll, unblockScroll } = useScrollLock()
+const props = defineProps({
+  buttonStyle: {
+    type: String,
+    default: 'default',
+    validator: (value: string) => ['default', 'alternative'].includes(value)
+  }
+})
+
+const { blockScroll, unblockScroll } = useScrollLock()
 const formStore = useFormStore()
 const isModalOpen = ref(false)
 const modalRef = ref<HTMLElement | null>(null)
@@ -128,31 +144,15 @@ const handleTabKey = (e: KeyboardEvent) => {
   }
 }
 
-// Function to toggle body scroll
-/*const toggleBodyScroll = (disable: boolean) => {
-  if (disable) {
-    document.body.style.overflow = 'hidden'
-    document.documentElement.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-    document.documentElement.style.overflow = ''
-  }
-}*/
-
-// Watch for changes in isModalOpen and toggle body scroll accordingly
 watch(isModalOpen, (newValue) => {
   if (newValue) {
-    //toggleBodyScroll(true)
     blockScroll()
   } else {
-    //toggleBodyScroll(false)
     unblockScroll()
   }
 })
 
-// Ensure body scroll is re-enabled when component is unmounted
 onUnmounted(() => {
-  //toggleBodyScroll(false)
   unblockScroll()
 })
 </script>

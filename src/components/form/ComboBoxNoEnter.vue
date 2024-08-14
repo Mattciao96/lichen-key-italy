@@ -17,9 +17,6 @@
         :loading="isLoading"
         @show="toggleScroll"
         @hide="toggleScroll"
-        @keydown.enter="handleEnterKey"
-        @filter="handleFilter"
-        ref="dropdownRef"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="flex items-center">
@@ -47,12 +44,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useFormStore } from '@/stores/formStore'
 import { useComboboxItemsQuery } from '@/composables/useKeyApi'
 import Dropdown from 'primevue/dropdown'
-import { useScrollLock } from '@/composables/useScrollLock'
 
+import { useScrollLock } from '@/composables/useScrollLock'
 const { toggleScroll } = useScrollLock()
 
 const props = defineProps({
@@ -62,33 +59,13 @@ const props = defineProps({
 })
 
 const formStore = useFormStore()
-const dropdownRef = ref(null)
 
 const { data, isLoading, error } = useComboboxItemsQuery(props.placeholder, props.apiEndpoint)
 
 const items = computed(() => data.value || [])
-const filterValue = ref('')
 
 // You can handle the error state if needed
 if (error.value) {
   console.error('Error fetching combobox items:', error.value)
-}
-
-const handleFilter = (event: { value: string }) => {
-  filterValue.value = event.value
-}
-
-const handleEnterKey = (event: KeyboardEvent) => {
-  if (dropdownRef.value && dropdownRef.value.$el.querySelector('.p-virtualscroller-content')) {
-    event.preventDefault()
-    const filteredItems = items.value.filter((item) =>
-      item.name.toLowerCase().startsWith(filterValue.value.toLowerCase())
-    )
-    const firstOption = filteredItems[0]
-    if (firstOption) {
-      formStore.formData[props.storeFieldId] = firstOption
-      dropdownRef.value.hide()
-    }
-  }
 }
 </script>

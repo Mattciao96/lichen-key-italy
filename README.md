@@ -1,6 +1,6 @@
-# ITALIC Lichen Key Generator
+# ITALIC Lichen KeyMaker
 
-This tool generates keys to subsets of species defined by specifying their distribution, traits and ecological requirements.
+This tool generates keys to lichens of Italy and Europe based on user selected parameters.
 
 ## Prerequisites
 

@@ -71,11 +71,25 @@ const router = createRouter({
             }
           ]
         },
-        {
+        /*{
           path: 'filter-species/:letter?',
           name: 'FilterTaxa',
           component: FilterTaxaView
+        },*/
+        {
+          path: 'filter-species',
+          name: 'FilterTaxa',
+
+          redirect: { name: 'FilterTaxaLetter', params: { letter: 'a' } },
+          children: [
+            {
+              path: ':letter',
+              name: 'FilterTaxaLetter',
+              component: FilterTaxaView
+            }
+          ]
         },
+
         {
           path: ':keyId/nodes/:nodeId/',
           name: 'key-node',

@@ -25,6 +25,8 @@
             'flex items-center justify-center text-center text-surface-800 hover:text-primary-500',
             'rounded-md px-0 py-2 text-sm font-medium lg:px-3'
           ]"
+          :exact-active-class="item.route.name === '/' ? '!text-primary-500' : ''"
+          :active-class="item.route.name !== '/' ? '!text-primary-500' : ''"
           :aria-current="item.current ? 'page' : undefined"
         >
           {{ item.name }}
@@ -87,7 +89,6 @@
       @click.stop
     >
       <div class="mt-16 space-y-4 p-4">
-        <!-- Added mt-16 to account for the button -->
         <!-- Menu items -->
         <RouterLink
           v-for="item in navigation"
@@ -97,6 +98,8 @@
             'text-surface-800 hover:text-primary-500',
             'block rounded-md px-3 py-2 text-base font-medium'
           ]"
+          :exact-active-class="item.route.name === '/' ? 'bg-primary-500/80 text-white' : ''"
+          :active-class="item.route.name !== '/' ? 'bg-primary-500/80 text-white' : ''"
           :aria-current="item.current ? 'page' : undefined"
           @click="toggleMobileMenu"
         >
@@ -110,15 +113,15 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+
 const route = useRoute()
 const mobileMenuOpen = ref(false)
 const isHomePage = computed(() => route.path === '/')
 const navigation = [
   { name: 'Home', route: { name: '/' } },
   { name: 'Filters', route: { name: '/filters' } },
-  { name: 'Free choice of species', route: { name: '/filter-species/a' } },
+  { name: 'Free choice of species', route: { name: '/filter-species' } },
   { name: 'How to cite', route: { name: '/how-to-cite' } }
-  /*  { name: 'Full key', route: { name: '/full/species-list' } }*/
 ]
 
 const toggleMobileMenu = () => {
@@ -141,7 +144,6 @@ const toggleMobileMenu = () => {
   font-size: 0.5em;
   left: 2px;
   top: 22px;
-
   z-index: -1;
   white-space: nowrap;
 }

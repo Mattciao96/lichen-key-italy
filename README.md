@@ -24,3 +24,6 @@ npm install
 ```bash
 npm start
 ```
+
+## How to cite
+Coming soon...

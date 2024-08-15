@@ -35,8 +35,7 @@ export default {
       // States
       { 'hover:border-surface-400 dark:hover:border-surface-600': !props.invalid },
       {
-        'outline-none outline-offset-0 ring-1 ring-primary-500 dark:ring-primary-400 ':
-          state.focused
+        'outline-none outline-offset-0 ring-1 ring-primary-500 dark:ring-primary-400': state.focused
       },
 
       // Misc
@@ -127,7 +126,6 @@ export default {
   wrapper: {
     class: [
       // Sizing
-
       'max-h-[300px]',
 
       // Misc
@@ -137,9 +135,9 @@ export default {
     ]
   },
   list: {
-    class: 'p-1 list-none m-0'
+    class: 'p-1 pt-0 list-none m-0'
   },
-  item: ({ context }) => ({
+  item: ({ context, props }) => ({
     class: [
       'relative',
 
@@ -160,12 +158,15 @@ export default {
 
       // Colors
       {
-        'text-surface-700 dark:text-white/80': !context.focused && !context.selected,
+        'first:mt-1': true,
+        'text-surface-700 dark:text-white/80 first:bg-surface-100':
+          !context.focused && !context.selected,
         'bg-surface-200 dark:bg-surface-600/60': context.focused && !context.selected,
-        'text-surface-700 dark:text-white/80': context.focused && !context.selected,
 
         'text-primary-highlight-inverse': context.selected,
         'bg-primary-highlight': context.selected
+
+        // New style for the first item when no item is hovered or focused
       },
 
       //States
@@ -259,7 +260,7 @@ export default {
 
       // States
       'hover:border-surface-400 dark:hover:border-surface-600',
-      'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400 ',
+      'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400',
 
       // Misc
       'appearance-none'

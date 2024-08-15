@@ -15,8 +15,8 @@
         append-to="self"
         filterMatchMode="startsWith"
         :loading="isLoading"
-        @show="toggleScroll"
-        @hide="toggleScroll"
+        @show="handleShow"
+        @hide="handleHide"
         @keydown.enter="handleEnterKey"
         @filter="handleFilter"
         ref="dropdownRef"
@@ -63,6 +63,7 @@ const props = defineProps({
 
 const formStore = useFormStore()
 const dropdownRef = ref(null)
+const isDropdownOpen = ref(false)
 
 const { data, isLoading, error } = useComboboxItemsQuery(props.placeholder, props.apiEndpoint)
 
@@ -78,8 +79,22 @@ const handleFilter = (event: { value: string }) => {
   filterValue.value = event.value
 }
 
+const handleShow = () => {
+  isDropdownOpen.value = true
+  toggleScroll()
+}
+
+const handleHide = () => {
+  isDropdownOpen.value = false
+  toggleScroll()
+}
+
 const handleEnterKey = (event: KeyboardEvent) => {
-  if (dropdownRef.value && dropdownRef.value.$el.querySelector('.p-virtualscroller-content')) {
+  if (
+    isDropdownOpen.value &&
+    dropdownRef.value &&
+    dropdownRef.value.$el.querySelector('.p-virtualscroller-content')
+  ) {
     event.preventDefault()
     const filteredItems = items.value.filter((item) =>
       item.name.toLowerCase().startsWith(filterValue.value.toLowerCase())

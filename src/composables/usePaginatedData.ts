@@ -71,7 +71,7 @@ export function usePaginatedData<T>(
   }
 
   const scrollToElement = (element: HTMLElement) => {
-    element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   watch(() => sourceData(), resetAndReload)

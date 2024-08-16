@@ -1,15 +1,31 @@
 <template>
-  <table class="w-full table-fixed rounded-md bg-white">
-    <thead class="sticky -top-1 z-10 bg-white">
-      <tr class="bg-gray-100">
+  <table class="w-full table-fixed rounded-md bg-white text-sm">
+    <thead class="-top-1 z-10 bg-white">
+      <tr class="hidden bg-slate-100 lg:flex">
+        <th class="w-[10%] border-b px-1 py-2 sm:w-[5%]">Couplet</th>
+        <th class="w-[80%] border-b px-1 py-2 sm:w-[85%] md:w-[70%]">Lead Text</th>
+        <th class="w-[10%] border-b px-1 py-2 md:w-[25%]">Lead to</th>
+      </tr>
+      <tr class="items-center bg-slate-100 lg:hidden">
+        <th class="w-[100px] border-b px-1 py-2">Couplet</th>
+        <th class="w-[80%] border-b px-1 py-2">Lead Text</th>
+        <th class="w-[100px] border-b px-1 py-2">Lead to</th>
+      </tr>
+    </thead>
+  </table>
+  <table class="w-full table-fixed rounded-md bg-white text-sm">
+    <!--    <thead class="sticky -top-1 z-10 bg-white">
+      <tr class="bg-slate-100">
         <th class="w-[10%] border-b p-1 sm:w-[5%]">Couplet</th>
         <th class="w-[80%] border-b p-1 sm:w-[85%] md:w-[70%]">Lead Text</th>
         <th class="w-[10%] border-b p-1 md:w-[25%]">Lead to</th>
       </tr>
-    </thead>
+    </thead>-->
     <tbody>
-      <template v-for="item in visibleSteps" :key="item.leadId">
-        <tr :class="['hover:bg-gray-50', { 'border-b': !item.italicId }]">
+      <template v-for="(item, index) in visibleSteps" :key="item.leadId">
+        <tr
+          :class="[{ 'border-b': !item.italicId }, index % 4 < 2 ? 'bg-white' : 'bg-primary-500/5']"
+        >
           <td
             class="w-[10%] px-1 py-2 text-center font-semibold sm:w-[5%]"
             :id="`couplet${item.parentId}`"
@@ -38,8 +54,12 @@
             >
           </td>
         </tr>
-        <!-- default       -->
-        <tr v-if="item.species_description" class="hidden hover:bg-gray-50 lg:table-row">
+        <!-- default -->
+        <tr
+          v-if="item.species_description"
+          class="hidden lg:table-row"
+          :class="index % 4 < 2 ? 'bg-white' : 'bg-primary-500/5'"
+        >
           <td class="w-[2%] border-b p-1"></td>
           <td class="w-[65%] border-b p-1">
             <span class="text-xs"><b>Description:</b></span>
@@ -56,7 +76,11 @@
           </td>
         </tr>
         <!--mobile-->
-        <tr v-if="item.species_description" class="hover:bg-gray-50 md:hidden">
+        <tr
+          v-if="item.species_description"
+          class="md:hidden"
+          :class="index % 4 < 2 ? 'bg-white' : 'bg-primary-500/5'"
+        >
           <td colspan="3" class="border-b p-1 text-right">
             <a
               class="text-sm font-medium text-blue-600 hover:underline"
@@ -68,7 +92,11 @@
             </a>
           </td>
         </tr>
-        <tr v-if="item.species_description" class="hover:bg-gray-50 lg:hidden">
+        <tr
+          v-if="item.species_description"
+          class="lg:hidden"
+          :class="index % 4 < 2 ? 'bg-white' : 'bg-primary-500/5'"
+        >
           <td colspan="3" class="border-b p-1">
             <div class="flex items-center justify-center pb-1">
               <img
@@ -91,6 +119,7 @@
 <script setup lang="ts">
 import type { KeyLead } from '@/types'
 import { imageUrlToThumbNailUrl } from '@/utils/imageUtils'
+
 const props = defineProps<{
   visibleSteps: KeyLead[]
   taxonUrl: string

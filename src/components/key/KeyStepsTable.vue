@@ -15,7 +15,6 @@
       class="steps-table-container mx-auto w-[96vw] max-w-full overflow-hidden rounded-md border border-surface-300"
     >
       <component
-        class="text-sm"
         :is="currentVisualization"
         :visibleSteps="displayedData"
         @scroll-to-anchor="scrollToAnchor"

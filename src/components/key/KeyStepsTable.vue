@@ -5,8 +5,8 @@
         v-for="viewOption in viewOptions"
         :key="viewOption.name"
         :to="{ name: 'key-view', params: { keyId: $route.params.keyId, view: viewOption.name } }"
-        class="rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
-        activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
+        class="rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:border-primary-500 hover:bg-primary-500/5"
+        activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600 !border-primary-500"
       >
         {{ viewOption.label }}
       </RouterLink>

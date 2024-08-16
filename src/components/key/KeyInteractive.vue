@@ -28,7 +28,8 @@
           :class="[
             'w-full max-w-2xl overflow-hidden rounded-md border border-gray-200 bg-white pt-2 shadow-sm',
             {
-              'cursor-pointer hover:border-green-600 hover:bg-green-500/5': !child.data.leadSpecies
+              'cursor-pointer hover:border-primary-500 hover:bg-primary-500/5':
+                !child.data.leadSpecies
             }
           ]"
           @click="!child.data.leadSpecies && navigateToNode(child)"

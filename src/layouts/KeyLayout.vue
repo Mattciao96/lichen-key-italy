@@ -31,8 +31,8 @@
               v-for="(route, index) in routes"
               :key="index"
               :to="route.path"
-              class="whitespace-nowrap rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:bg-primary-500/30"
-              activeClass="!bg-primary-500 text-white border-green-500 hover:bg-primary-600"
+              class="whitespace-nowrap rounded border border-surface-300 bg-white px-3 py-2 text-sm font-medium text-surface-700 transition duration-150 ease-in-out hover:border-primary-500 hover:bg-primary-500/5"
+              activeClass="!bg-primary-500 text-white !border-primary-500 hover:bg-primary-600"
             >
               {{ route.label }}
             </RouterLink>

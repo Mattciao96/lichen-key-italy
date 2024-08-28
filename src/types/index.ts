@@ -3,9 +3,9 @@
  */
 export type KeyLead = {
   leadId: number
-  coupletNumber: number
+  coupletNumber: number // for legacy keys DON'T use
   leadText: string | null
-  leadTo: number | null
+  leadTo: number | null // for legacy keys DON'T use
   leadRecordId: string | null
   leadSpeciesId: string | null
   leadSpecies: string | null
@@ -26,7 +26,6 @@ export type FullKey = {
 /**
  * The type for the data used by gallery, species-list and adjust
  * */
-
 export type KeyUniqueSpeciesData = {
   name: string
   image: string | null
@@ -37,7 +36,6 @@ export type KeyUniqueSpeciesData = {
 /**
  * The type for teh form data
  * */
-
 export type FormData = {
   id: string
   title: string

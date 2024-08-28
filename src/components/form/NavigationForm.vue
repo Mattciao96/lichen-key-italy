@@ -21,24 +21,39 @@
         </div>
 
         <div class="justify-self-end">
-          <button
-            v-if="actualRouteIndex < 2"
-            @click="goToNext"
-            class="flex h-10 items-center justify-center rounded-full bg-primary-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-600"
-          >
-            Next step
-            <i class="pi pi-chevron-right ml-1 text-sm"></i>
-          </button>
-          <button
-            v-else
-            type="submit"
-            form="filter-form"
-            :disabled="isLoading"
-            class="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-600"
-          >
-            Make key
-            <i class="pi pi-key ml-2 text-sm"></i>
-          </button>
+          <div class="removeme flex gap-2">
+            <button
+              v-if="actualRouteIndex < 2"
+              @click="goToNext"
+              class="flex h-10 items-center justify-center rounded-full bg-primary-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-600"
+            >
+              Next step
+              <i class="pi pi-chevron-right ml-1 text-sm"></i>
+            </button>
+            <button
+              v-else
+              type="submit"
+              form="filter-form"
+              :disabled="isLoading"
+              class="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-600"
+            >
+              Make key
+              <i class="pi pi-key ml-2 text-sm"></i>
+            </button>
+            <!--   remove it, just for Nimis and remove div removeme <div class="justify-self-end"> -->
+            <button
+              v-if="actualRouteIndex === 2"
+              @click="
+                () => {
+                  clearKeyStoreData()
+                  console.log('Key refreshed')
+                }
+              "
+              class="inline-flex size-10 items-center justify-center rounded-full bg-surface-200 text-sm font-semibold transition-colors hover:bg-surface-300"
+            >
+              <i class="pi pi-refresh text-sm"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,16 +1,19 @@
 # ITALIC Lichen KeyMaker
 
-This tool generates keys to lichens of Italy and Europe based on user selected parameters.
+This tool generates dynamic identification keys for lichens in Italy and Europe.
+Users can select specific parameters to narrow down the taxa included in the key, based on morphological traits, ecological preferences, and geographical distribution.
+
 
 ## Prerequisites
 
 - node.js version 20 or higher
+- npm
 
 ## Setup
 
 ### Clone the repository:
 ```bash
-git clone https://github.com/Mattciao96/lichen-key-italy.git
+git clone https://github.com/plant-data/lichen-keymaker.git
 cd lichen-key-italy
 ```
 ### Install the dependencies:
@@ -22,7 +25,7 @@ npm install
 
 ### Start the development server:
 ```bash
-npm start
+npm run dev
 ```
 
 ## How to cite

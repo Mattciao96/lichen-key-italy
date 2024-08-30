@@ -28,7 +28,14 @@ const keyStore = useKeyStore()
   //return keyStore.getStepsListFromNodeId(0)
   return keyStore.getStepsListFromNodeId(route.params.nodeId)
 })*/
-onMounted(() => {
+/*onMounted(() => {
+  keyStore.setStepsListFromNodeId(route.params.nodeId)
+})*/
+
+import { watchEffect } from 'vue'
+
+// Replace onMounted with:
+watchEffect(() => {
   keyStore.setStepsListFromNodeId(route.params.nodeId)
 })
 </script>

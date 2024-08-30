@@ -13,22 +13,12 @@
       Not available
     </div>
     <div v-else>
-      <p class="text-md mb-4 text-center font-semibold">
+      <p class="mb-4 text-center text-lg">
         Select one or multiple species to remove them from the key
       </p>
       <form @submit.prevent="handleSubmit" class="space-y-4">
-        <button
-          type="submit"
-          class="w-full rounded-md border border-transparent bg-primary-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-        >
-          Remove Selected Species
-        </button>
         <ul class="space-y-3">
-          <li
-            v-for="species in keyStore.currentUniqueSpeciesWithImages"
-            :key="species.name"
-            class="flex items-center gap-2"
-          >
+          <li v-for="species in displayedData" :key="species.name" class="flex items-center gap-2">
             <div class="relative min-h-5 min-w-5 cursor-pointer" @click="toggleSpecies(species)">
               <input
                 type="checkbox"
@@ -58,6 +48,7 @@
               {{ species.name }}
             </label>
           </li>
+          <li v-if="!allLoaded" ref="loadMoreTrigger" class="h-10"></li>
         </ul>
 
         <button
@@ -77,6 +68,7 @@ import { useKeyStore } from '@/stores/keyStore'
 import { useFormStore } from '@/stores/formStore'
 import { useRouter, useRoute } from 'vue-router'
 import { useKeyRecordsMutation } from '@/composables/useKeyApi'
+import { usePaginatedData } from '@/composables/usePaginatedData'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const keyStore = useKeyStore()
@@ -87,8 +79,13 @@ const keyRecordMutation = useKeyRecordsMutation()
 const speciesToRemove = ref([])
 const isSubmitting = ref(false)
 
+const { displayedData, allLoaded, loadMoreTrigger, setupIntersectionObserver } = usePaginatedData(
+  () => keyStore.currentUniqueSpeciesWithImages
+)
+
 onMounted(() => {
   keyStore.setUniqueSpeciesWithImagesFromNodeId(route.params.nodeId as string)
+  setupIntersectionObserver()
 })
 
 const toggleSpecies = (species) => {
@@ -120,7 +117,6 @@ const handleSubmit = async () => {
       isSubmitting.value = false
     }
   } else {
-    alert('Select at least one species to remove')
     console.log('No species selected for removal')
   }
 }

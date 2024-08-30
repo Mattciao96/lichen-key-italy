@@ -14,11 +14,11 @@ export const useKeyStore = defineStore('key', () => {
   const currentLeadId = ref<string | null>(null)
 
   const recordsList = ref<string[]>([])
-  let fullKey = <FullKey | null>null
-  const keyTree = ref<Tree | null>(null)
+  let fullKey: FullKey | null = null
+  let keyTree: Tree | null = null
   const stepsList = ref<KeyLead[]>([])
   const uniqueSpeciesWithImages = computed(() => getUniqueSpeciesWithImages(stepsList.value))
-  const speciesCount = computed(() => getSpeciesCount())
+  const speciesCount = ref<number | null>(0)
 
   const nodeIdOfCurrentSteps = ref<string | null>(null)
   const nodeIdOfCurrentSpeciesImages = ref<string | null>(null)
@@ -40,7 +40,7 @@ export const useKeyStore = defineStore('key', () => {
             records: []
           })
         }
-        speciesMap.get(item.leadSpecies).records.push(item.leadRecordId)
+        speciesMap.get(item.leadSpecies)!.records.push(item.leadRecordId)
       }
     })
     return Array.from(speciesMap.values()).sort((a, b) => a.name.localeCompare(b.name))
@@ -54,6 +54,8 @@ export const useKeyStore = defineStore('key', () => {
       return tree
     }
     tree.prune3(records)
+    // put the species count
+    speciesCount.value = tree.getNumberOfUniqueLeaves(1)
     return tree
   }
 
@@ -85,7 +87,7 @@ export const useKeyStore = defineStore('key', () => {
 
       fullKey = retrievedFullKey
       recordsList.value = retrievedRecords
-      keyTree.value = newTree
+      keyTree = newTree
       stepsList.value = stepsListFromTree
 
       if (newTree.root) {
@@ -119,13 +121,13 @@ export const useKeyStore = defineStore('key', () => {
   }
 
   const getSpeciesCount = (nodeId: number | null = null) => {
-    if (keyId.value === 'no-data' || !keyTree.value) {
+    if (keyId.value === 'no-data' || !keyTree) {
       return 0
     }
     if (uniqueSpeciesWithImages.value.length === 1) {
       return 1
     }
-    return keyTree.value.getNumberOfUniqueLeaves(nodeId ?? 1)
+    return keyTree.getNumberOfUniqueLeaves(nodeId ?? 1)
   }
 
   const getUniqueSpeciesWithImages = (stepsList: KeyLead[]) => {
@@ -134,15 +136,14 @@ export const useKeyStore = defineStore('key', () => {
   }
 
   const getNodeIdFromLeadId = (leadId: number) => {
-    const tree = keyTree.value
-    if (!tree || !tree.root) {
+    if (!keyTree || !keyTree.root) {
       return null
     }
-    if (tree.root.children.length === 0) {
-      return tree.root
+    if (keyTree.root.children.length === 0) {
+      return keyTree.root
     }
 
-    const actualNode = tree.find(leadId)
+    const actualNode = keyTree.find(leadId)
     if (!actualNode) {
       isCurrentNodeValid.value = false
     }
@@ -150,7 +151,7 @@ export const useKeyStore = defineStore('key', () => {
     return actualNode
   }
 
-  const setStepsListFromNodeId = (nodeId: string) => {
+  const setStepsListFromNodeId = async (nodeId: string) => {
     if (nodeId === nodeIdOfCurrentSteps.value) {
       return
     }
@@ -160,12 +161,12 @@ export const useKeyStore = defineStore('key', () => {
       return
     }
 
-    const tree = keyTree.value
-    if (!tree) {
+    if (!keyTree) {
       return
     }
 
-    const tempStepsList = tree.getTreeAsListById(parseInt(nodeId))
+    isLoading.value = true
+    const tempStepsList = await keyTree.getTreeAsListByIdAsync(parseInt(nodeId))
 
     if (tempStepsList.length === 0) {
       isCurrentNodeValid.value = false
@@ -183,6 +184,7 @@ export const useKeyStore = defineStore('key', () => {
     }))
 
     currentStepsList.value = adjustedStepsList
+    isLoading.value = false
   }
 
   const setUniqueSpeciesWithImagesFromNodeId = (nodeId: string) => {
@@ -195,12 +197,11 @@ export const useKeyStore = defineStore('key', () => {
       return
     }
 
-    const tree = keyTree.value
-    if (!tree) {
+    if (!keyTree) {
       return
     }
 
-    const tempStepsList = tree.getTreeAsListById(parseInt(nodeId))
+    const tempStepsList = keyTree.getTreeAsListById(parseInt(nodeId))
 
     if (tempStepsList.length === 0) {
       isCurrentNodeValid.value = false
@@ -218,7 +219,7 @@ export const useKeyStore = defineStore('key', () => {
     error.value = null
     recordsList.value = []
     fullKey = null
-    keyTree.value = null
+    keyTree = null
     stepsList.value = []
     nodeIdOfCurrentSteps.value = null
     nodeIdOfCurrentSpeciesImages.value = null
@@ -240,7 +241,7 @@ export const useKeyStore = defineStore('key', () => {
     recordsList,
     fullKey,
     speciesCount,
-    keyTree,
+    getKeyTree: () => keyTree,
     stepsList,
     uniqueSpeciesWithImages,
 

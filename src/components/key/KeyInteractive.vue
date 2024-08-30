@@ -20,7 +20,6 @@
     </div>
 
     <div v-if="currentNode.children.length > 0" class="space-y-4">
-      <!--      <h3 class="text-xl font-semibold mb-2">Choose an option:</h3>-->
       <div class="flex flex-col items-center space-y-4">
         <div
           v-for="child in currentNode.children"
@@ -49,8 +48,9 @@
                   class="font-medium text-blue-600 hover:underline"
                   :href="`${paths.taxonPagePath}${child.data.italicId}`"
                   target="_blank"
-                  >({{ child.data.leadSpecies }})</a
                 >
+                  ({{ child.data.leadSpecies }})
+                </a>
               </span>
             </p>
           </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useKeyStore } from '@/stores/keyStore'
 import { paths } from '@/config/endpoints'
 import placeholderImage from '@/assets/placeholder.svg'
@@ -80,12 +80,26 @@ const props = defineProps({
 const emit = defineEmits(['update:currentNode'])
 
 const keyStore = useKeyStore()
+const localKeyTree = ref(null)
+
+onMounted(() => {
+  localKeyTree.value = keyStore.getKeyTree()
+})
+
+watch(() => keyStore.isLoading, (newValue) => {
+  if (!newValue) {
+    localKeyTree.value = keyStore.getKeyTree()
+  }
+})
 
 const isRoot = computed(() => {
-  return props.currentNode && keyStore.keyTree.isRoot(props.currentNode)
+  return props.currentNode && localKeyTree.value && localKeyTree.value.isRoot(props.currentNode)
 })
+
 function navigateToRoot() {
-  emit('update:currentNode', keyStore.keyTree.root)
+  if (localKeyTree.value) {
+    emit('update:currentNode', localKeyTree.value.root)
+  }
 }
 
 function navigateToNode(node) {
@@ -93,8 +107,8 @@ function navigateToNode(node) {
 }
 
 function navigateToParent() {
-  if (props.currentNode && props.currentNode.data.parentId) {
-    const parentNode = keyStore.keyTree.find(props.currentNode.data.parentId)
+  if (props.currentNode && props.currentNode.data.parentId && localKeyTree.value) {
+    const parentNode = localKeyTree.value.find(props.currentNode.data.parentId)
     if (parentNode) {
       emit('update:currentNode', parentNode)
     }

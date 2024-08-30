@@ -119,7 +119,14 @@ export default class Tree {
 
     return uniqueSpeciesIds.size
   }
-
+  async getTreeAsListByIdAsync(leadId?: number): Promise<KeyLead[]> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const result = this.getTreeAsListById(leadId);
+        resolve(result);
+      }, 0);
+    });
+  }
   getTreeAsListById(leadId?: number) {
     if (!leadId) {
       return this.getTreeAsList()

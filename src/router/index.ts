@@ -19,6 +19,7 @@ import KeyRefineView from '@/views/key/KeyRefineView.vue'
 import KeyDuplicateView from '@/views/key/KeyDuplicateView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import CitationView from '@/views/CitationView.vue'
+import InformationView from '@/views/InformationView.vue'
 
 const router = createRouter({
   history: createWebHistory('/key-maker/'),
@@ -40,6 +41,11 @@ const router = createRouter({
           path: '',
           name: 'home',
           component: HomeView
+        },
+        {
+          path: 'info',
+          name: 'info',
+          component: InformationView
         },
         {
           path: 'how-to-cite',

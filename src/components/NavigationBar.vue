@@ -121,6 +121,7 @@ const navigation = [
   { name: 'Home', route: { name: '/' } },
   { name: 'Filters', route: { name: '/filters' } },
   { name: 'Free choice of species', route: { name: '/filter-species' } },
+  { name: 'Info', route: { name: '/info' } },
   { name: 'How to cite', route: { name: '/how-to-cite' } }
 ]
 

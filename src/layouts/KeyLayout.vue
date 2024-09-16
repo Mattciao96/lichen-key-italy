@@ -76,15 +76,16 @@ const routes = computed(() => [
     label: 'Interactive key'
   },
   {
-    path: { name: 'species-list', params: { keyId: route.params.keyId } },
-    name: 'species-list',
-    label: 'Species list'
-  },
-  {
     path: { name: 'species', params: { keyId: route.params.keyId } },
     name: 'species',
     label: 'Gallery'
   },
+  {
+    path: { name: 'species-list', params: { keyId: route.params.keyId } },
+    name: 'species-list',
+    label: 'Species list'
+  },
+
 
   {
     path: { name: 'refine', params: { keyId: route.params.keyId } },

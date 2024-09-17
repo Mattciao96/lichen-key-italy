@@ -5,10 +5,10 @@
       <!--      <p>M. Conti, S. Martellos, P.L. Nimis</p>-->
       <div class="mb-8">
         <p class="">This tool generates keys to subsets of species defined by their distribution, traits and ecological requirements. The keys are obtained from <a href="https://dryades.units.it/home/index.php?procedure=ext_key_home&key_type=lic&key_id=1692" target="_blank" class="text-blue-600 hover:underline">the general key to the lichens of Italy by P.L. Nimis</a>, by eliminating all species which do not share the specified characters. There are 3 main filters:</p>
-<ul class="pl-6 mb-4">
-  <li><span >1)</span>	General Filter: filtering by some general characters (including/excluding species not known for Italy, or non-lichenized species, filtering by administrative region and/or ecoregion, commonness/rarity, genus or family).</li>
-          <li><span >1)</span>		Trait Filter:  filtering by some morphological or chemical traits.</li>
-            <li><span >1)</span>	Ecological Filter: filtering by substrate-type, and by ecological indicator values.</li>
+<ul class="pl-2 mb-4">
+  <li class="mt-2"><span class="font-semibold">1)	General Filter:</span> filtering by some general characters (including/excluding species not known for Italy, or non-lichenized species, filtering by administrative region and/or ecoregion, commonness/rarity, genus or family).</li>
+          <li><span class="font-semibold">2)	Trait Filter:</span>  filtering by some morphological or chemical traits.</li>
+            <li><span class="font-semibold">3)	Ecological Filter:</span> filtering by substrate-type, and by ecological indicator values.</li>
 </ul>
         Once a query is completed, the system produces a photo gallery of the filtered species, and a key to those species in 4 different formats. The option “Free choice of species” permits to select any subset of species to be included in a key.
         Before using the tool, reading the <RouterLink to="/info" class="text-blue-600 hover:underline">Info box</RouterLink

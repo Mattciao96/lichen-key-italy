@@ -108,7 +108,7 @@ const router = createRouter({
           path: 'filter-species',
           name: 'FilterTaxa',
           meta: {
-            title: 'Filter species'
+            title: 'Species filter'
           },
 
 

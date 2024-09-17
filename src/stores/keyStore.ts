@@ -166,9 +166,14 @@ export const useKeyStore = defineStore('key', () => {
     }
 
     isLoading.value = true
+
+
     const tempStepsList = await keyTree.getTreeAsListByIdAsync(parseInt(nodeId))
 
+
     if (tempStepsList.length === 0) {
+      error.value = 'Passage not found'
+      isLoading.value = false
       isCurrentNodeValid.value = false
       return
     }

@@ -10,7 +10,7 @@
       <span
         class="homepage relative min-w-[218px] text-2xl font-semibold text-primary-950"
         :class="{ 'is-home': isHomePage }"
-        >ITALIC KEYMAKER</span
+        >ITALIC - THE KEYMAKER</span
       >
     </div>
 

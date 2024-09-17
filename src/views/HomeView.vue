@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full flex-col">
-    <h1 class="text-title mb-8 mt-4 hidden text-center">ITALIC KEYMAKER</h1>
+    <h1 class="text-title mb-8 mt-4 hidden text-center">ITALIC - THE KEYMAKER</h1>
     <div class="mt-8 [&>h2]:font-bold [&>p]:mb-4">
       <!--      <p>M. Conti, S. Martellos, P.L. Nimis</p>-->
       <div class="mb-8">

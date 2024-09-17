@@ -35,6 +35,7 @@ import KeyTableDescriptions from '@/components/key/KeyTableDescriptions.vue'
 import { paths } from '@/config/endpoints'
 import type { KeyLead } from '@/types'
 
+
 const props = defineProps<{
   stepsList: KeyLead[]
 }>()

@@ -40,17 +40,30 @@ const router = createRouter({
         {
           path: '',
           name: 'home',
-          component: HomeView
+          component: HomeView,
+          meta: {
+            title: 'ITALIC Keymaker',
+            description: 'This tool generates identification keys keys to subsets of lichen species defined by the user by specifying their distribution, traits and ecological requirements. The smaller keys are obtained from the general key to the lichens of Italy by eliminating all couplets leading to species which do no share all of the specified characters.'
+          }
+
         },
         {
           path: 'info',
           name: 'info',
-          component: InformationView
+          component: InformationView,
+          meta: {
+            title: 'Information',
+            description: 'How to use ITALIC Keymaker'
+          }
         },
         {
           path: 'how-to-cite',
           name: 'how-to-cite',
-          component: CitationView
+          component: CitationView,
+          meta: {
+            title: 'How to cite',
+            description: 'How to cite ITALIC Keymaker'
+          }
         },
         {
           path: 'filters/',
@@ -63,17 +76,26 @@ const router = createRouter({
             {
               path: 'general',
               name: 'general',
-              component: FilterGeneralView
+              component: FilterGeneralView,
+              meta: {
+                title: 'General Filter'
+              }
             },
             {
               path: 'traits',
               name: 'traits',
-              component: FilterTraitsView
+              component: FilterTraitsView,
+              meta: {
+                title: 'Trait Filter'
+              }
             },
             {
               path: 'ecology',
               name: 'ecology',
-              component: FilterEcologyView
+              component: FilterEcologyView,
+              meta: {
+                title: 'Ecology Filter'
+              }
             }
           ]
         },
@@ -85,6 +107,10 @@ const router = createRouter({
         {
           path: 'filter-species',
           name: 'FilterTaxa',
+          meta: {
+            title: 'Filter species'
+          },
+
 
           redirect: { name: 'FilterTaxaLetter', params: { letter: 'a' } },
           children: [
@@ -100,7 +126,7 @@ const router = createRouter({
           path: ':keyId/nodes/:nodeId/',
           name: 'key-node',
           component: KeyLayout,
-          meta: { requiresKeyData: true, requiresNodeData: true },
+          meta: { requiresKeyData: true, requiresNodeData: true, title: 'Generated key' },
           children: [
             {
               path: 'key',
@@ -172,6 +198,10 @@ const routeGroups = {
 
 const isFirstLoad = { form: true, taxa: true }
 
+router.beforeEach( ( to, from, next ) => {
+  document.title = `${ to.meta.title }`
+  next()
+})
 router.beforeEach((to, from, next) => {
   // Handle store resets for form and taxa routes
   Object.entries(routeGroups).forEach(([group, { routes, resetStore }]) => {

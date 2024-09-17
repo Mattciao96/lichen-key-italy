@@ -8,14 +8,20 @@
         <img class="h-10 w-10" src="/general/banner-key.jpg" alt="Your Company" />
       </div>
       <span
-        class="homepage relative min-w-[218px] text-2xl font-semibold text-primary-950"
+        class="hidden sm:block homepage relative min-w-[300px] text-2xl font-semibold text-primary-950"
         :class="{ 'is-home': isHomePage }"
         >ITALIC - THE KEYMAKER</span
       >
+      <span
+        class="block sm:hidden homepage relative min-w-[300px] text-2xl font-semibold text-primary-950"
+        :class="{ 'is-home': isHomePage }"
+      >ITALIC KEYMAKER</span
+      >
+
     </div>
 
     <!-- Desktop menu -->
-    <div class="hidden sm:ml-6 sm:block">
+    <div class="hidden md:ml-6 md:block">
       <div class="flex space-x-4">
         <RouterLink
           v-for="item in navigation"
@@ -39,7 +45,7 @@
   <button
     @click="toggleMobileMenu"
     type="button"
-    class="absolute right-4 top-4 z-[1002] inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-primary-500 focus:outline-none sm:hidden"
+    class="absolute right-4 top-4 z-[1002] inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-primary-500 focus:outline-none md:hidden"
     aria-controls="mobile-menu"
     :aria-expanded="mobileMenuOpen"
   >

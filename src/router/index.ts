@@ -198,12 +198,15 @@ const routeGroups = {
 
 const isFirstLoad = { form: true, taxa: true }
 
-router.beforeEach( ( to, from, next ) => {
-  document.title = `${ to.meta.title }`
+/*router.beforeEach( ( to, from, next ) => {
+
   next()
-})
+})*/
 router.beforeEach((to, from, next) => {
+
+  document.title = `${ to.meta.title }`
   // Handle store resets for form and taxa routes
+  // probabilmente inutile perchè ho cambiato i route name
   Object.entries(routeGroups).forEach(([group, { routes, resetStore }]) => {
     const isCurrentRoute = routes.some((route) => to.path.startsWith(route))
     const wasLastRoute = routes.some((route) => from.path.startsWith(route))
@@ -241,6 +244,7 @@ router.beforeEach((to, from, next) => {
   // to set default italy
   if (to.path.startsWith('/filters/') && !from.path.startsWith('/filters/')) {
     const formStore = useFormStore()
+    formStore.resetForm()
     formStore.updateFormField('area', { value: 'italy', text: 'Only species known from Italy' })
   }
 

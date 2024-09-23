@@ -9,7 +9,7 @@
       How to Cite
     </RouterLink>
     <a
-      href="https://github.com/orgs/plant-data/lichen-keymaker"
+      href="https://github.com/plant-data/lichen-keymaker"
       target="_blank"
       rel="noopener noreferrer"
       class="flex items-center text-surface-900"

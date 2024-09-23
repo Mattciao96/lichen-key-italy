@@ -14,7 +14,7 @@ Users can select specific parameters to narrow down the taxa included in the key
 ### Clone the repository:
 ```bash
 git clone https://github.com/plant-data/lichen-keymaker.git
-cd lichen-key-italy
+cd lichen-keymaker
 ```
 ### Install the dependencies:
 ```bash

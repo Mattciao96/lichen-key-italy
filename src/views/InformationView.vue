@@ -146,7 +146,10 @@
                 </ul>
             </li>
       </ul>
+        <p>
       Clicking on a species name in any type of key, you are redirected to the corresponding taxon page of  ITALIC. The function “adjust key” permits to delete some species from a key: it may be useful e.g. for teachers who want to produce a printable key, for example to the epiphytic lichens of a given city, excluding species that they have never found in their area, or which make the key too difficult for their students.
+        </p>
+        <p class="mt-2">Every key is conserved by the system: if you intend to use a given key several times, just copy-paste its URL. You can also incorporate that URL into an external, dedicated web page (e.g. on the lichens of a Natural Park, or on a school project of biomonitoring).</p>
       </div>
 
 
